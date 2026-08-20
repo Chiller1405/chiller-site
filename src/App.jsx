@@ -18,10 +18,10 @@ const translations = {
     
     // About Chiller translations
     aboutTitle: "על צ'ילר - Chiller",
-    aboutSubtitle: "השותף החכם שלך לטיול בדרום ומרכז אמריקה",
-    aboutDescription: "צ'ילר הוא עוזר נסיעות חכם מבוסס AI שפותח במיוחד כדי לסייע לתרמילאים ומטיילים עצמאיים לתכנן את הרפתקת חייהם בדרום ומרכז אמריקה. צ'ילר מתמחה במתן מענה לוגיסטי, מציאת מקומות לינה מתאימים, סגירת אטרקציות, וסידור מעברים ותחבורה (אוטובוסים, שאטלים, מעבורות וטיסות). צ'ילר מיועד לתפקד כ״חבר מומחה בכיס״ עבור התרמילאי הישראלי ולעזור לו לבנות את חווית הטיול המושלמת בשבילו.",
+    aboutSubtitle: "השותף החכם שלך לטיול הגדול",
+    aboutDescription: "צ'ילר הוא עוזר נסיעות חכם מבוסס AI שפותח במיוחד כדי לסייע לתרמילאים ומטיילים עצמאיים לתכנן את הרפתקת חייהם בטיול הגדול. צ'ילר מתמחה במתן מענה לוגיסטי, מציאת מקומות לינה מתאימים, סגירת אטרקציות, וסידור מעברים ותחבורה (אוטובוסים, שאטלים, מעבורות וטיסות). צ'ילר מיועד לתפקד כ״חבר מומחה בכיס״ עבור התרמילאי הישראלי ולעזור לו לבנות את חווית הטיול המושלמת בשבילו.",
     whoTitle: "למי השירות מיועד?",
-    whoText: "למוצ'ילרים ותרמילאים ישראלים המחפשים לחקור את דרום ומרכז אמריקה בצורה מתוחכמת, מותאמת אישית וחסכונית.",
+    whoText: "למוצ'ילרים ותרמילאים ישראלים המחפשים לחקור את העולם בצורה מתוחכמת, מותאמת אישית וחסכונית.",
     whatTitle: "מה צ'ילר יודע לעשות?",
     whatItems: [
       "איתור והזמנת דרכי הגעה, אוטובוסים, טיסות ומעברי גבול יבשתיים וימיים.",
@@ -44,7 +44,7 @@ const translations = {
     partners: {
       booking: { name: "Booking.com", desc: "האתר המוביל בעולם להזמנת מלונות, דירות וחדרי אירוח." },
       expedia: { name: "Expedia", desc: "סוכנות נסיעות מקוונת מקיפה להזמנת מלונות ודילים." },
-      agoda: { name: "Agoda", desc: "דילים מעולים והזמנות לינה באמריקה הלטינית ובכל העולם." },
+      agoda: { name: "Agoda", desc: "דילים מעולים והזמנות לינה בכל העולם." },
       busbud: { name: "Busbud", desc: "השוואה והזמנת כרטיסי אוטובוס למעברים בין ערים ומדינות." },
       trip: { name: "Trip.com", desc: "סוכנות נסיעות בינלאומית המציעה טיסות, רכבות ומלונות." },
       wayaway: { name: "WayAway", desc: "מנוע חיפוש טיסות המציע החזר כספי (Cashback) על רכישות נסיעות." },
@@ -69,10 +69,10 @@ const translations = {
 
     // About Chiller translations
     aboutTitle: "About Chiller",
-    aboutSubtitle: "Your smart travel companion for South and Central America",
-    aboutDescription: "Chiller is a smart AI-powered travel assistant developed specifically to help backpackers and independent travelers plan the adventure of a lifetime in South and Central America. Chiller specializes in logistics, finding suitable accommodation, booking attractions, and arranging transport (buses, shuttles, ferries, and flights). Chiller is designed to be your 'expert friend in your pocket,' helping you build your perfect travel experience.",
+    aboutSubtitle: "Your smart travel companion for the big trip",
+    aboutDescription: "Chiller is a smart AI-powered travel assistant developed specifically to help backpackers and independent travelers plan the adventure of a lifetime on the big trip. Chiller specializes in logistics, finding suitable accommodation, booking attractions, and arranging transport (buses, shuttles, ferries, and flights). Chiller is designed to be your 'expert friend in your pocket,' helping you build your perfect travel experience.",
     whoTitle: "Who is it for?",
-    whoText: "For backpackers looking to explore South and Central America in a smart, personalized, and cost-effective way.",
+    whoText: "For backpackers looking to explore the world in a smart, personalized, and cost-effective way.",
     whatTitle: "What Chiller Can Do",
     whatItems: [
       "Find and book routes, buses, flights, and land/sea border crossings.",
@@ -95,7 +95,7 @@ const translations = {
     partners: {
       booking: { name: "Booking.com", desc: "The world's leading site for booking hotels, apartments, and guest houses." },
       expedia: { name: "Expedia", desc: "A comprehensive travel platform for booking hotels, flights, and vacation packages." },
-      agoda: { name: "Agoda", desc: "Great deals and accommodation booking worldwide and in Latin America." },
+      agoda: { name: "Agoda", desc: "Great deals and accommodation booking worldwide." },
       busbud: { name: "Busbud", desc: "Compare and book intercity and cross-border bus tickets easily." },
       trip: { name: "Trip.com", desc: "An international online travel agency offering flights, hotels, and train tickets." },
       wayaway: { name: "WayAway", desc: "Flight search engine that helps you find cheap flights with cashback on travel purchases." },
