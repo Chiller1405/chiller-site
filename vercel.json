@@ -1,0 +1,6 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/go/:path*", "destination": "/go/index.html" }
+  ]
+}
