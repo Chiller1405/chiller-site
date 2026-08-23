@@ -150,7 +150,7 @@ function performRedirect() {
   if (provider) {
     // Flow A: Verified Affiliate
     if (redirectTitle) {
-      redirectTitle.innerHTML = `מעביר אותך ל-<span id="partner-name">${providerName}</span>...`;
+      redirectTitle.innerHTML = `למעבר ל-<span id="partner-name">${providerName}</span> לחץ המשך`;
     }
     if (redirectSubtitle) {
       redirectSubtitle.textContent = "מכין את ההצעה הטובה ביותר עבורך...";
@@ -173,7 +173,7 @@ function performRedirect() {
   } else {
     // Default fallback (no provider or custom destination target)
     if (redirectTitle) {
-      redirectTitle.textContent = "מעביר אותך לדף הבית...";
+      redirectTitle.textContent = "למעבר לדף הבית לחץ המשך";
     }
     if (redirectSubtitle) {
       redirectSubtitle.textContent = "הקישור לא נמצא או שאינו תקין.";
