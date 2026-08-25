@@ -6,14 +6,27 @@ import './ChatWidget.css';
 // stray asterisk). The bot's system prompt was fixed (2026-08-25) to emit this syntax instead
 // of Markdown's **bold**, which neither WhatsApp nor this widget rendered — it showed up as
 // literal, ugly asterisks. This renders the same spans as real bold here too.
-const BOLD_REGEX = /\*([^\s*][^*]*?[^\s*]|[^\s*])\*/g;
+// Also matches **double-asterisk** as a defensive fallback: live-verified (2026-08-25) that the
+// prompt rule alone isn't 100% reliable — one reply out of a few still slipped back to double
+// asterisks. A naive single-asterisk-only regex partially matches inside a double-asterisk span
+// and leaves one stray "*" on each side, which is worse than not matching at all. Trying the
+// double-asterisk alternative FIRST (regex alternation is ordered) avoids that.
+const BOLD_REGEX = /\*\*([^\s*][^*]*?[^\s*]|[^\s*])\*\*|\*([^\s*][^*]*?[^\s*]|[^\s*])\*/g;
 
 const renderBoldSegments = (text, keyPrefix) => {
-  const segments = text.split(BOLD_REGEX);
-  if (segments.length === 1) return text;
-  return segments.map((segment, i) =>
-    i % 2 === 1 ? <strong key={`${keyPrefix}-b-${i}`}>{segment}</strong> : segment,
-  );
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+  let i = 0;
+  BOLD_REGEX.lastIndex = 0;
+  while ((match = BOLD_REGEX.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index));
+    const content = match[1] !== undefined ? match[1] : match[2];
+    parts.push(<strong key={`${keyPrefix}-b-${i++}`}>{content}</strong>);
+    lastIndex = BOLD_REGEX.lastIndex;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return parts.length ? parts : text;
 };
 
 const renderMessageText = (text) => {
