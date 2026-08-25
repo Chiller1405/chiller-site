@@ -1,6 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ChatWidget.css';
 
+// WhatsApp-style bold: *word* or *a few words* (no space touching either asterisk — matches
+// WhatsApp's own rule so this only catches spans the bot actually intended as bold, not a
+// stray asterisk). The bot's system prompt was fixed (2026-08-25) to emit this syntax instead
+// of Markdown's **bold**, which neither WhatsApp nor this widget rendered — it showed up as
+// literal, ugly asterisks. This renders the same spans as real bold here too.
+const BOLD_REGEX = /\*([^\s*][^*]*?[^\s*]|[^\s*])\*/g;
+
+const renderBoldSegments = (text, keyPrefix) => {
+  const segments = text.split(BOLD_REGEX);
+  if (segments.length === 1) return text;
+  return segments.map((segment, i) =>
+    i % 2 === 1 ? <strong key={`${keyPrefix}-b-${i}`}>{segment}</strong> : segment,
+  );
+};
+
 const renderMessageText = (text) => {
   if (!text) return null;
 
@@ -48,7 +63,7 @@ const renderMessageText = (text) => {
       );
     }
 
-    return part;
+    return <React.Fragment key={index}>{renderBoldSegments(part, index)}</React.Fragment>;
   });
 };
 
