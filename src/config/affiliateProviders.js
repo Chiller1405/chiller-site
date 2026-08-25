@@ -16,7 +16,17 @@
  * chiller-bot/services/affiliateConfig.js (that file is what the AI model uses to pick a
  * valid providerId when generating a link). Provider IDs are fully in sync as of
  * 2026-08-20 — check both files together whenever a provider is added or removed.
+ *
+ * UPDATING YOUR TRAVELPAYOUTS MARKER (partner ID):
+ * All tp.media affiliateUrl templates below share the same `marker` value via the
+ * AFFILIATE_MARKER constant right below this comment. To change it (e.g. new Travelpayouts
+ * account), edit that ONE line — every provider's URL picks it up automatically.
+ * (Fixed 2026-08-25: previously the marker was hardcoded as a literal string separately inside
+ * all 15 affiliateUrl templates, so changing it meant hunting down and editing 15 lines by hand
+ * and risking missing one.)
  */
+const AFFILIATE_MARKER = '750063';
+
 export const affiliateProviders = [
   // --- eSIM & Connectivity ---
   {
@@ -24,7 +34,7 @@ export const affiliateProviders = [
     name: 'Airalo',
     category: 'esim',
     cleanUrl: 'https://www.airalo.com',
-    affiliateUrl: 'https://tp.media/r?marker=750063&p=8310&campaign_id=541&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?marker=${AFFILIATE_MARKER}&p=8310&campaign_id=541&u={{dest}}`,
     isActive: true
   },
   {
@@ -32,7 +42,7 @@ export const affiliateProviders = [
     name: 'Saily',
     category: 'esim',
     cleanUrl: 'https://saily.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=629&marker=750063&p=8979&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=629&marker=${AFFILIATE_MARKER}&p=8979&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -40,7 +50,7 @@ export const affiliateProviders = [
     name: 'Yesim',
     category: 'esim',
     cleanUrl: 'https://yesim.app',
-    affiliateUrl: 'https://tp.media/r?campaign_id=224&marker=750063&p=5998&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=224&marker=${AFFILIATE_MARKER}&p=5998&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -59,7 +69,7 @@ export const affiliateProviders = [
     name: 'Klook',
     category: 'activities',
     cleanUrl: 'https://www.klook.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=137&marker=750063&p=4110&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=137&marker=${AFFILIATE_MARKER}&p=4110&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -67,7 +77,7 @@ export const affiliateProviders = [
     name: 'Tiqets',
     category: 'activities',
     cleanUrl: 'https://www.tiqets.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=89&marker=750063&p=2074&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=89&marker=${AFFILIATE_MARKER}&p=2074&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -75,7 +85,7 @@ export const affiliateProviders = [
     name: 'KKday',
     category: 'activities',
     cleanUrl: 'https://www.kkday.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=633&marker=750063&p=9074&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=633&marker=${AFFILIATE_MARKER}&p=9074&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -83,7 +93,7 @@ export const affiliateProviders = [
     name: 'Go City',
     category: 'activities',
     cleanUrl: 'https://gocity.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=62&marker=750063&p=1942&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=62&marker=${AFFILIATE_MARKER}&p=1942&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -91,7 +101,7 @@ export const affiliateProviders = [
     name: 'WeGoTrip',
     category: 'activities',
     cleanUrl: 'https://wegotrip.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=150&marker=750063&p=4487&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=150&marker=${AFFILIATE_MARKER}&p=4487&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -133,7 +143,7 @@ export const affiliateProviders = [
     name: 'Aviasales',
     category: 'transit',
     cleanUrl: 'https://www.aviasales.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=100&marker=750063&p=4114&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=100&marker=${AFFILIATE_MARKER}&p=4114&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -149,7 +159,7 @@ export const affiliateProviders = [
     name: 'GetTransfer.com',
     category: 'transit',
     cleanUrl: 'https://gettransfer.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=147&marker=750063&p=4439&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=147&marker=${AFFILIATE_MARKER}&p=4439&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -157,7 +167,7 @@ export const affiliateProviders = [
     name: 'Welcome Pickups',
     category: 'transit',
     cleanUrl: 'https://www.welcomepickups.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=627&marker=750063&p=8919&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=627&marker=${AFFILIATE_MARKER}&p=8919&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -165,7 +175,7 @@ export const affiliateProviders = [
     name: 'Kiwitaxi',
     category: 'transit',
     cleanUrl: 'https://kiwitaxi.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=1&marker=750063&p=647&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=1&marker=${AFFILIATE_MARKER}&p=647&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -282,7 +292,7 @@ export const affiliateProviders = [
     name: 'Localrent.com',
     category: 'car_insurance',
     cleanUrl: 'https://localrent.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=87&marker=750063&p=2043&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=87&marker=${AFFILIATE_MARKER}&p=2043&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -290,7 +300,7 @@ export const affiliateProviders = [
     name: 'Economybookings.com',
     category: 'car_insurance',
     cleanUrl: 'https://www.economybookings.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=10&marker=750063&p=2018&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=10&marker=${AFFILIATE_MARKER}&p=2018&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
@@ -298,7 +308,7 @@ export const affiliateProviders = [
     name: 'QEEQ',
     category: 'car_insurance',
     cleanUrl: 'https://www.qeeq.com',
-    affiliateUrl: 'https://tp.media/r?campaign_id=172&marker=750063&p=4845&trs=550285&u={{dest}}',
+    affiliateUrl: `https://tp.media/r?campaign_id=172&marker=${AFFILIATE_MARKER}&p=4845&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
