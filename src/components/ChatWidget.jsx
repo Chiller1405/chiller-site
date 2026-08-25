@@ -124,7 +124,14 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
     inputRef.current?.focus();
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    // 45s, not 15s: verified live (2026-08-25, Render production logs) that a normal multi-tool
+    // reply (web search + affiliate link + preference extraction) regularly takes 15-20s on its
+    // own, before counting a Render free-tier cold start on top of that. At 15s the backend was
+    // still fully processing and successfully finished seconds later -- but the abort() below had
+    // already fired, so the real, correct, fully-computed answer was silently thrown away and the
+    // user saw a generic "server waking up" message instead, then had to ask again from scratch
+    // (paying for the search/OpenAI call twice). 45s gives real replies room to land before we give up.
+    const timeoutId = setTimeout(() => controller.abort(), 45000);
 
     try {
       const response = await fetch('https://chiller-bot-server.onrender.com/simulate', {
