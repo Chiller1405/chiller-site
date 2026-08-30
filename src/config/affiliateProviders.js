@@ -151,7 +151,20 @@ export const affiliateProviders = [
     name: 'Kiwi.com',
     category: 'transit',
     cleanUrl: 'https://www.kiwi.com',
-    affiliateUrl: 'https://kiwi.tpx.lu/UCx2XBi8',
+    // FIXED 2026-08-28: the old value was a static kiwi.tpx.lu short-link with NO {{dest}}
+    // placeholder at all -- meaning even when the bot built a real, route+date-specific Kiwi
+    // deep link (services/affiliateService.js's new `kiwi` urlBuilder), it was silently thrown
+    // away here and every user landed on whatever the static short-link points to (likely the
+    // Kiwi homepage), un-personalized. Per Travelpayouts' own documented pattern for Kiwi deep
+    // links (support.travelpayouts.com/hc/en-us/articles/360010109719-Kiwi-com-affiliate-links):
+    // wrap the real kiwi.com/deep?... URL in their click-tracking template so it's both a real
+    // route-specific search result AND attributed to Noam's account.
+    // NOT YET VERIFIED: promo_id=3791 is the value shown in Travelpayouts' generic Kiwi docs --
+    // it may be a fixed per-program ID shared by all their Kiwi affiliates, or it may need to
+    // match Noam's own Kiwi program page in his Travelpayouts dashboard specifically. Worth a
+    // quick check there before trusting this fully; if it's wrong the link likely still works
+    // (Kiwi's site itself doesn't care about promo_id) but the click may not get credited.
+    affiliateUrl: `https://c111.travelpayouts.com/click?shmarker=${AFFILIATE_MARKER}&promo_id=3791&source_type=customlink&type=click&custom_url={{dest}}`,
     isActive: true
   },
   {
