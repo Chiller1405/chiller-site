@@ -56,6 +56,16 @@ function resolveProviderAndDest() {
   return { provider: matchedProvider, customDest };
 }
 
+// For providers using linkType: 'append' (e.g. Trip.com's own affiliate platform): the
+// destination URL is used as-is, with the provider's fixed tracking params appended directly
+// onto it (as opposed to {{dest}} providers, which wrap the whole destination inside a
+// tracking-domain URL, e.g. tp.media/r?...&u=<encoded dest>).
+function appendAffiliateParams(url, paramsString) {
+  if (!paramsString) return url;
+  const separator = url.includes('?') ? '&' : '?';
+  return `${url}${separator}${paramsString}`;
+}
+
 function appendTrackingParams(targetUrl) {
   try {
     const currentParams = new URLSearchParams(window.location.search);
@@ -108,7 +118,10 @@ function performRedirect() {
   let providerName = 'השותף שלנו';
 
   if (customDest) {
-    if (provider && provider.isActive && provider.affiliateUrl) {
+    if (provider && provider.isActive && provider.linkType === 'append') {
+      providerName = provider.name;
+      targetUrl = appendAffiliateParams(customDest, provider.affiliateParams);
+    } else if (provider && provider.isActive && provider.affiliateUrl) {
       providerName = provider.name;
       if (provider.affiliateUrl.includes('{{dest}}')) {
         targetUrl = provider.affiliateUrl.replace('{{dest}}', encodeURIComponent(customDest));
@@ -128,7 +141,9 @@ function performRedirect() {
   } else if (provider) {
     providerName = provider.name;
     const baseDest = provider.cleanUrl;
-    if (provider.isActive && provider.affiliateUrl) {
+    if (provider.isActive && provider.linkType === 'append') {
+      targetUrl = appendAffiliateParams(baseDest, provider.affiliateParams);
+    } else if (provider.isActive && provider.affiliateUrl) {
       if (provider.affiliateUrl.includes('{{dest}}')) {
         targetUrl = provider.affiliateUrl.replace('{{dest}}', encodeURIComponent(baseDest));
       } else if (provider.affiliateUrl.includes('{{uri}}')) {

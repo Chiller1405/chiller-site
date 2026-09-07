@@ -24,6 +24,16 @@
  * (Fixed 2026-08-25: previously the marker was hardcoded as a literal string separately inside
  * all 15 affiliateUrl templates, so changing it meant hunting down and editing 15 lines by hand
  * and risking missing one.)
+ *
+ * PROVIDERS THAT USE `linkType: 'append'` INSTEAD OF `{{dest}}`:
+ * Not every affiliate program wraps the destination through a tracking domain (tp.media/...).
+ * Some (Trip.com's own direct affiliate platform is the first example here) just want two fixed
+ * tracking params appended straight onto whatever destination URL you're already sending the
+ * user to — no per-destination link creation needed. For those providers, set:
+ *   linkType: 'append',
+ *   affiliateParams: 'key1=value1&key2=value2'   // fixed per your account, same for every destination
+ * redirect.js appends these to the real destination URL (with '?' or '&' as needed) instead of
+ * doing the {{dest}} substitution. Leave `affiliateUrl` as '' for these providers.
  */
 const AFFILIATE_MARKER = '750063';
 
@@ -134,8 +144,26 @@ export const affiliateProviders = [
     name: 'Trip.com',
     category: 'accommodation',
     cleanUrl: 'https://www.trip.com',
+    // Trip.com's own direct affiliate platform (Account ID 10464826, site "Chiller - Travel")
+    // works differently from the tp.media providers above: it doesn't wrap the destination
+    // through a tracking domain, it just appends two fixed tracking params directly onto
+    // whatever Trip.com URL you're already sending the user to.
+    // VERIFIED LIVE 2026-09-07: created a test link on the real dashboard by pasting
+    //   https://www.trip.com/hotels/list?city=249&checkin=2026-10-01&checkout=2026-10-03
+    // and got back the SAME url with "&Allianceid=10464826&SID=330520163" appended — nothing
+    // else changed. Allianceid/SID are fixed per Noam's account (not per-destination), so this
+    // one template covers ANY Trip.com deep link Chiller ever builds (hotel search, flight
+    // search, homepage, etc.) with no need to pre-create a link per destination in their UI.
+    // NOT YET VERIFIED: the test link also auto-included "trip_sub3=D19714102" (looked like a
+    // random ID their form generates per link). Unknown whether that param is required for the
+    // click to be credited, or purely cosmetic for their own reporting UI. Before fully trusting
+    // attribution here: click a real generated /go/trip link, then check Trip.com's "Booking
+    // Performance" dashboard to confirm the click registers without trip_sub3 — or ask Trip.com
+    // affiliate support directly.
+    linkType: 'append',
+    affiliateParams: 'Allianceid=10464826&SID=330520163',
     affiliateUrl: '',
-    isActive: false
+    isActive: true
   },
 
   {
