@@ -315,8 +315,8 @@ export const affiliateProviders = [
     name: 'Expedia',
     category: 'accommodation',
     cleanUrl: 'https://www.expedia.com',
-    affiliateUrl: '',
-    isActive: false
+    affiliateUrl: 'https://expedia.com/affiliate/TWN5VV1',
+    isActive: true
   },
   {
     id: 'vrbo',
