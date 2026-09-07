@@ -127,8 +127,10 @@ export const affiliateProviders = [
     name: 'Viator',
     category: 'activities',
     cleanUrl: 'https://www.viator.com',
+    linkType: 'append',
+    affiliateParams: 'pid=P00318757&mcid=42383&medium=link',
     affiliateUrl: '',
-    isActive: false
+    isActive: true
   },
   {
     id: 'tripadvisor',
