@@ -119,8 +119,8 @@ export const affiliateProviders = [
     name: 'GetYourGuide',
     category: 'activities',
     cleanUrl: 'https://www.getyourguide.com',
-    affiliateUrl: '',
-    isActive: false
+    affiliateUrl: 'https://gyg.me/jHkKbxKX',
+    isActive: true
   },
   {
     id: 'viator',
