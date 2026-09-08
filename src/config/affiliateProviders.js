@@ -234,8 +234,8 @@ export const affiliateProviders = [
     name: 'Omio',
     category: 'transit',
     cleanUrl: 'https://www.omio.com',
-    affiliateUrl: '',
-    isActive: false
+    affiliateUrl: 'https://omio.sjv.io/L0yA7O',
+    isActive: true
   },
 
   {
