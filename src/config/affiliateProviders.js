@@ -301,8 +301,8 @@ export const affiliateProviders = [
     name: 'Agoda',
     category: 'accommodation',
     cleanUrl: 'https://www.agoda.com',
-    affiliateUrl: '',
-    isActive: false
+    affiliateUrl: 'https://www.agoda.com/partners/partnersearch.aspx?pcs=1&cid=1974284',
+    isActive: true
   },
   {
     id: 'hotels',
