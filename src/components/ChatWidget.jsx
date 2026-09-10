@@ -18,6 +18,61 @@ const BOLD_REGEX = /\*\*([^\s*][^*]*?[^\s*]|[^\s*])\*\*|\*([^\s*][^*]*?[^\s*]|[^
 // config until/unless a staging environment needs a different one.
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://chiller-bot-server.onrender.com';
 
+// Session token for /simulate (2026-09-10): the backend now requires a short-lived token before
+// it accepts /simulate calls (see requireSimulateToken in chiller-bot/index.js). This is NOT a
+// login — the widget stays fully anonymous — it just means a caller has to go through our own
+// server once before reaching the endpoint that actually costs money per call, instead of being
+// able to POST straight to it with a spoofed Origin header. Fetched lazily on first send and
+// cached for the page's lifetime; refreshed automatically if the backend ever rejects it.
+let simulateTokenPromise = null;
+async function getSimulateToken(forceRefresh) {
+  if (forceRefresh) simulateTokenPromise = null;
+  if (!simulateTokenPromise) {
+    simulateTokenPromise = fetch(`${API_BASE_URL}/simulate/token`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Token endpoint returned ${res.status}`);
+        return res.json();
+      })
+      .then((data) => data.token)
+      .catch((err) => {
+        simulateTokenPromise = null;
+        throw err;
+      });
+  }
+  return simulateTokenPromise;
+}
+
+// Calls /simulate (or /simulate/reset) with the session token attached, retrying once with a
+// freshly-issued token if the backend says ours expired — keeps the retry logic in one place
+// instead of duplicating it at every call site.
+async function fetchSimulateApi(path, body, signal) {
+  let token = await getSimulateToken(false);
+  let response = await fetch(`${API_BASE_URL}${path}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-simulate-token': token,
+    },
+    body: JSON.stringify(body),
+    signal,
+  });
+
+  if (response.status === 403) {
+    token = await getSimulateToken(true);
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-simulate-token': token,
+      },
+      body: JSON.stringify(body),
+      signal,
+    });
+  }
+
+  return response;
+}
+
 const renderBoldSegments = (text, keyPrefix) => {
   const parts = [];
   let lastIndex = 0;
@@ -167,14 +222,11 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
     const timeoutId = setTimeout(() => controller.abort(), 45000);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/simulate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: sessionId.current, message: userMessageText }),
-        signal: controller.signal,
-      });
+      const response = await fetchSimulateApi(
+        '/simulate',
+        { userId: sessionId.current, message: userMessageText },
+        controller.signal,
+      );
 
       clearTimeout(timeoutId);
 
