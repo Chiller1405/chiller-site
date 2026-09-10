@@ -13,6 +13,11 @@ import './ChatWidget.css';
 // double-asterisk alternative FIRST (regex alternation is ordered) avoids that.
 const BOLD_REGEX = /\*\*([^\s*][^*]*?[^\s*]|[^\s*])\*\*|\*([^\s*][^*]*?[^\s*]|[^\s*])\*/g;
 
+// Backend base URL, configurable via VITE_API_URL (set in Netlify's build environment) instead
+// of being hardcoded — falls back to the current production URL so this keeps working with zero
+// config until/unless a staging environment needs a different one.
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://chiller-bot-server.onrender.com';
+
 const renderBoldSegments = (text, keyPrefix) => {
   const parts = [];
   let lastIndex = 0;
@@ -162,7 +167,7 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
     const timeoutId = setTimeout(() => controller.abort(), 45000);
 
     try {
-      const response = await fetch('https://chiller-bot-server.onrender.com/simulate', {
+      const response = await fetch(`${API_BASE_URL}/simulate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -178,7 +183,12 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
       }
 
       const data = await response.json();
-      const botResponseText = data.response || data.message || data.reply || JSON.stringify(data);
+      // FIXED (2026-09-10): the backend always returns `reply` (see index.js's /simulate route) —
+      // `data.response`/`data.message` were dead fallbacks that never matched the real API shape.
+      // Worse, if `reply` was ever falsy, this used to fall through to JSON.stringify(data) and
+      // show the raw response JSON to the user as if it were a chat message. Now a real,
+      // in-character fallback string instead.
+      const botResponseText = data.reply || "מצטער, לא הצלחתי לעבד את זה — נסה שוב בבקשה.";
 
       const botMessage = {
         id: (Date.now() + 1).toString(),
