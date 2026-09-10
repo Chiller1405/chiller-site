@@ -251,8 +251,8 @@ export const affiliateProviders = [
     name: '12Go',
     category: 'transit',
     cleanUrl: 'https://12go.asia',
-    affiliateUrl: '',
-    isActive: false
+    affiliateUrl: 'https://12go.asia/?z=16896756',
+    isActive: true
   },
   {
     id: 'skyscanner',
