@@ -71,6 +71,14 @@ export const affiliateProviders = [
     affiliateUrl: 'https://drimsim.tpx.lu/c6V7Ofxr',
     isActive: true
   },
+  {
+    id: 'mobimatter',
+    name: 'MobiMatter',
+    category: 'esim',
+    cleanUrl: 'https://mobimatter.com',
+    affiliateUrl: 'https://mobimatter.com/#Chiller',
+    isActive: true
+  },
 
 
   // --- Activities & Tours ---
