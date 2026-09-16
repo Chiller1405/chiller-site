@@ -283,8 +283,8 @@ export const affiliateProviders = [
     name: 'Bookaway',
     category: 'transit',
     cleanUrl: 'https://www.bookaway.com',
-    affiliateUrl: '',
-    isActive: false
+    affiliateUrl: 'https://www.bookaway.com/?offer_id=34&aff_id=4249',
+    isActive: true
   },
 
   // --- Accommodation & Hostels ---
