@@ -211,30 +211,54 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
     setIsLoading(true);
     inputRef.current?.focus();
 
-    const controller = new AbortController();
-    // 45s, not 15s: verified live (2026-08-25, Render production logs) that a normal multi-tool
-    // reply (web search + affiliate link + preference extraction) regularly takes 15-20s on its
-    // own, before counting a Render free-tier cold start on top of that. At 15s the backend was
-    // still fully processing and successfully finished seconds later -- but the abort() below had
-    // already fired, so the real, correct, fully-computed answer was silently thrown away and the
-    // user saw a generic "server waking up" message instead, then had to ask again from scratch
-    // (paying for the search/OpenAI call twice). 45s gives real replies room to land before we give up.
-    const timeoutId = setTimeout(() => controller.abort(), 45000);
+    // Runs one actual attempt against the backend. Pulled out of handleSend so a genuine
+    // network-level failure (as opposed to the 45s timeout below) can be retried once without
+    // duplicating the request/timeout/parsing logic.
+    const attemptSend = async () => {
+      const controller = new AbortController();
+      // 45s, not 15s: verified live (2026-08-25, Render production logs) that a normal multi-tool
+      // reply (web search + affiliate link + preference extraction) regularly takes 15-20s on its
+      // own, before counting a Render free-tier cold start on top of that. At 15s the backend was
+      // still fully processing and successfully finished seconds later -- but the abort() below had
+      // already fired, so the real, correct, fully-computed answer was silently thrown away and the
+      // user saw a generic "server waking up" message instead, then had to ask again from scratch
+      // (paying for the search/OpenAI call twice). 45s gives real replies room to land before we give up.
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
+      try {
+        const response = await fetchSimulateApi(
+          '/simulate',
+          { userId: sessionId.current, message: userMessageText },
+          controller.signal,
+        );
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          throw new Error(`Server returned status ${response.status}`);
+        }
+
+        return await response.json();
+      } catch (err) {
+        clearTimeout(timeoutId);
+        throw err;
+      }
+    };
 
     try {
-      const response = await fetchSimulateApi(
-        '/simulate',
-        { userId: sessionId.current, message: userMessageText },
-        controller.signal,
-      );
-
-      clearTimeout(timeoutId);
-
-      if (!response.ok) {
-        throw new Error(`Server returned status ${response.status}`);
+      let data;
+      try {
+        data = await attemptSend();
+      } catch (err) {
+        // Only retry a genuine network-level hiccup (connection refused, DNS blip, a transient
+        // failure while a Render free-tier instance is spinning up) — never a real 45s timeout
+        // (AbortError). That case already gave the backend its full, generous window to answer;
+        // retrying it would just make the traveler wait up to another 45s for the same likely
+        // outcome instead of seeing the "server waking up" message promptly.
+        if (err.name === 'AbortError') {
+          throw err;
+        }
+        data = await attemptSend();
       }
 
-      const data = await response.json();
       // FIXED (2026-09-10): the backend always returns `reply` (see index.js's /simulate route) —
       // `data.response`/`data.message` were dead fallbacks that never matched the real API shape.
       // Worse, if `reply` was ever falsy, this used to fall through to JSON.stringify(data) and
@@ -248,11 +272,10 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
         sender: 'bot',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-      
+
       setMessages((prev) => [...prev, botMessage]);
       setIsLoading(false);
     } catch {
-      clearTimeout(timeoutId);
       // Catch connection errors and show a connection error message
       const botMessage = {
         id: (Date.now() + 1).toString(),
