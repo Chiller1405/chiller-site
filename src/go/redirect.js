@@ -39,10 +39,21 @@ function resolveProviderAndDest() {
       const urlObj = new URL(customDest);
       const hostname = urlObj.hostname.toLowerCase();
 
+      // FIXED (Section 9 review, 2026-09-22): this used to be `hostname.includes(providerHost)` —
+      // a plain substring check, which also matches a spoofed host like
+      // "booking.com.evil-domain.ru" (it DOES contain "booking.com" as a substring). Since a match
+      // here makes performRedirect() show the "Flow A: Verified Affiliate" UI ("למעבר ל-X לחץ
+      // המשך") instead of the "Flow B: unverified external site" warning that exists specifically
+      // to flag exactly this kind of link — a crafted ?dest= URL could impersonate a trusted
+      // partner and use chiller-travel.com's own domain reputation to make a phishing redirect
+      // look legitimate. Now requires an exact hostname match or a real subdomain
+      // (es.booking.com, m.agoda.com) — same fix already applied on the bot side
+      // (chiller-bot/services/affiliateService.js's isValidUrlForProvider, which has carried this
+      // exact same protection since the Section 7 review with an explicit comment about it).
       matchedProvider = affiliateProviders.find(provider => {
         const cleanUrlObj = new URL(provider.cleanUrl);
-        const providerHost = cleanUrlObj.hostname.replace('www.', '').toLowerCase();
-        return hostname.includes(providerHost);
+        const providerHost = cleanUrlObj.hostname.replace(/^www\./, '').toLowerCase();
+        return hostname === providerHost || hostname.endsWith(`.${providerHost}`);
       });
 
       if (matchedProvider) {
