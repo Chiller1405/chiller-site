@@ -89,10 +89,33 @@ function resolveProviderAndDest() {
 // destination URL is used as-is, with the provider's fixed tracking params appended directly
 // onto it (as opposed to {{dest}} providers, which wrap the whole destination inside a
 // tracking-domain URL, e.g. tp.media/r?...&u=<encoded dest>).
-function appendAffiliateParams(url, paramsString) {
-  if (!paramsString) return url;
-  const separator = url.includes('?') ? '&' : '?';
-  return `${url}${separator}${paramsString}`;
+// Adds the provider's partner params (and, for MobiMatter-style programs, a partner hash) to the
+// exact page the bot built. Rewritten 2026-09-23: the old version glued "?params" onto the end of
+// the string, which put them AFTER any "#fragment" (where the site never sees them) and could
+// duplicate a param the page already had. Our partner value wins over any same-named param.
+function appendAffiliateParams(url, paramsString, affiliateHash) {
+  try {
+    const urlObj = new URL(url);
+    if (paramsString) {
+      for (const [key, value] of new URLSearchParams(paramsString)) {
+        urlObj.searchParams.set(key, value);
+      }
+    }
+    if (affiliateHash) urlObj.hash = affiliateHash;
+    return urlObj.toString();
+  } catch {
+    return url;
+  }
+}
+
+function hostMatchesProvider(destUrl, provider) {
+  try {
+    const host = new URL(destUrl).hostname.toLowerCase().replace(/^www\./, '');
+    const providerHost = new URL(provider.cleanUrl).hostname.toLowerCase().replace(/^www\./, '');
+    return host === providerHost || host.endsWith(`.${providerHost}`);
+  } catch {
+    return false;
+  }
 }
 
 function appendTrackingParams(targetUrl) {
@@ -147,7 +170,15 @@ function setTitleWithHighlight(el, before, highlight, after) {
 }
 
 function performRedirect() {
-  const { provider, customDest } = resolveProviderAndDest();
+  const { provider: resolvedProvider, customDest } = resolveProviderAndDest();
+  // Anti-spoofing (2026-09-23): a provider picked by the /go/<id> path must actually own the
+  // destination. Otherwise "/go/agoda?dest=https://evil.example" would show the trusted
+  // "continue to Agoda" screen while sending the visitor somewhere else. A mismatch is treated
+  // exactly like an unknown external link (Flow B, with its warning and visible hostname).
+  const provider =
+    resolvedProvider && customDest && !hostMatchesProvider(customDest, resolvedProvider)
+      ? null
+      : resolvedProvider;
   const debugMode = getQueryParam('debug') === 'true';
 
   logClick(provider);
@@ -158,7 +189,7 @@ function performRedirect() {
   if (customDest) {
     if (provider && provider.isActive && provider.linkType === 'append') {
       providerName = provider.name;
-      targetUrl = appendAffiliateParams(customDest, provider.affiliateParams);
+      targetUrl = appendAffiliateParams(customDest, provider.affiliateParams, provider.affiliateHash);
     } else if (provider && provider.isActive && provider.affiliateUrl) {
       providerName = provider.name;
       if (provider.affiliateUrl.includes('{{dest}}')) {
@@ -180,7 +211,7 @@ function performRedirect() {
     providerName = provider.name;
     const baseDest = provider.cleanUrl;
     if (provider.isActive && provider.linkType === 'append') {
-      targetUrl = appendAffiliateParams(baseDest, provider.affiliateParams);
+      targetUrl = appendAffiliateParams(baseDest, provider.affiliateParams, provider.affiliateHash);
     } else if (provider.isActive && provider.affiliateUrl) {
       if (provider.affiliateUrl.includes('{{dest}}')) {
         targetUrl = provider.affiliateUrl.replace('{{dest}}', encodeURIComponent(baseDest));

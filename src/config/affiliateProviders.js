@@ -76,7 +76,12 @@ export const affiliateProviders = [
     name: 'MobiMatter',
     category: 'esim',
     cleanUrl: 'https://mobimatter.com',
-    affiliateUrl: 'https://mobimatter.com/#Chiller',
+    // MobiMatter runs its own affiliate program (Post Affiliate Pro), not Travelpayouts: the
+    // referral is the URL hash "#Chiller", which works on any page (verified on /esim-colombia).
+    linkType: 'append',
+    affiliateParams: '',
+    affiliateHash: 'Chiller',
+    affiliateUrl: '',
     isActive: true
   },
 
@@ -127,7 +132,12 @@ export const affiliateProviders = [
     name: 'GetYourGuide',
     category: 'activities',
     cleanUrl: 'https://www.getyourguide.com',
-    affiliateUrl: 'https://gyg.me/jHkKbxKX',
+    // Deep-link mode verified live 2026-09-23 (code review, section 5): the partner code rides on
+    // the exact page the bot built, instead of a fixed link that drops it.
+    // (gyg.me/jHkKbxKX resolves to ?partner_id=VJZAOAS; GYG then keeps it in localStorage.)
+    linkType: 'append',
+    affiliateParams: 'partner_id=VJZAOAS&cmp=Chiller',
+    affiliateUrl: '',
     isActive: true
   },
   {
@@ -242,7 +252,11 @@ export const affiliateProviders = [
     name: 'Omio',
     category: 'transit',
     cleanUrl: 'https://www.omio.com',
-    affiliateUrl: 'https://omio.sjv.io/L0yA7O',
+    // Deep-link mode verified live 2026-09-23 (code review, section 5): the partner code rides on
+    // the exact page the bot built, instead of a fixed link that drops it.
+    // Impact tracking link + ?u= (Impact's documented deep-link param); verified to land on the
+    // exact page with the affiliate_ir_Noam tracking params attached.
+    affiliateUrl: 'https://omio.sjv.io/L0yA7O?u={{dest}}',
     isActive: true
   },
 
@@ -259,7 +273,12 @@ export const affiliateProviders = [
     name: '12Go',
     category: 'transit',
     cleanUrl: 'https://12go.asia',
-    affiliateUrl: 'https://12go.asia/?z=16896756',
+    // Deep-link mode verified live 2026-09-23 (code review, section 5): the partner code rides on
+    // the exact page the bot built, instead of a fixed link that drops it.
+    // (12Go moves z= into a cookie and strips it from the address bar — expected.)
+    linkType: 'append',
+    affiliateParams: 'z=16896756',
+    affiliateUrl: '',
     isActive: true
   },
   {
@@ -283,7 +302,13 @@ export const affiliateProviders = [
     name: 'Bookaway',
     category: 'transit',
     cleanUrl: 'https://www.bookaway.com',
-    affiliateUrl: 'https://www.bookaway.com/?offer_id=34&aff_id=4249',
+    // Deep-link mode verified live 2026-09-23 (code review, section 5): the partner code rides on
+    // the exact page the bot built, instead of a fixed link that drops it.
+    // NOT yet confirmed that Bookaway credits aff_id on a non-homepage landing — needs one
+    // test click checked in the Bookaway partner dashboard.
+    linkType: 'append',
+    affiliateParams: 'offer_id=34&aff_id=4249',
+    affiliateUrl: '',
     isActive: true
   },
 
@@ -309,7 +334,11 @@ export const affiliateProviders = [
     name: 'Agoda',
     category: 'accommodation',
     cleanUrl: 'https://www.agoda.com',
-    affiliateUrl: 'https://www.agoda.com/partners/partnersearch.aspx?pcs=1&cid=1974284',
+    // Deep-link mode verified live 2026-09-23 (code review, section 5): the partner code rides on
+    // the exact page the bot built, instead of a fixed link that drops it.
+    linkType: 'append',
+    affiliateParams: 'cid=1974284',
+    affiliateUrl: '',
     isActive: true
   },
   {
@@ -325,7 +354,11 @@ export const affiliateProviders = [
     name: 'Expedia',
     category: 'accommodation',
     cleanUrl: 'https://www.expedia.com',
-    affiliateUrl: 'https://expedia.com/affiliate/TWN5VV1',
+    // Deep-link format from Noam's Expedia Creator link builder (2026-09-23): any expedia.com page
+    // goes in landingPage=, camref/creativeref are his account ids. Verified live: a Hotel-Search
+    // with Cartagena + dates + 2 adults lands intact with his affcid attached (same account as the
+    // old fixed short link expedia.com/affiliate/TWN5VV1).
+    affiliateUrl: 'https://expedia.com/affiliate?siteid=1&landingPage={{dest}}&camref=1110lMIh2&creativeref=1100l68075',
     isActive: true
   },
   {
