@@ -68,7 +68,9 @@ export const affiliateProviders = [
     name: 'Drimsim',
     category: 'esim',
     cleanUrl: 'https://drimsim.com',
-    affiliateUrl: 'https://drimsim.tpx.lu/c6V7Ofxr',
+    // Travelpayouts deep link Noam generated (2026-09-23), verified: lands on the exact country page
+    // with utm_travelpayouts_track_id=...-750063.
+    affiliateUrl: `https://tp.media/r?campaign_id=102&marker=${AFFILIATE_MARKER}&p=2762&trs=550285&u={{dest}}`,
     isActive: true
   },
   {
