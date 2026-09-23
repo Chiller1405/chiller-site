@@ -30,6 +30,19 @@ function resolveProviderAndDest() {
     customDest = null;
   }
 
+  // FIXED (code review, 2026-09-23): a dest that merely STARTS with "https://" but isn't a real
+  // URL (e.g. "https://<img src=x onerror=...>") used to reach Flow B's `catch`, where the raw
+  // string was dropped into innerHTML — a reflected XSS on chiller-travel.com. Anything the URL
+  // parser rejects is now treated as no destination at all, and the page falls back to home.
+  if (customDest) {
+    try {
+      const parsed = new URL(customDest);
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') customDest = null;
+    } catch {
+      customDest = null;
+    }
+  }
+
   // If dest query parameter is a full URL, it could represent the destination directly.
   // If providerId is still undefined, we attempt to match the domain of the customDest URL.
   let matchedProvider = null;
@@ -124,6 +137,15 @@ function logClick(provider) {
   }
 }
 
+// Writes before + <span id="partner-name">highlight</span> + after using text nodes only, so a
+// provider name or hostname can never be interpreted as HTML.
+function setTitleWithHighlight(el, before, highlight, after) {
+  const span = document.createElement('span');
+  span.id = 'partner-name';
+  span.textContent = highlight;
+  el.replaceChildren(document.createTextNode(before), span, document.createTextNode(after));
+}
+
 function performRedirect() {
   const { provider, customDest } = resolveProviderAndDest();
   const debugMode = getQueryParam('debug') === 'true';
@@ -181,22 +203,18 @@ function performRedirect() {
   if (provider) {
     // Flow A: Verified Affiliate
     if (redirectTitle) {
-      redirectTitle.innerHTML = `למעבר ל-<span id="partner-name">${providerName}</span> לחץ המשך`;
+      setTitleWithHighlight(redirectTitle, 'למעבר ל-', providerName, ' לחץ המשך');
     }
     if (redirectSubtitle) {
       redirectSubtitle.textContent = "מעביר אותך לאתר השותף...";
     }
   } else if (customDest) {
     // Flow B: Unverified / General External Site (Exposes hostname to prevent phishing/open redirect abuse)
-    let extractedHostname = '';
-    try {
-      extractedHostname = new URL(customDest).hostname.replace('www.', '');
-    } catch {
-      extractedHostname = customDest;
-    }
+    // customDest is already guaranteed to parse as an http(s) URL (see resolveProviderAndDest).
+    const extractedHostname = new URL(customDest).hostname.replace(/^www\./, '');
 
     if (redirectTitle) {
-      redirectTitle.innerHTML = `אתה עובר כעת לאתר חיצוני: <span id="partner-name">${extractedHostname}</span>`;
+      setTitleWithHighlight(redirectTitle, 'אתה עובר כעת לאתר חיצוני: ', extractedHostname, '');
     }
     if (redirectSubtitle) {
       redirectSubtitle.textContent = "שים לב: זהו קישור חיצוני שאינו שותף רשמי של Chiller.";
@@ -223,14 +241,35 @@ function performRedirect() {
     const debugInfo = document.getElementById('debug-info');
     if (debugInfo) {
       debugInfo.style.display = 'block';
-      debugInfo.innerHTML = `
-        <h3>Debug Mode Active</h3>
-        <p><strong>Matched Provider:</strong> ${provider ? `${provider.name} (${provider.id})` : 'None'}</p>
-        <p><strong>Is Active Affiliate:</strong> ${provider ? provider.isActive : 'N/A'}</p>
-        <p><strong>Custom Destination:</strong> ${customDest || 'None'}</p>
-        <p><strong>Target URL:</strong> <a href="${targetUrl}" target="_blank" style="color: #38bdf8; word-break: break-all;">${targetUrl}</a></p>
-        <p><strong>Referrer Policy:</strong> preserved (origin-when-cross-origin)</p>
-      `;
+      // Built from DOM nodes + textContent, never innerHTML: customDest and targetUrl come from
+      // the query string, so interpolating them as HTML is a script-injection hole.
+      const heading = document.createElement('h3');
+      heading.textContent = 'Debug Mode Active';
+      debugInfo.replaceChildren(heading);
+      const addRow = (label, value, asLink = false) => {
+        const row = document.createElement('p');
+        const strong = document.createElement('strong');
+        strong.textContent = `${label}: `;
+        row.appendChild(strong);
+        if (asLink) {
+          const a = document.createElement('a');
+          a.href = value;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.style.color = '#38bdf8';
+          a.style.wordBreak = 'break-all';
+          a.textContent = value;
+          row.appendChild(a);
+        } else {
+          row.appendChild(document.createTextNode(String(value)));
+        }
+        debugInfo.appendChild(row);
+      };
+      addRow('Matched Provider', provider ? `${provider.name} (${provider.id})` : 'None');
+      addRow('Is Active Affiliate', provider ? provider.isActive : 'N/A');
+      addRow('Custom Destination', customDest || 'None');
+      addRow('Target URL', targetUrl, true);
+      addRow('Referrer Policy', 'preserved (origin-when-cross-origin)');
     }
     const loader = document.querySelector('.loader');
     if (loader) loader.style.borderTopColor = '#f59e0b'; // amber loader for debug
