@@ -5,6 +5,9 @@ import ChatWidget from './components/ChatWidget';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import ContactUs from './components/ContactUs';
+import AccessibilityStatement from './components/AccessibilityStatement';
+import CookieBanner from './components/CookieBanner';
+import { reopenConsentBanner } from './consent';
 
 const translations = {
   he: {
@@ -13,28 +16,30 @@ const translations = {
     privacyLink: "מדיניות פרטיות",
     termsLink: "תנאי שימוש",
     contactLink: "צור קשר",
+    accessibilityLink: "הצהרת נגישות",
+    cookieSettings: "הגדרות עוגיות",
     talkToChiller: "דבר עם צ'ילר",
     tagline: "עוזר נסיעות חכם מבוסס AI לתרמילאים",
     
     // About Chiller translations
     aboutTitle: "על צ'ילר - Chiller",
     aboutSubtitle: "השותף החכם שלך לטיול הגדול",
-    aboutDescription: "צ'ילר הוא עוזר נסיעות חכם מבוסס AI שפותח במיוחד כדי לסייע לתרמילאים ומטיילים עצמאיים לתכנן את הרפתקת חייהם בטיול הגדול. צ'ילר מתמחה במתן מענה לוגיסטי, מציאת מקומות לינה מתאימים, סגירת אטרקציות, וסידור מעברים ותחבורה (אוטובוסים, שאטלים, מעבורות וטיסות). צ'ילר מיועד לתפקד כ״חבר מומחה בכיס״ עבור התרמילאי הישראלי ולעזור לו לבנות את חווית הטיול המושלמת בשבילו.",
+    aboutDescription: "צ'ילר הוא עוזר נסיעות חכם מבוסס AI שפותח במיוחד כדי לסייע לתרמילאים ומטיילים עצמאיים לתכנן את הרפתקת חייהם בטיול הגדול. צ'ילר מתמחה במתן מענה לוגיסטי, מציאת מקומות לינה מתאימים, המלצה על אטרקציות, ותכנון מעברים ותחבורה (אוטובוסים, שאטלים, מעבורות וטיסות). צ'ילר מיועד לתפקד כ״חבר מומחה בכיס״ עבור התרמילאי הישראלי ולעזור לו לבנות את חווית הטיול המושלמת בשבילו.",
     whoTitle: "למי השירות מיועד?",
     whoText: "למוצ'ילרים ותרמילאים ישראלים המחפשים לחקור את העולם בצורה מתוחכמת, מותאמת אישית וחסכונית.",
     whatTitle: "מה צ'ילר יודע לעשות?",
     whatItems: [
-      "איתור והזמנת דרכי הגעה, אוטובוסים, טיסות ומעברי גבול יבשתיים וימיים.",
-      "השוואה, חיפוש והזמנה של הוסטלים ומקומות לינה מומלצים.",
-      "איתור והזמנת אטרקציות, סיורים וחוויות אקסטרים.",
-      "התאמה והזמנת חבילות תקשורת ו-eSIM לכל מדינה."
+      "מציאת דרכי הגעה: אוטובוסים, טיסות ומעברי גבול יבשתיים וימיים, עם קישור להזמנה אצל הספק.",
+      "השוואה וחיפוש של הוסטלים ומקומות לינה, עם קישור ישיר להזמנה.",
+      "המלצות על אטרקציות, סיורים וחוויות אקסטרים, עם קישור להזמנה.",
+      "התאמה של חבילות תקשורת ו-eSIM לכל מדינה."
     ],
     visionTitle: "החזון שלנו",
-    goalText: "להנגיש את כלי התכנון והמענה הלוגיסטי המובילים ביותר לכל תרמילאי, ולאפשר לכם לצאת לדרך בראש שקט תוך חיבור לספקי השירות הטובים והאמינים ביותר בעולם הנסיעות והטיולים.",
+    goalText: "להנגיש את כלי התכנון והמענה הלוגיסטי המובילים ביותר לכל תרמילאי, ולאפשר לכם לצאת לדרך בראש שקט תוך חיבור לספקי שירות מוכרים בעולם הנסיעות והטיולים.",
 
     // Booking section translations
     bookingTitle: "פורטל הזמנות נסיעות",
-    bookingSubtitle: "בדקו והזמינו כבר עכשיו ישירות מהאתר כדי לטייל בראש שקט.",
+    bookingSubtitle: "בחרו ספק ועברו להזמנה ישירות באתר שלו.",
     categories: {
       accommodation: "לינה ואירוח 🛏️",
       transport: "תחבורה, מעברים וטיסות 🚌",
@@ -42,19 +47,19 @@ const translations = {
       connectivity: "תקשורת ואינטרנט 📱"
     },
     partners: {
-      booking: { name: "Booking.com", desc: "האתר המוביל בעולם להזמנת מלונות, דירות וחדרי אירוח." },
+      booking: { name: "Booking.com", desc: "אחד האתרים הגדולים בעולם להזמנת מלונות, דירות וחדרי אירוח." },
       expedia: { name: "Expedia", desc: "סוכנות נסיעות מקוונת מקיפה להזמנת מלונות ודילים." },
       agoda: { name: "Agoda", desc: "דילים מעולים והזמנות לינה בכל העולם." },
       busbud: { name: "Busbud", desc: "השוואה והזמנת כרטיסי אוטובוס למעברים בין ערים ומדינות." },
       trip: { name: "Trip.com", desc: "סוכנות נסיעות בינלאומית המציעה טיסות, רכבות ומלונות." },
       wayaway: { name: "WayAway", desc: "מנוע חיפוש טיסות המציע החזר כספי (Cashback) על רכישות נסיעות." },
       getyourguide: { name: "GetYourGuide", desc: "סיורים מודרכים, אטרקציות ופעילויות מדהימות בטיול." },
-      viator: { name: "Viator", desc: "מאות אלפי חוויות, טיולי יום ופעילויות שטח מומלצות." },
+      viator: { name: "Viator", desc: "מגוון גדול של חוויות, טיולי יום ופעילויות שטח." },
       klook: { name: "Klook", desc: "פלטפורמה להזמנת חוויות טיול, סיורים מקומיים וכרטיסי כניסה." },
       airalo: { name: "Airalo", desc: "חבילות eSIM מקומיות ואזוריות לחיבור מיידי לאינטרנט." },
       yesim: { name: "Yesim", desc: "כרטיסי eSIM המאפשרים חיבור יציב לאינטרנט סלולרי ברחבי העולם." }
     },
-    bookBtn: "להזמנה באתר",
+    bookBtn: "מעבר לאתר ההזמנה",
     footerNotice: "Chiller Travel משתתפת בתוכניות שותפים. אנו עשויים להרוויח עמלה על הזמנות המתבצעות דרך הקישורים שלנו ללא עלות נוספת עבורכם.",
     footerCopyright: "כל הזכויות שמורות ל-Chiller Travel."
   },
@@ -64,28 +69,30 @@ const translations = {
     privacyLink: "Privacy Policy",
     termsLink: "Terms of Service",
     contactLink: "Contact Us",
+    accessibilityLink: "Accessibility",
+    cookieSettings: "Cookie settings",
     talkToChiller: "Talk to Chiller",
     tagline: "AI-Powered Travel Assistant for Backpackers",
 
     // About Chiller translations
     aboutTitle: "About Chiller",
     aboutSubtitle: "Your smart travel companion for the big trip",
-    aboutDescription: "Chiller is a smart AI-powered travel assistant developed specifically to help backpackers and independent travelers plan the adventure of a lifetime on the big trip. Chiller specializes in logistics, finding suitable accommodation, booking attractions, and arranging transport (buses, shuttles, ferries, and flights). Chiller is designed to be your 'expert friend in your pocket,' helping you build your perfect travel experience.",
+    aboutDescription: "Chiller is a smart AI-powered travel assistant developed specifically to help backpackers and independent travelers plan the adventure of a lifetime on the big trip. Chiller specializes in logistics, finding suitable accommodation, recommending attractions, and planning transport (buses, shuttles, ferries, and flights). Chiller is designed to be your 'expert friend in your pocket,' helping you build your perfect travel experience.",
     whoTitle: "Who is it for?",
     whoText: "For backpackers looking to explore the world in a smart, personalized, and cost-effective way.",
     whatTitle: "What Chiller Can Do",
     whatItems: [
-      "Find and book routes, buses, flights, and land/sea border crossings.",
-      "Compare, search, and book recommended hostels and accommodations.",
-      "Find and book attractions, tours, and extreme experiences.",
-      "Match and book communication packages and eSIMs for each country."
+      "Find routes, buses, flights, and land/sea border crossings, with a link to book with the provider.",
+      "Compare and search hostels and accommodation, with a direct booking link.",
+      "Recommend attractions, tours, and extreme experiences, with a booking link.",
+      "Match communication packages and eSIMs for each country."
     ],
     visionTitle: "Our Vision",
-    goalText: "To make top-tier planning and logistics tools accessible to every backpacker, allowing you to travel with peace of mind by connecting you with the best and most reliable service providers in the travel industry.",
+    goalText: "To make top-tier planning and logistics tools accessible to every backpacker, allowing you to travel with peace of mind by connecting you with well-known service providers in the travel industry.",
 
     // Booking section translations
     bookingTitle: "Travel Booking Portal",
-    bookingSubtitle: "Check and book right now directly from the site to travel with peace of mind.",
+    bookingSubtitle: "Pick a provider and continue to book directly on their site.",
     categories: {
       accommodation: "Accommodation 🛏️",
       transport: "Transport & Flights 🚌",
@@ -93,19 +100,19 @@ const translations = {
       connectivity: "Telecom & Internet 📱"
     },
     partners: {
-      booking: { name: "Booking.com", desc: "The world's leading site for booking hotels, apartments, and guest houses." },
+      booking: { name: "Booking.com", desc: "One of the world's largest sites for booking hotels, apartments, and guest houses." },
       expedia: { name: "Expedia", desc: "A comprehensive travel platform for booking hotels, flights, and vacation packages." },
       agoda: { name: "Agoda", desc: "Great deals and accommodation booking worldwide." },
       busbud: { name: "Busbud", desc: "Compare and book intercity and cross-border bus tickets easily." },
       trip: { name: "Trip.com", desc: "An international online travel agency offering flights, hotels, and train tickets." },
       wayaway: { name: "WayAway", desc: "Flight search engine that helps you find cheap flights with cashback on travel purchases." },
       getyourguide: { name: "GetYourGuide", desc: "Find guided tours, attractions, and amazing travel experiences." },
-      viator: { name: "Viator", desc: "Hundreds of thousands of recommended experiences, day trips, and outdoor tours." },
+      viator: { name: "Viator", desc: "A wide range of experiences, day trips, and outdoor tours." },
       klook: { name: "Klook", desc: "Book tour experiences, local attractions, transit passes, and activities." },
       airalo: { name: "Airalo", desc: "Local and regional eSIM packages for instant mobile internet access." },
       yesim: { name: "Yesim", desc: "eSIM cards offering stable mobile data connection in countries worldwide." }
     },
-    bookBtn: "Book Now",
+    bookBtn: "Go to booking site",
     footerNotice: "Chiller Travel participates in affiliate programs. We may earn a commission on bookings made through our links at no extra cost to you.",
     footerCopyright: "All rights reserved. Chiller Travel."
   }
@@ -118,6 +125,12 @@ function App() {
 
   const t = translations[lang];
 
+  // Keep <html lang> in sync with the visible language so screen readers pronounce it correctly
+  // (index.html used to hard-code lang="en" while the default UI language is Hebrew).
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
@@ -126,6 +139,9 @@ function App() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#terms') {
         setCurrentPage('terms');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#accessibility') {
+        setCurrentPage('accessibility');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#contact') {
         setCurrentPage('contact');
@@ -218,21 +234,21 @@ function App() {
                     <div className="partner-card">
                       <h4>{t.partners.booking.name}</h4>
                       <p>{t.partners.booking.desc}</p>
-                      <a href="/go/booking" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/booking" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.booking.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
                     <div className="partner-card">
                       <h4>{t.partners.expedia.name}</h4>
                       <p>{t.partners.expedia.desc}</p>
-                      <a href="/go/expedia" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/expedia" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.expedia.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
                     <div className="partner-card">
                       <h4>{t.partners.agoda.name}</h4>
                       <p>{t.partners.agoda.desc}</p>
-                      <a href="/go/agoda" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/agoda" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.agoda.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
@@ -246,21 +262,21 @@ function App() {
                     <div className="partner-card">
                       <h4>{t.partners.busbud.name}</h4>
                       <p>{t.partners.busbud.desc}</p>
-                      <a href="/go/busbud" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/busbud" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.busbud.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
                     <div className="partner-card">
                       <h4>{t.partners.trip.name}</h4>
                       <p>{t.partners.trip.desc}</p>
-                      <a href="/go/trip" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/trip" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.trip.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
                     <div className="partner-card">
                       <h4>{t.partners.wayaway.name}</h4>
                       <p>{t.partners.wayaway.desc}</p>
-                      <a href="/go/wayaway" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/wayaway" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.wayaway.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
@@ -274,21 +290,21 @@ function App() {
                     <div className="partner-card">
                       <h4>{t.partners.getyourguide.name}</h4>
                       <p>{t.partners.getyourguide.desc}</p>
-                      <a href="/go/getyourguide" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/getyourguide" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.getyourguide.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
                     <div className="partner-card">
                       <h4>{t.partners.viator.name}</h4>
                       <p>{t.partners.viator.desc}</p>
-                      <a href="/go/viator" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/viator" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.viator.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
                     <div className="partner-card">
                       <h4>{t.partners.klook.name}</h4>
                       <p>{t.partners.klook.desc}</p>
-                      <a href="/go/klook" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/klook" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.klook.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
@@ -302,14 +318,14 @@ function App() {
                     <div className="partner-card">
                       <h4>{t.partners.airalo.name}</h4>
                       <p>{t.partners.airalo.desc}</p>
-                      <a href="/go/airalo" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/airalo" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.airalo.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
                     <div className="partner-card">
                       <h4>{t.partners.yesim.name}</h4>
                       <p>{t.partners.yesim.desc}</p>
-                      <a href="/go/yesim" target="_blank" rel="noopener noreferrer" className="partner-link-btn">
+                      <a href="/go/yesim" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.yesim.name}`}>
                         {t.bookBtn}
                       </a>
                     </div>
@@ -326,6 +342,10 @@ function App() {
 
         {currentPage === 'terms' && (
           <TermsOfService onBack={() => { window.location.hash = 'home'; }} />
+        )}
+
+        {currentPage === 'accessibility' && (
+          <AccessibilityStatement onBack={() => { window.location.hash = 'home'; }} />
         )}
 
         {currentPage === 'contact' && (
@@ -354,6 +374,21 @@ function App() {
             >
               {t.contactLink}
             </a>
+            <span className="footer-separator">•</span>
+            <a 
+              href="#accessibility" 
+              className="footer-link"
+            >
+              {t.accessibilityLink}
+            </a>
+            <span className="footer-separator">•</span>
+            <button
+              type="button"
+              className="footer-link footer-link-button"
+              onClick={reopenConsentBanner}
+            >
+              {t.cookieSettings}
+            </button>
           </div>
           <p className="footer-disclosure">
             {t.footerNotice}
@@ -363,6 +398,8 @@ function App() {
           </div>
         </footer>
       </main>
+
+      <CookieBanner lang={lang} />
 
       {/* Floating Chat Widget */}
       <ChatWidget externalIsOpen={isChatOpen} setExternalIsOpen={setIsChatOpen} />

@@ -172,7 +172,7 @@ p.description {
 
 .footer-disclosure {
   font-size: 0.78rem;
-  color: #64748b;
+  color: #94a3b8;
   line-height: 1.6;
   max-width: 650px;
   margin: 0 auto;
@@ -181,7 +181,7 @@ p.description {
 
 .footer-copyright {
   font-size: 0.8rem;
-  color: #475569;
+  color: #94a3b8;
   letter-spacing: 0.5px;
 }
 
@@ -334,7 +334,7 @@ p.description {
 
 .legal-meta {
   font-size: 0.85rem;
-  color: #64748b;
+  color: #94a3b8;
   font-weight: 500;
 }
 
@@ -926,3 +926,92 @@ main[dir="rtl"] .partner-card {
 
 
 
+
+/* ---------------------------------------------------------------------------------------------
+   Accessibility + consent (2026-09-23, legal-checklist review)
+   --------------------------------------------------------------------------------------------- */
+
+/* Several controls (.cta-button, .lang-toggle-btn, form inputs, chat input) set `outline: none`,
+   which removed the only visual cue for keyboard users. :focus-visible shows a clear ring for
+   keyboard navigation only, so mouse/touch users see no change. !important is needed to beat the
+   component-level `outline: none` rules without editing each one. */
+:focus-visible {
+  outline: 3px solid #38bdf8 !important;
+  outline-offset: 3px !important;
+}
+
+.footer-link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cookie-banner {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 88px; /* sits above the chat bottom bar */
+  width: min(720px, calc(100% - 32px));
+  box-sizing: border-box;
+  z-index: 10000; /* above the chat widget (9999) */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  background: rgba(15, 23, 42, 0.97);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  color: #e2e8f0;
+}
+
+.cookie-banner-text strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #f8fafc;
+}
+
+.cookie-banner-text p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #cbd5e1;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Accept and Decline are deliberately styled identically: a consent choice shouldn't nudge. */
+.cookie-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  color: #f8fafc;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cookie-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+}
+
+@media (max-width: 640px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: stretch;
+    bottom: 76px;
+    gap: 12px;
+  }
+
+  .cookie-banner-actions .cookie-btn {
+    flex: 1;
+  }
+}

@@ -322,6 +322,15 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
 
         {/* Message List */}
         <div className="chiller-messages-container">
+          {/* Consent / disclosure notice (2026-09-23, legal-checklist review): messages typed here
+              are sent to our server and to OpenAI, so the visitor is told that — with links to the
+              terms and privacy policy — before the first message goes out. The window opens as soon
+              as the input is focused (onFocus below), so this is visible while typing. */}
+          <p className="chiller-consent-notice" dir="rtl">
+            צ'ילר הוא בינה מלאכותית ועלול לטעות. בשליחת הודעה אתם מסכימים ל
+            <a href="#terms">תנאי השימוש</a> ול<a href="#privacy">מדיניות הפרטיות</a>.
+            {' '}אל תשתפו מידע רגיש כמו מספר דרכון או פרטי אשראי.
+          </p>
           {messages.map((msg) => (
             <div key={msg.id} className={`chiller-message-row ${msg.sender}`}>
               {msg.sender === 'bot' && (
@@ -368,7 +377,8 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
             onChange={(e) => setInputValue(e.target.value)}
             onFocus={() => setIsOpen(true)}
             dir="auto"
-            placeholder="Ask Chiller about flights, hostels..."
+            placeholder="שאלו את צ'ילר על טיסות, הוסטלים, מעברים..."
+            aria-label="הודעה לצ'ילר"
             disabled={isLoading}
           />
           <button type="submit" disabled={!inputValue.trim() || isLoading} aria-label="Send Message">

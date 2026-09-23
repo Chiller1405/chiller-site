@@ -1,114 +1,249 @@
 import React from 'react';
 
+// Rewritten 2026-09-23 (legal-checklist review). The previous version never mentioned WhatsApp
+// (the primary channel) or phone numbers, named none of the third parties that actually receive
+// data (OpenAI, Meta, Render, Netlify, Microsoft Clarity...), said nothing about servers being in
+// the US, about retention, or about Israeli privacy law, and had only one generic line on
+// cookies. Every processor listed below was checked against the real code (chiller-bot services
+// + Chiller-site) — keep this list in sync if a provider is added or removed.
+//
+// Content is data-driven (one array per language) so the Hebrew and English versions stay
+// structurally identical and can't drift apart section-by-section.
+
+const CONTACT_EMAIL = 'chillerbot1405@gmail.com';
+
+const Email = () => (
+  <a href={`mailto:${CONTACT_EMAIL}`} className="legal-link">{CONTACT_EMAIL}</a>
+);
+
+const he = {
+  title: 'מדיניות פרטיות',
+  updated: 'עודכן לאחרונה: ספטמבר 2026',
+  intro:
+    "צ'ילר (Chiller Travel) הוא עוזר נסיעות מבוסס בינה מלאכותית, שזמין בווטסאפ ובצ'אט באתר chiller-travel.com. במסמך הזה מוסבר איזה מידע אנחנו אוספים, למה, עם מי הוא משותף ומה הזכויות שלכם. המסמך מנוסח בלשון רבים ופונה לכל המגדרים.",
+  sections: [
+    {
+      h: '1. איזה מידע אנחנו אוספים',
+      items: [
+        'בווטסאפ: מספר הטלפון שלכם (הוא המזהה שלכם אצלנו) ותוכן ההודעות שאתם שולחים — טקסט, הודעות קוליות (שמתומללות לטקסט) ותמונות.',
+        "בצ'אט באתר: מזהה שיחה אקראי שנוצר בדפדפן ונמחק כשסוגרים את הלשונית, ותוכן ההודעות. אין צורך בהרשמה, שם או טלפון.",
+        'פרופיל טיול: מתוך השיחות אנחנו שומרים סיכום קצר של העדפות הטיול שלכם (יעדים, תקציב, סגנון טיול) כדי לא לשאול אתכם שוב את אותם דברים.',
+        'אם הגעתם לווטסאפ דרך מודעה, אנחנו מקבלים ממטא מזהה של המודעה, כדי לדעת איזו מודעה עבדה.',
+        'לחיצות על קישורים לספקים: איזה ספק נבחר ומאיזה עמוד הגעתם. בלי פרטים מזהים.',
+        'פנייה דרך "צור קשר": השם וההודעה שאתם כותבים. הטופס פותח את תיבת הדואר שלכם, והפנייה מגיעה אלינו כמייל רגיל.',
+        'מידע טכני: כתובת IP, סוג דפדפן ומכשיר וזמני גישה, שנרשמים ביומני השרת לצורך אבטחה ותקלות.',
+        'נתוני שימוש באתר (Microsoft Clarity): רק אם אישרתם עוגיות מדידה. ראו סעיף 7.',
+      ],
+    },
+    {
+      h: '2. למה אנחנו משתמשים במידע',
+      items: [
+        'כדי לענות לכם ולמצוא עבורכם לינה, תחבורה, טיסות, אטרקציות ו-eSIM.',
+        'כדי לזכור את ההקשר של השיחה ואת העדפות הטיול שלכם.',
+        'כדי לשפר את השירות, לזהות תקלות ולמנוע שימוש לרעה (למשל הגבלת כמות הודעות).',
+        'כדי למדוד אילו ספקים ומודעות עובדים, כולל עמלות שאנחנו מקבלים מספקים (ראו תנאי השימוש).',
+      ],
+      after: 'אנחנו לא מוכרים את המידע האישי שלכם ולא משתמשים בו לפרסום ממוקד.',
+    },
+    {
+      h: '3. עם מי המידע משותף',
+      text: 'כדי להפעיל את השירות אנחנו נעזרים בספקים חיצוניים, שמעבדים מידע בשבילנו:',
+      items: [
+        'OpenAI: תוכן ההודעות, ההקלטות והתמונות נשלחים ל-OpenAI כדי לנסח תשובות, לתמלל קול ולזהות תמונות.',
+        'Meta (WhatsApp): הודעות הווטסאפ עוברות דרך השרתים של מטא, לפי תנאי השימוש של ווטסאפ.',
+        'Render: אחסון השרת ומסד הנתונים שבו נשמרות השיחות ופרופיל הטיול.',
+        'Netlify: אחסון האתר.',
+        'Sentry: ניטור שגיאות טכניות בשרת.',
+        'Microsoft Clarity: מדידת שימוש באתר, רק אם אישרתם.',
+        'Google Fonts: טעינת הגופן של האתר. גוגל מקבלת את כתובת ה-IP שלכם.',
+        'ספקי חיפוש ומידע נסיעות (כמו Tavily, Serper, SerpApi, Travelpayouts, Google Places): מקבלים שאילתות חיפוש שנגזרות מהשיחה, למשל יעד ותאריכים. הם לא מקבלים את מספר הטלפון שלכם.',
+      ],
+      after:
+        'כשאתם לוחצים על קישור לספק (למשל Booking או Airalo) ועוברים לאתר שלו, הספק אוסף מידע לפי מדיניות הפרטיות שלו ועשוי להציב עוגיות משלו. אנחנו לא אחראים לאתרים אלה. נמסור מידע לרשויות רק אם נחויב בכך לפי דין.',
+    },
+    {
+      h: '4. איפה המידע נשמר',
+      text: 'השרתים ומסד הנתונים של צילר נמצאים בארצות הברית, וחלק מהספקים שלמעלה מעבדים מידע גם במדינות אחרות. השימוש בשירות כולל העברה של המידע אל מחוץ לישראל.',
+    },
+    {
+      h: '5. כמה זמן המידע נשמר',
+      items: [
+        'היסטוריית השיחות ופרופיל הטיול נשמרים כל עוד אתם משתמשים בשירות, כדי שצילר יזכור את הטיול שלכם, ונמחקים כשאתם מבקשים.',
+        "בצ'אט באתר, המזהה נמחק מהדפדפן כשסוגרים את הלשונית. ההודעות עצמן נשמרות אצלנו כמו בווטסאפ.",
+        'יומני שרת ושגיאות נשמרים אצל ספקי האחסון והניטור לתקופה מוגבלת, לפי ההגדרות שלהם.',
+      ],
+    },
+    {
+      h: '6. אל תשתפו מידע רגיש',
+      text: "התשובות נוצרות אוטומטית על ידי בינה מלאכותית. אל תשלחו לצילר מספרי דרכון, פרטי כרטיס אשראי, סיסמאות או מידע רפואי — הוא לא צריך את זה כדי לעזור לכם.",
+    },
+    {
+      id: 'cookies',
+      h: '7. עוגיות (Cookies) ואחסון בדפדפן',
+      items: [
+        "הכרחיים (תמיד פועלים): מזהה השיחה של הצ'אט (sessionStorage, נמחק בסגירת הלשונית) ושמירת הבחירה שלכם לגבי עוגיות (localStorage).",
+        'מדידה (רק באישור): Microsoft Clarity מציב את העוגיות _clck ו-_clsk ומתעד איך משתמשים באתר (לחיצות, גלילה, מעבר בין עמודים) כדי שנוכל לשפר אותו. הכלי לא נטען בכלל לפני שאישרתם.',
+        'אצל ספקים: אחרי שעוברים לאתר של ספק, הוא עשוי להציב עוגיות משלו, כולל עוגיות שיוך לתוכנית השותפים.',
+      ],
+      after: 'אפשר לשנות את הבחירה בכל רגע דרך הקישור "הגדרות עוגיות" בתחתית האתר.',
+    },
+    {
+      h: '8. הזכויות שלכם',
+      text:
+        'לפי חוק הגנת הפרטיות, התשמ"א-1981, מותר לכם לעיין במידע שנשמר עליכם ולבקש לתקן אותו. בנוסף, אפשר לבקש שנמחק את היסטוריית השיחות ואת פרופיל הטיול שלכם. אם אתם באיחוד האירופי או בקליפורניה, ייתכן שעומדות לכם זכויות נוספות לפי GDPR או CCPA. כדי לממש זכות, כתבו לנו מאיזה מספר ווטסאפ פניתם (או שהפנייה הייתה מהאתר). נענה תוך 30 יום.',
+      email: true,
+    },
+    {
+      h: '9. אבטחה',
+      text: 'התקשורת מוצפנת (HTTPS), הגישה למסד הנתונים מוגנת בסיסמה ומוגבלת, ואנחנו מצמצמים את המידע האישי שנכנס ליומני השרת. אף מערכת לא מאובטחת ב-100%, אבל אנחנו עושים מאמץ סביר להגן על המידע.',
+    },
+    {
+      h: '10. שינויים ויצירת קשר',
+      text: 'אם נשנה את המדיניות, נעדכן את התאריך בראש העמוד. לכל שאלה על פרטיות:',
+      email: true,
+    },
+  ],
+};
+
+const en = {
+  title: 'Privacy Policy',
+  updated: 'Last updated: September 2026',
+  intro:
+    'Chiller (Chiller Travel) is an AI travel assistant available on WhatsApp and in the chat on chiller-travel.com. This policy explains what we collect, why, who we share it with, and your rights.',
+  sections: [
+    {
+      h: '1. What we collect',
+      items: [
+        'On WhatsApp: your phone number (your identifier with us) and the content you send — text, voice messages (transcribed to text) and images.',
+        'In the website chat: a random session ID created in your browser and deleted when you close the tab, plus your messages. No sign-up, name or phone number needed.',
+        'Travel profile: a short summary of your travel preferences (destinations, budget, style) derived from your chats, so we don\'t ask the same things again.',
+        'If you reached us on WhatsApp through an ad, Meta passes us an identifier for that ad.',
+        'Clicks on provider links: which provider and which page you came from, without identifying details.',
+        'Contact form: the name and message you write. The form opens your own email app and reaches us as a normal email.',
+        'Technical data: IP address, browser/device type and access times in server logs, for security and troubleshooting.',
+        'Site usage data (Microsoft Clarity): only if you accept analytics cookies. See section 7.',
+      ],
+    },
+    {
+      h: '2. How we use it',
+      items: [
+        'To reply and to find accommodation, transport, flights, activities and eSIMs for you.',
+        'To remember the context of your conversation and your travel preferences.',
+        'To improve the service, fix problems and prevent abuse (e.g. message rate limits).',
+        'To measure which providers and ads work, including commissions we earn (see Terms of Service).',
+      ],
+      after: 'We do not sell your personal data or use it for targeted advertising.',
+    },
+    {
+      h: '3. Who we share it with',
+      text: 'We rely on third-party providers that process data on our behalf:',
+      items: [
+        'OpenAI: message content, recordings and images are sent to OpenAI to generate replies, transcribe audio and understand images.',
+        'Meta (WhatsApp): WhatsApp messages pass through Meta\'s servers under WhatsApp\'s terms.',
+        'Render: hosting of our server and the database where chats and travel profiles are stored.',
+        'Netlify: website hosting.',
+        'Sentry: technical error monitoring on our server.',
+        'Microsoft Clarity: site analytics, only if you accept.',
+        'Google Fonts: loads the site font; Google receives your IP address.',
+        'Search and travel-data providers (e.g. Tavily, Serper, SerpApi, Travelpayouts, Google Places): receive search queries derived from the conversation, such as destination and dates — never your phone number.',
+      ],
+      after:
+        'When you click a provider link (e.g. Booking or Airalo) and go to their site, that provider collects data under its own privacy policy and may set its own cookies. We are not responsible for those sites. We disclose data to authorities only when legally required.',
+    },
+    {
+      h: '4. Where data is stored',
+      text: 'Chiller\'s servers and database are in the United States, and some providers above process data in other countries. Using the service involves transferring data outside Israel.',
+    },
+    {
+      h: '5. How long we keep it',
+      items: [
+        'Chat history and your travel profile are kept while you use the service, so Chiller remembers your trip, and are deleted on request.',
+        'In the website chat, the session ID is removed from your browser when you close the tab; the messages themselves are stored like WhatsApp messages.',
+        'Server and error logs are kept by our hosting and monitoring providers for a limited period under their settings.',
+      ],
+    },
+    {
+      h: '6. Don\'t share sensitive information',
+      text: 'Replies are generated automatically by AI. Please don\'t send Chiller passport numbers, card details, passwords or medical information — it doesn\'t need them to help you.',
+    },
+    {
+      id: 'cookies-en',
+      h: '7. Cookies and browser storage',
+      items: [
+        'Essential (always on): the chat session ID (sessionStorage, cleared when the tab closes) and your cookie choice (localStorage).',
+        'Analytics (only with consent): Microsoft Clarity sets the _clck and _clsk cookies and records how the site is used (clicks, scrolling, page views) so we can improve it. It does not load at all before you accept.',
+        'Providers: after you move to a provider\'s site, it may set its own cookies, including affiliate attribution cookies.',
+      ],
+      after: 'You can change your choice at any time via the "Cookie settings" link at the bottom of the site.',
+    },
+    {
+      h: '8. Your rights',
+      text:
+        'Under the Israeli Protection of Privacy Law, 1981, you may access the data we hold about you and ask us to correct it. You may also ask us to delete your chat history and travel profile. If you are in the EU or California you may have additional rights under the GDPR or CCPA. To make a request, tell us which WhatsApp number you used (or that you used the website). We reply within 30 days.',
+      email: true,
+    },
+    {
+      h: '9. Security',
+      text: 'Traffic is encrypted (HTTPS), database access is password-protected and restricted, and we limit the personal data that goes into server logs. No system is 100% secure, but we take reasonable measures to protect your data.',
+    },
+    {
+      h: '10. Changes and contact',
+      text: 'If we change this policy we will update the date at the top. For any privacy question:',
+      email: true,
+    },
+  ],
+};
+
+function PolicyBody({ data, rtl }) {
+  const boxStyle = rtl
+    ? { borderLeft: 'none', borderRight: '4px solid #38bdf8', borderRadius: '12px 0 0 12px' }
+    : undefined;
+  const listStyle = rtl ? { paddingRight: '24px', paddingLeft: 0 } : undefined;
+  return (
+    <>
+      <header className="legal-header">
+        <h1 className="legal-title" style={rtl ? { fontSize: '2.4rem' } : undefined}>{data.title}</h1>
+        <div className="legal-meta">{data.updated}</div>
+      </header>
+      <section className="legal-section">
+        <p className="legal-text">{data.intro}</p>
+      </section>
+      {data.sections.map((s) => (
+        <section className="legal-section" key={s.h} id={s.id}>
+          <h2>{s.h}</h2>
+          {s.text && <p className="legal-text">{s.text}</p>}
+          {s.items && (
+            <ul className="legal-list" style={listStyle}>
+              {s.items.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          )}
+          {s.after && <p className="legal-text">{s.after}</p>}
+          {s.email && (
+            <div className="legal-highlight-box" style={boxStyle}>
+              <p><Email /></p>
+            </div>
+          )}
+        </section>
+      ))}
+    </>
+  );
+}
+
 function PrivacyPolicy({ onBack }) {
   return (
     <div className="legal-container">
-      <button className="back-btn" onClick={onBack} aria-label="Back to Home">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
-        <span>Back to Home</span>
+      <button type="button" className="back-btn" onClick={onBack}>
+        <span>חזרה לדף הבית / Back to Home</span>
       </button>
 
-      <header className="legal-header">
-        <h1 className="legal-title">Privacy Policy</h1>
-        <div className="legal-meta">Last Updated: August 2026</div>
-      </header>
-
-      <section className="legal-section">
-        <p className="legal-text">
-          Welcome to Chiller Travel. We highly value your privacy and are committed to protecting the personal data you share with us. This Privacy Policy governs the collection, use, maintenance, and disclosure of information gathered from users of our artificial intelligence (AI) travel assistant platform. By accessing or using our services, you consent to the data practices described in this policy. If you do not agree with any of the terms outlined herein, please discontinue your use of our platform immediately.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>1. Information We Collect</h2>
-        <p className="legal-text">
-          We collect two primary categories of information: non-personal data and personal data. Non-personal data includes details automatically recorded by our servers, such as browser type, device identifiers, operating systems, referring URLs, access times, and general analytics data concerning how users interact with the site. Personal data refers to information that you voluntarily provide to us when using our services. This includes, but is not limited to, the text inputs, search queries, destinations, and custom preferences you enter during your conversations with our AI travel assistant, as well as any contact details you submit during support inquiries. Additionally, our platform explicitly utilizes Cookies and other tracking technologies to optimize overall site performance.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>2. Use of Information</h2>
-        <p className="legal-text">
-          The information we collect is utilized to provide, maintain, protect, and improve the functionality of Chiller Travel. Specifically, we process your conversation inputs and travel preferences to generate personalized, relevant backpacking itineraries, hostel comparisons, and transit route suggestions. Furthermore, we use the collected information to handle support requests, respond to inquiries, monitor platform security, troubleshoot technical issues, and analyze user interaction trends to enhance the user experience across our entire system.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>3. Third-Party Links</h2>
-        <p className="legal-text">
-          Third-Party Links: The site contains links to external booking sites. Once you leave our site, we are not responsible for their privacy policies.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>4. User Rights (GDPR / CCPA)</h2>
-        <p className="legal-text">
-          Depending on your jurisdiction, you may have specific data protection rights under regulations such as the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA). These rights include the right to request access to the personal data we hold about you, the right to request the correction of any inaccurate or incomplete personal information, and the right to request the complete deletion of your personal data from our active systems. If you wish to exercise any of these rights, please contact us using the contact details provided below.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>5. Contact Us</h2>
-        <div className="legal-highlight-box">
-          <p>
-            For any questions or requests, contact us at <a href="mailto:chillerbot1405@gmail.com" className="legal-link">chillerbot1405@gmail.com</a>. You must include your full name in the email so we can process your request.
-          </p>
-        </div>
-      </section>
+      <div dir="rtl" lang="he" style={{ width: '100%', textAlign: 'right' }}>
+        <PolicyBody data={he} rtl />
+      </div>
 
       <hr className="legal-divider" />
 
-      <div className="rtl-container" dir="rtl">
-        <header className="legal-header" style={{ borderBottomColor: 'rgba(255, 255, 255, 0.08)' }}>
-          <h1 className="legal-title" style={{ fontSize: '2.4rem' }}>מדיניות פרטיות</h1>
-          <div className="legal-meta" style={{ textAlign: 'right' }}>עודכן לאחרונה: אוגוסט 2026</div>
-        </header>
-
-        <section className="legal-section">
-          <p className="legal-text">
-            ברוכים הבאים ל-Chiller Travel. אנו מעריכים מאוד את הפרטיות שלכם ומחויבים להגנה על המידע האישי שאתם משתפים עמנו. מדיניות פרטיות זו מסדירה את האופן שבו אנו אוספים, משתמשים, שומרים ומגלים מידע שנאסף ממשתמשי פלטפורמת סוכן הנסיעות מבוסס הבינה המלאכותית (AI) שלנו. בעצם הגישה או השימוש בשירותים שלנו, אתם מסכימים לנהלי המידע המתוארים במדיניות זו. אם אינכם מסכימים לתנאי כלשהו המפורט במסמך זה, אנא הפסיקו את השימוש בפלטפורמה שלנו באופן מיידי.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>1. מידע שאנו אוספים</h2>
-          <p className="legal-text">
-            אנו אוספים שתי קטגוריות עיקריות של מידע: מידע שאינו אישי ומידע אישי. מידע שאינו אישי כולל פרטים שנרשמים באופן אוטומטי על ידי השרתים שלנו, כגון סוג הדפדפן, מזהי מכשיר, מערכות הפעלה, כתובות אתרים מפנות, זמני גישה ונתוני ניתוח כלליים בנוגע לאופן שבו משתמשים מקיימים אינטראקציה עם האתר. מידע אישי מתייחס למידע שאתם מספקים לנו מרצונכם החופשי בעת השימוש בשירותים שלנו. מידע זה כולל, בין היתר, את הזנות הטקסט, שאילתות החיפוש, היעדים וההעדפות המותאמות אישית שאתם מזינים במהלך השיחות שלכם עם סוכן הנסיעות של הבינה המלאכותית שלנו, כמו גם פרטי קשר שאתם מגישים במהלך פניות תמיכה. בנוסף, הפלטפורמה שלנו משתמשת במפורש בעוגיות (Cookies) ובטכנולוגיות מעקב אחרות כדי לייעל את הביצועים הכוללים של האתר.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>2. שימוש במידע</h2>
-          <p className="legal-text">
-            המידע שאנו אוספים משמש כדי לספק, לתחזק, להגן ולשפר את הפונקציונליות של Chiller Travel. באופן ספציפי, אנו מעבדים את שיחות המשתמשים ואת העדפות הנסיעה שלהם כדי להפיק המלצות מותאמות אישית, מסלולי טיול רלוונטיים לתרמילאים, השוואות הוסטלים והצעות למסלולי נסיעה ותחבורה. יתר על כן, אנו משתמשים במידע שנאסף כדי לטפל בבקשות תמיכה, להגיב לפניות משתמשים, לפקח על אבטחת הפלטפורמה, לפתור בעיות טכניות ולנתח מגמות אינטראקציה של משתמשים במטרה לשפר את חוויית המשתמש במערכת כולה.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>3. קישורים לצד שלישי</h2>
-          <p className="legal-text">
-            קישורים לצד שלישי: האתר מכיל קישורים לאתרי הזמנות חיצוניים. לאחר מעבר לאתרים אלו, איננו אחראים על מדיניות הפרטיות שלהם.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>4. זכויות משתמשים (GDPR / CCPA)</h2>
-          <p className="legal-text">
-            בהתאם לאזור השיפוט שלכם, יייתכן שיעמדו לזכותכם זכויות ספציפיות להגנה על נתונים תחת תקנות כגון תקנת הגנת המידע הכללית (GDPR) וחוק פרטיות הצרכן של קליפורניה (CCPA). זכויות אלו כוללות את הזכות לבקש גישה למידע האישי שאנו מחזיקים עליכם, הזכות לבקש תיקון של כל מידע אישי לא מדויק או לא שלם, והזכות לבקש מחיקה מלאה של המידע האישי שלכם מהמערכות הפעילות שלנו. אם ברצונכם לממש זכות כלשהי מזכויות אלו, אנא צרו עמנו קשר באמצעות פרטי הקשר המופיעים להלן.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>5. יצירת קשר</h2>
-          <div className="legal-highlight-box" style={{ borderLeft: 'none', borderRight: '4px solid #38bdf8', borderRadius: '12px 0 0 12px' }}>
-            <p>
-              לכל שאלה או בקשה, פנו אלינו בכתובת <a href="mailto:chillerbot1405@gmail.com" className="legal-link">chillerbot1405@gmail.com</a>. חובה לציין שם מלא בפנייה כדי שנוכל לטפל בה.
-            </p>
-          </div>
-        </section>
+      <div dir="ltr" lang="en" style={{ width: '100%' }}>
+        <PolicyBody data={en} rtl={false} />
       </div>
     </div>
   );

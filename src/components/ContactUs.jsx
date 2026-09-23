@@ -27,7 +27,7 @@ function ContactUs({ onBack }) {
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
         </svg>
-        <span>Back to Home</span>
+        <span>חזרה לדף הבית / Back to Home</span>
       </button>
 
       <div className="rtl-container" dir="rtl" style={{ width: '100%' }}>

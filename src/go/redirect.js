@@ -1,4 +1,9 @@
 import { affiliateProviders } from '../config/affiliateProviders';
+import { loadAnalyticsIfConsented } from '../consent';
+
+// Microsoft Clarity used to be an inline <script> in go/index.html that ran before any consent.
+// It now loads only if the visitor already accepted analytics on the main site (2026-09-23).
+loadAnalyticsIfConsented();
 
 function getQueryParam(name) {
   const urlParams = new URLSearchParams(window.location.search);
@@ -179,7 +184,7 @@ function performRedirect() {
       redirectTitle.innerHTML = `למעבר ל-<span id="partner-name">${providerName}</span> לחץ המשך`;
     }
     if (redirectSubtitle) {
-      redirectSubtitle.textContent = "מכין את ההצעה הטובה ביותר עבורך...";
+      redirectSubtitle.textContent = "מעביר אותך לאתר השותף...";
     }
   } else if (customDest) {
     // Flow B: Unverified / General External Site (Exposes hostname to prevent phishing/open redirect abuse)

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- Custom 404 (2026-09-23, legal-checklist review). Netlify serves /404.html automatically for any
+     path that doesn't exist; before this, visitors saw Netlify's generic English error page. -->
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>הדף לא נמצא | Chiller</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+      background: #0f172a;
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      text-align: center;
+    }
+    main { max-width: 420px; }
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    h1 { font-size: 1.5rem; margin: 0 0 0.75rem; }
+    p { color: #cbd5e1; line-height: 1.6; margin: 0 0 1.5rem; }
+    a.home {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: linear-gradient(to right, #38bdf8, #818cf8);
+      color: #0f172a;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    a.home:focus-visible { outline: 3px solid #f1f5f9; outline-offset: 3px; }
+    .en { margin-top: 2rem; font-size: 0.9rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="logo" aria-hidden="true">Chiller</div>
+    <h1>נראה שהלכנו לאיבוד בדרך</h1>
+    <p>הדף שחיפשתם לא קיים או שהוזז. אפשר לחזור לדף הבית ולהמשיך לתכנן את הטיול משם.</p>
+    <a class="home" href="/">חזרה לדף הבית</a>
+    <p class="en" lang="en" dir="ltr">Page not found. <a href="/" style="color:#38bdf8">Back to home</a></p>
+  </main>
+</body>
+</html>
