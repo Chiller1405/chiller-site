@@ -71,5 +71,11 @@ export function reopenConsentBanner() {
 }
 
 export function loadAnalyticsIfConsented() {
-  if (getConsent() === 'accepted') loadClarity();
+  if (getConsent() === 'accepted') {
+    loadClarity();
+  } else {
+    // Visitors from before consent gating (pre 2026-09-23) still carry old _clck/_clsk cookies
+    // in their browser. They're inert without the script, but clear them unless consent exists.
+    deleteClarityCookies();
+  }
 }
