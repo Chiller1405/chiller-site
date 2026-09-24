@@ -1,0 +1,22 @@
+name: CI
+
+# Build + lint on every push/PR to main (added 2026-09-24). Netlify deploys main on its own; this
+# makes a broken build or lint error visible on the commit in GitHub before anyone relies on it.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
