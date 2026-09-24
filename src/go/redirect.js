@@ -153,8 +153,18 @@ function logClick(provider) {
       referrer: document.referrer || null,
       ts: Date.now(),
     });
-    const blob = new Blob([payload], { type: 'application/json' });
-    navigator.sendBeacon('https://chiller-bot-server.onrender.com/api/log-click', blob);
+    // FIXED (2026-09-24): this used navigator.sendBeacon with an application/json Blob. A beacon is
+    // sent with credentials, and a JSON body needs a CORS preflight; the bot's CORS response has no
+    // Access-Control-Allow-Credentials, so the browser dropped every beacon silently — the
+    // click_events table was still EMPTY after weeks of real clicks, and the server logs showed no
+    // /api/log-click request at all. fetch() with keepalive omits credentials cross-origin, passes
+    // the preflight (verified: 204 + row written), and still completes after the page navigates away.
+    fetch('https://chiller-bot-server.onrender.com/api/log-click', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+      keepalive: true,
+    }).catch(() => {});
   } catch (e) {
     console.error('Failed to log click:', e);
   }
