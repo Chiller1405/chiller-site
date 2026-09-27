@@ -328,8 +328,13 @@ export const affiliateProviders = [
     name: 'Booking.com',
     category: 'accommodation',
     cleanUrl: 'https://www.booking.com',
-    affiliateUrl: '',
-    isActive: false
+    // Approved 2026-09-25 via CJ ("Booking.com MEA", advertiser 4347392). CJ deep link:
+    // click-<PID 101867183 = "Chiller Travel" property>-<AID 11891539 = Booking text link>?url=<dest>.
+    // Verified 2026-09-27: lands on the exact searchresults page with aid=818288 and
+    // label=affnetcj-11891539_pub-8049232_site-101867183. Booking only pays on in-session
+    // bookings (no cookie), so the deep link must open the exact page the user wants.
+    affiliateUrl: 'https://www.anrdoezrs.net/click-101867183-11891539?url={{dest}}',
+    isActive: true
   },
   {
     id: 'agoda',
