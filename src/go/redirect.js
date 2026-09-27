@@ -118,13 +118,18 @@ function hostMatchesProvider(destUrl, provider) {
   }
 }
 
+// Params of this /go page that are Chiller's own and must never reach the provider: dest/provider
+// pick the destination, c is the WhatsApp short-link code and t its label (2026-09-27), debug is
+// the debug view. Anything else (e.g. utm_*) is passed through to the provider as before.
+const CHILLER_ONLY_PARAMS = new Set(['dest', 'provider', 'providerId', 'c', 't', 'debug']);
+
 function appendTrackingParams(targetUrl) {
   try {
     const currentParams = new URLSearchParams(window.location.search);
     const paramsToAppend = new URLSearchParams();
 
     for (const [key, value] of currentParams.entries()) {
-      if (key !== 'dest' && key !== 'provider') {
+      if (!CHILLER_ONLY_PARAMS.has(key)) {
         paramsToAppend.append(key, value);
       }
     }
@@ -142,16 +147,19 @@ function appendTrackingParams(targetUrl) {
   return targetUrl;
 }
 
-// Minimal funnel logging: fire-and-forget beacon to the bot backend so click volume per
-// provider is greppable from server logs (no dashboard, no DB write — see chiller-bot's
-// POST /api/log-click).
-function logClick(provider) {
+// Funnel logging: fire-and-forget beacon to the bot backend (chiller-bot's POST /api/log-click,
+// stored in click_events). Sent when the user presses "continue" — since 2026-09-27; before that it
+// fired on page load, so link-preview bots that load the page were counted as clicks. `code` is
+// the WhatsApp short-link code (c param), which marks that link as "continued" in the funnel.
+function logContinue(provider) {
   try {
+    const code = getQueryParam('c');
     const payload = JSON.stringify({
       providerId: provider ? provider.id : null,
       isActive: !!(provider && provider.isActive),
       referrer: document.referrer || null,
       ts: Date.now(),
+      code: code && /^[A-Za-z0-9]{4,16}$/.test(code) ? code : null,
     });
     // FIXED (2026-09-24): this used navigator.sendBeacon with an application/json Blob. A beacon is
     // sent with credentials, and a JSON body needs a CORS preflight; the bot's CORS response has no
@@ -166,7 +174,7 @@ function logClick(provider) {
       keepalive: true,
     }).catch(() => {});
   } catch (e) {
-    console.error('Failed to log click:', e);
+    console.error('Failed to log continue:', e);
   }
 }
 
@@ -191,7 +199,6 @@ function performRedirect() {
       : resolvedProvider;
   const debugMode = getQueryParam('debug') === 'true';
 
-  logClick(provider);
 
   let targetUrl = '';
   let providerName = 'השותף שלנו';
@@ -241,13 +248,22 @@ function performRedirect() {
   const redirectTitle = document.getElementById('redirect-title');
   const redirectSubtitle = document.getElementById('redirect-subtitle');
 
+  // What this link opens, as Chiller described it in the chat (t param, set by the WhatsApp short
+  // link — 2026-09-27). Shown as plain text only (textContent), so it can't inject markup.
+  const linkDescription = (getQueryParam('t') || '').trim().slice(0, 80);
+  const redirectDesc = document.getElementById('redirect-desc');
+  if (redirectDesc && linkDescription && (provider || customDest)) {
+    redirectDesc.textContent = linkDescription;
+    redirectDesc.style.display = 'block';
+  }
+
   if (provider) {
-    // Flow A: Verified Affiliate
+    // Flow A: Verified Affiliate — the user sees where they're going and chooses to continue.
     if (redirectTitle) {
-      setTitleWithHighlight(redirectTitle, 'למעבר ל-', providerName, ' לחץ המשך');
+      setTitleWithHighlight(redirectTitle, 'ממשיכים ל-', providerName, '');
     }
     if (redirectSubtitle) {
-      redirectSubtitle.textContent = "מעביר אותך לאתר השותף...";
+      redirectSubtitle.textContent = `"המשך" יעביר אותך לאתר של ${providerName} להשלמת ההזמנה. "ביטול" יחזיר אותך לאתר של Chiller.`;
     }
   } else if (customDest) {
     // Flow B: Unverified / General External Site (Exposes hostname to prevent phishing/open redirect abuse)
@@ -320,10 +336,15 @@ function performRedirect() {
   if (buttonContainer) {
     buttonContainer.style.display = 'flex';
   }
+  // The spinner only covers the moment before this script runs; once the choice is shown it
+  // would suggest an automatic redirect that doesn't happen.
+  const loaderEl = document.querySelector('.loader');
+  if (loaderEl && !debugMode) loaderEl.style.display = 'none';
 
   const continueBtn = document.getElementById('continue-btn');
   if (continueBtn) {
     continueBtn.addEventListener('click', () => {
+      logContinue(provider);
       const finalUrl = appendTrackingParams(targetUrl);
       window.location.replace(finalUrl);
     });

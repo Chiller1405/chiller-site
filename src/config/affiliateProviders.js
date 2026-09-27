@@ -153,6 +153,21 @@ export const affiliateProviders = [
     isActive: true
   },
   {
+    // Viator Partner API product pages (2026-09-27). The bot strips the tracking the API bakes
+    // into productUrl (so no link Chiller sends carries a partner code) and routes the page here;
+    // on "continue" the exact same params come back, medium=api included, so Viator attributes
+    // these bookings to the API integration as before. Internal id — the bot never offers it to
+    // the model as a provider.
+    id: 'viator_api',
+    name: 'Viator',
+    category: 'activities',
+    cleanUrl: 'https://www.viator.com',
+    linkType: 'append',
+    affiliateParams: 'pid=P00318757&mcid=42383&medium=api',
+    affiliateUrl: '',
+    isActive: true
+  },
+  {
     id: 'tripadvisor',
     name: 'Tripadvisor Experiences',
     cleanUrl: 'https://www.tripadvisor.com/Attractions',
