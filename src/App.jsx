@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
+import HeroSection from './components/HeroSection';
+import AppChaosComparison from './components/AppChaosComparison';
+import ProductTheater from './components/ProductTheater';
+import LiveTelemetry from './components/LiveTelemetry';
+import WhatsAppExperience from './components/WhatsAppExperience';
+import BookingPortal from './components/BookingPortal';
+import FaqSection from './components/FaqSection';
+import CtaBanner from './components/CtaBanner';
 import ChatWidget from './components/ChatWidget';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
@@ -12,109 +20,41 @@ import { reopenConsentBanner } from './consent';
 const translations = {
   he: {
     logo: "צ'ילר",
-    bookingLink: "הזמנות",
+    tagline: "עוזר נסיעות חכם מבוסס AI לתרמילאים",
+    heroEyebrow: "זמין עכשיו בווטסאפ • החבר החכם לתרמילאים",
+    heroPrimaryCta: "פתח שיחה בווטסאפ — חינם",
+    bookingLink: "פורטל הזמנות",
     privacyLink: "מדיניות פרטיות",
     termsLink: "תנאי שימוש",
     contactLink: "צור קשר",
     accessibilityLink: "הצהרת נגישות",
     cookieSettings: "הגדרות עוגיות",
     talkToChiller: "דבר עם צ'ילר",
-    tagline: "עוזר נסיעות חכם מבוסס AI לתרמילאים",
-    
-    // About Chiller translations
-    aboutTitle: "על צ'ילר - Chiller",
-    aboutSubtitle: "השותף החכם שלך לטיול הגדול",
-    aboutDescription: "צ'ילר הוא עוזר נסיעות חכם מבוסס AI שפותח במיוחד כדי לסייע לתרמילאים ומטיילים עצמאיים לתכנן את הרפתקת חייהם בטיול הגדול. צ'ילר מתמחה במתן מענה לוגיסטי, מציאת מקומות לינה מתאימים, המלצה על אטרקציות, ותכנון מעברים ותחבורה (אוטובוסים, שאטלים, מעבורות וטיסות). צ'ילר מיועד לתפקד כ״חבר מומחה בכיס״ עבור התרמילאי הישראלי ולעזור לו לבנות את חווית הטיול המושלמת בשבילו.",
-    whoTitle: "למי השירות מיועד?",
-    whoText: "למוצ'ילרים ותרמילאים ישראלים המחפשים לחקור את העולם בצורה מתוחכמת, מותאמת אישית וחסכונית.",
-    whatTitle: "מה צ'ילר יודע לעשות?",
-    whatItems: [
-      "מציאת דרכי הגעה: אוטובוסים, טיסות ומעברי גבול יבשתיים וימיים, עם קישור להזמנה אצל הספק.",
-      "השוואה וחיפוש של הוסטלים ומקומות לינה, עם קישור ישיר להזמנה.",
-      "המלצות על אטרקציות, סיורים וחוויות אקסטרים, עם קישור להזמנה.",
-      "התאמה של חבילות תקשורת ו-eSIM לכל מדינה."
-    ],
-    visionTitle: "החזון שלנו",
-    goalText: "להנגיש את כלי התכנון והמענה הלוגיסטי המובילים ביותר לכל תרמילאי, ולאפשר לכם לצאת לדרך בראש שקט תוך חיבור לספקי שירות מוכרים בעולם הנסיעות והטיולים.",
-
-    // Booking section translations
-    bookingTitle: "פורטל הזמנות נסיעות",
-    bookingSubtitle: "בחרו ספק ועברו להזמנה ישירות באתר שלו.",
-    categories: {
-      accommodation: "לינה ואירוח 🛏️",
-      transport: "תחבורה, מעברים וטיסות 🚌",
-      attractions: "אטרקציות וחוויות 🎟️",
-      connectivity: "תקשורת ואינטרנט 📱"
-    },
-    partners: {
-      booking: { name: "Booking.com", desc: "אחד האתרים הגדולים בעולם להזמנת מלונות, דירות וחדרי אירוח." },
-      expedia: { name: "Expedia", desc: "סוכנות נסיעות מקוונת מקיפה להזמנת מלונות ודילים." },
-      agoda: { name: "Agoda", desc: "דילים מעולים והזמנות לינה בכל העולם." },
-      busbud: { name: "Busbud", desc: "השוואה והזמנת כרטיסי אוטובוס למעברים בין ערים ומדינות." },
-      trip: { name: "Trip.com", desc: "סוכנות נסיעות בינלאומית המציעה טיסות, רכבות ומלונות." },
-      wayaway: { name: "WayAway", desc: "מנוע חיפוש טיסות המציע החזר כספי (Cashback) על רכישות נסיעות." },
-      getyourguide: { name: "GetYourGuide", desc: "סיורים מודרכים, אטרקציות ופעילויות מדהימות בטיול." },
-      viator: { name: "Viator", desc: "מגוון גדול של חוויות, טיולי יום ופעילויות שטח." },
-      klook: { name: "Klook", desc: "פלטפורמה להזמנת חוויות טיול, סיורים מקומיים וכרטיסי כניסה." },
-      airalo: { name: "Airalo", desc: "חבילות eSIM מקומיות ואזוריות לחיבור מיידי לאינטרנט." },
-      yesim: { name: "Yesim", desc: "כרטיסי eSIM המאפשרים חיבור יציב לאינטרנט סלולרי ברחבי העולם." }
-    },
-    bookBtn: "מעבר לאתר ההזמנה",
-    footerNotice: "Chiller Travel משתתפת בתוכניות שותפים. אנו עשויים להרוויח עמלה על הזמנות המתבצעות דרך הקישורים שלנו ללא עלות נוספת עבורכם.",
-    footerCopyright: "כל הזכויות שמורות ל-Chiller Travel."
+    footerNotice: "Chiller Travel משתתפת בתוכניות שותפים של ספקי נסיעות. אנו עשויים להרוויח עמלה על הזמנות דרך הקישורים שלנו, ללא עלות נוספת מצידכם, והמלצות ממומנות מסומנות. צ'ילר מבוסס בינה מלאכותית ועלול לטעות; ההזמנה והתשלום נעשים אצל הספק ובאחריותו.",
+    footerCopyright: "© 2026 Chiller Travel (צ'ילר). כל הזכויות שמורות. נבנה באהבה עבור מטיילים עצמאיים ותרמילאים.",
+    footerBackpackerNote: "צ'ילר נבנה על בסיס חוויות שטח אמיתיות בדרום ומרכז אמריקה, מזרח אסיה והודו.",
+    footerNavHead: "ניווט באתר",
+    footerLegalHead: "משפטי ושקיפות",
+    footerCommunityHead: "תרמילאות"
   },
   en: {
     logo: "Chiller",
-    bookingLink: "Booking",
+    tagline: "AI-Powered Travel Companion for Backpackers",
+    heroEyebrow: "Live on WhatsApp • Smart Backpacker Friend",
+    heroPrimaryCta: "Start Chatting on WhatsApp — Free",
+    bookingLink: "Booking Portal",
     privacyLink: "Privacy Policy",
     termsLink: "Terms of Service",
     contactLink: "Contact Us",
     accessibilityLink: "Accessibility",
     cookieSettings: "Cookie settings",
     talkToChiller: "Talk to Chiller",
-    tagline: "AI-Powered Travel Assistant for Backpackers",
-
-    // About Chiller translations
-    aboutTitle: "About Chiller",
-    aboutSubtitle: "Your smart travel companion for the big trip",
-    aboutDescription: "Chiller is a smart AI-powered travel assistant developed specifically to help backpackers and independent travelers plan the adventure of a lifetime on the big trip. Chiller specializes in logistics, finding suitable accommodation, recommending attractions, and planning transport (buses, shuttles, ferries, and flights). Chiller is designed to be your 'expert friend in your pocket,' helping you build your perfect travel experience.",
-    whoTitle: "Who is it for?",
-    whoText: "For backpackers looking to explore the world in a smart, personalized, and cost-effective way.",
-    whatTitle: "What Chiller Can Do",
-    whatItems: [
-      "Find routes, buses, flights, and land/sea border crossings, with a link to book with the provider.",
-      "Compare and search hostels and accommodation, with a direct booking link.",
-      "Recommend attractions, tours, and extreme experiences, with a booking link.",
-      "Match communication packages and eSIMs for each country."
-    ],
-    visionTitle: "Our Vision",
-    goalText: "To make top-tier planning and logistics tools accessible to every backpacker, allowing you to travel with peace of mind by connecting you with well-known service providers in the travel industry.",
-
-    // Booking section translations
-    bookingTitle: "Travel Booking Portal",
-    bookingSubtitle: "Pick a provider and continue to book directly on their site.",
-    categories: {
-      accommodation: "Accommodation 🛏️",
-      transport: "Transport & Flights 🚌",
-      attractions: "Attractions & Experiences 🎟️",
-      connectivity: "Telecom & Internet 📱"
-    },
-    partners: {
-      booking: { name: "Booking.com", desc: "One of the world's largest sites for booking hotels, apartments, and guest houses." },
-      expedia: { name: "Expedia", desc: "A comprehensive travel platform for booking hotels, flights, and vacation packages." },
-      agoda: { name: "Agoda", desc: "Great deals and accommodation booking worldwide." },
-      busbud: { name: "Busbud", desc: "Compare and book intercity and cross-border bus tickets easily." },
-      trip: { name: "Trip.com", desc: "An international online travel agency offering flights, hotels, and train tickets." },
-      wayaway: { name: "WayAway", desc: "Flight search engine that helps you find cheap flights with cashback on travel purchases." },
-      getyourguide: { name: "GetYourGuide", desc: "Find guided tours, attractions, and amazing travel experiences." },
-      viator: { name: "Viator", desc: "A wide range of experiences, day trips, and outdoor tours." },
-      klook: { name: "Klook", desc: "Book tour experiences, local attractions, transit passes, and activities." },
-      airalo: { name: "Airalo", desc: "Local and regional eSIM packages for instant mobile internet access." },
-      yesim: { name: "Yesim", desc: "eSIM cards offering stable mobile data connection in countries worldwide." }
-    },
-    bookBtn: "Go to booking site",
-    footerNotice: "Chiller Travel participates in affiliate programs. We may earn a commission on bookings made through our links at no extra cost to you.",
-    footerCopyright: "All rights reserved. Chiller Travel."
+    footerNotice: "Chiller Travel participates in travel affiliate programs. We may earn a commission on bookings made through our links at no extra cost to you, and sponsored recommendations are labeled. Chiller is AI-based and can make mistakes; bookings and payments happen with, and are the responsibility of, the provider.",
+    footerCopyright: "© 2026 Chiller Travel. All rights reserved. Built with love for independent travelers and backpackers.",
+    footerBackpackerNote: "Chiller was forged on real trails across South & Central America, Southeast Asia, and India.",
+    footerNavHead: "Navigation",
+    footerLegalHead: "Legal & Trust",
+    footerCommunityHead: "Backpacking Hubs"
   }
 };
 
@@ -125,10 +65,9 @@ function App() {
 
   const t = translations[lang];
 
-  // Keep <html lang> in sync with the visible language so screen readers pronounce it correctly
-  // (index.html used to hard-code lang="en" while the default UI language is Hebrew).
   useEffect(() => {
     document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
   }, [lang]);
 
   useEffect(() => {
@@ -146,264 +85,173 @@ function App() {
       } else if (hash === '#contact') {
         setCurrentPage('contact');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#booking') {
-        setCurrentPage('home');
-        setTimeout(() => {
-          const el = document.getElementById('booking');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
       } else {
         setCurrentPage('home');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     };
 
-    // Run on initial mount
     handleHashChange();
-
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  const isHe = lang === 'he';
+
   return (
-    <>
-      <div className="grid-bg"></div>
-      <Header lang={lang} setLang={setLang} t={t} setIsChatOpen={setIsChatOpen} />
-      <main className="app-container" dir={lang === 'he' ? 'rtl' : 'ltr'}>
+    <div className={`chiller-app-wrapper ${lang === 'he' ? 'lang-he' : 'lang-en'}`} dir={isHe ? 'rtl' : 'ltr'}>
+      {/* Background Ambience */}
+      <div className="ambient-background"></div>
+
+      {/* Global Navigation Header */}
+      <Header 
+        lang={lang} 
+        setLang={setLang} 
+      />
+
+      <main className="app-main">
         {currentPage === 'home' && (
           <>
-            {/* About Chiller Section */}
-            <section id="about" className="about-section">
-              <div className="badge">{t.tagline}</div>
-              <h1 className="about-title">{t.aboutTitle}</h1>
-              <p className="about-subtitle">{t.aboutSubtitle}</p>
-              
-              <div className="about-card">
-                <p className="about-desc">{t.aboutDescription}</p>
-                
-                <div className="about-grid">
-                  <div className="about-grid-col">
-                    <h3>{t.whoTitle}</h3>
-                    <p>{t.whoText}</p>
-                  </div>
-                  
-                  <div className="about-grid-col">
-                    <h3>{t.visionTitle}</h3>
-                    <p>{t.goalText}</p>
-                  </div>
-                </div>
+            {/* 1. Hero with Interactive Phone Mockup */}
+            <HeroSection 
+              lang={lang} 
+              t={t} 
+              onOpenChatWidget={() => setIsChatOpen(true)} 
+            />
 
-                <div className="about-capabilities">
-                  <h3>{t.whatTitle}</h3>
-                  <ul className="capabilities-list">
-                    {t.whatItems.map((item, idx) => (
-                      <li key={idx}>
-                        <svg className="bullet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                          <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            {/* 2. 10 Apps vs. 1 Conversation */}
+            <AppChaosComparison 
+              lang={lang} 
+            />
 
-                <button 
-                  type="button"
-                  className="cta-button" 
-                  onClick={() => setIsChatOpen(true)}
-                  aria-label={t.talkToChiller}
-                >
-                  <span>{t.talkToChiller}</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-            </section>
+            {/* 3. Product Theater: 6 Backpacker Scenarios */}
+            <ProductTheater 
+              lang={lang} 
+            />
 
-            {/* Travel Booking Portal Section */}
-            <section id="booking" className="booking-section">
-              <h2 className="section-title">{t.bookingTitle}</h2>
-              <p className="section-subtitle">{t.bookingSubtitle}</p>
-              
-              <div className="booking-categories">
-                {/* Category 1: Accommodation */}
-                <div className="booking-category">
-                  <h3>{t.categories.accommodation}</h3>
-                  <div className="partners-grid">
-                    <div className="partner-card">
-                      <h4>{t.partners.booking.name}</h4>
-                      <p>{t.partners.booking.desc}</p>
-                      <a href="/go/booking" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.booking.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                    <div className="partner-card">
-                      <h4>{t.partners.expedia.name}</h4>
-                      <p>{t.partners.expedia.desc}</p>
-                      <a href="/go/expedia" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.expedia.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                    <div className="partner-card">
-                      <h4>{t.partners.agoda.name}</h4>
-                      <p>{t.partners.agoda.desc}</p>
-                      <a href="/go/agoda" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.agoda.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                  </div>
-                </div>
+            {/* 4. Live Telemetry & Real-Time Intelligence */}
+            <LiveTelemetry 
+              lang={lang} 
+            />
 
-                {/* Category 2: Transport & Flights */}
-                <div className="booking-category">
-                  <h3>{t.categories.transport}</h3>
-                  <div className="partners-grid">
-                    <div className="partner-card">
-                      <h4>{t.partners.busbud.name}</h4>
-                      <p>{t.partners.busbud.desc}</p>
-                      <a href="/go/busbud" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.busbud.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                    <div className="partner-card">
-                      <h4>{t.partners.trip.name}</h4>
-                      <p>{t.partners.trip.desc}</p>
-                      <a href="/go/trip" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.trip.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                    <div className="partner-card">
-                      <h4>{t.partners.wayaway.name}</h4>
-                      <p>{t.partners.wayaway.desc}</p>
-                      <a href="/go/wayaway" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.wayaway.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                  </div>
-                </div>
+            {/* 5. Zero-Friction WhatsApp Flow & Culture */}
+            <WhatsAppExperience 
+              lang={lang} 
+            />
 
-                {/* Category 3: Attractions */}
-                <div className="booking-category">
-                  <h3>{t.categories.attractions}</h3>
-                  <div className="partners-grid">
-                    <div className="partner-card">
-                      <h4>{t.partners.getyourguide.name}</h4>
-                      <p>{t.partners.getyourguide.desc}</p>
-                      <a href="/go/getyourguide" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.getyourguide.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                    <div className="partner-card">
-                      <h4>{t.partners.viator.name}</h4>
-                      <p>{t.partners.viator.desc}</p>
-                      <a href="/go/viator" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.viator.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                    <div className="partner-card">
-                      <h4>{t.partners.klook.name}</h4>
-                      <p>{t.partners.klook.desc}</p>
-                      <a href="/go/klook" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.klook.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                  </div>
-                </div>
+            {/* 6. Verified Booking Portal */}
+            <BookingPortal 
+              lang={lang} 
+            />
 
-                {/* Category 4: eSIM/SIM */}
-                <div className="booking-category">
-                  <h3>{t.categories.connectivity}</h3>
-                  <div className="partners-grid">
-                    <div className="partner-card">
-                      <h4>{t.partners.airalo.name}</h4>
-                      <p>{t.partners.airalo.desc}</p>
-                      <a href="/go/airalo" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.airalo.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                    <div className="partner-card">
-                      <h4>{t.partners.yesim.name}</h4>
-                      <p>{t.partners.yesim.desc}</p>
-                      <a href="/go/yesim" target="_blank" rel="noopener noreferrer" className="partner-link-btn" aria-label={`${t.bookBtn}: ${t.partners.yesim.name}`}>
-                        {t.bookBtn}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
+            {/* 7. Skeptic's FAQ */}
+            <FaqSection 
+              lang={lang} 
+            />
+
+            {/* 8. High-Impact Finale Banner */}
+            <CtaBanner 
+              lang={lang} 
+            />
           </>
         )}
 
-        {currentPage === 'privacy' && (
-          <PrivacyPolicy onBack={() => { window.location.hash = 'home'; }} />
-        )}
-
-        {currentPage === 'terms' && (
-          <TermsOfService onBack={() => { window.location.hash = 'home'; }} />
-        )}
-
-        {currentPage === 'accessibility' && (
-          <AccessibilityStatement onBack={() => { window.location.hash = 'home'; }} />
-        )}
-
-        {currentPage === 'contact' && (
-          <ContactUs onBack={() => { window.location.hash = 'home'; }} />
-        )}
-
-        <footer className="footer-container">
-          <div className="footer-nav">
-            <a 
-              href="#privacy" 
-              className="footer-link"
-            >
-              {t.privacyLink}
-            </a>
-            <span className="footer-separator">•</span>
-            <a 
-              href="#terms" 
-              className="footer-link"
-            >
-              {t.termsLink}
-            </a>
-            <span className="footer-separator">•</span>
-            <a 
-              href="#contact" 
-              className="footer-link"
-            >
-              {t.contactLink}
-            </a>
-            <span className="footer-separator">•</span>
-            <a 
-              href="#accessibility" 
-              className="footer-link"
-            >
-              {t.accessibilityLink}
-            </a>
-            <span className="footer-separator">•</span>
-            <button
-              type="button"
-              className="footer-link footer-link-button"
-              onClick={reopenConsentBanner}
-            >
-              {t.cookieSettings}
-            </button>
-          </div>
-          <p className="footer-disclosure">
-            {t.footerNotice}
-          </p>
-          <div className="footer-copyright">
-            © {new Date().getFullYear()} Chiller Travel. {t.footerCopyright}
-          </div>
-        </footer>
+        {/* Legal and Information Pages */}
+        {currentPage === 'privacy' && <PrivacyPolicy lang={lang} />}
+        {currentPage === 'terms' && <TermsOfService lang={lang} />}
+        {currentPage === 'accessibility' && <AccessibilityStatement lang={lang} />}
+        {currentPage === 'contact' && <ContactUs lang={lang} />}
       </main>
 
-      <CookieBanner lang={lang} />
+      {/* Modern High-Impact Footer */}
+      <footer className="app-footer">
+        <div className="footer-container">
+          
+          <div className="footer-top-grid">
+            {/* Brand Col */}
+            <div className="footer-brand-col">
+              <div className="footer-logo">
+                <span className="logo-symbol">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="12" r="10" fill="currentColor" fillOpacity="0.15" />
+                    <path d="M12 4a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm2.8 11.2l-4.8 1.6 1.6-4.8 4.8-1.6z" />
+                  </svg>
+                </span>
+                <span className="logo-name">CHILLER</span>
+                <span className="logo-sub">{isHe ? "צ'ילר" : "Travel AI"}</span>
+              </div>
+              <p className="footer-brand-desc">
+                {t.tagline}
+              </p>
+              <p className="footer-brand-note">
+                {t.footerBackpackerNote}
+              </p>
+            </div>
 
-      {/* Floating Chat Widget */}
-      <ChatWidget externalIsOpen={isChatOpen} setExternalIsOpen={setIsChatOpen} />
-    </>
+            {/* Nav Links Col */}
+            <div className="footer-col">
+              <h4>{t.footerNavHead}</h4>
+              <ul className="footer-links">
+                <li><a href="#hero">{isHe ? 'ראשי' : 'Home'}</a></li>
+                <li><a href="#problem">{isHe ? 'הבעיה בטיול' : 'The Problem'}</a></li>
+                <li><a href="#scenarios">{isHe ? 'תרחישים אמיתיים' : 'Scenarios'}</a></li>
+                <li><a href="#intelligence">{isHe ? 'מידע חי' : 'Live Data'}</a></li>
+                <li><a href="#how-it-works">{isHe ? 'איך זה עובד' : 'How It Works'}</a></li>
+                <li><a href="#booking">{isHe ? 'ספקי הזמנות' : 'Booking Portal'}</a></li>
+                <li><a href="#faq">{isHe ? 'שאלות ותשובות' : 'FAQ'}</a></li>
+              </ul>
+            </div>
+
+            {/* Backpacker Hubs Col */}
+            <div className="footer-col">
+              <h4>{t.footerCommunityHead}</h4>
+              <ul className="footer-links">
+                <li><span>{isHe ? 'דרום אמריקה (פרו, בוליביה, ארגנטינה)' : 'South America (Peru, Bolivia, Argentina)'}</span></li>
+                <li><span>{isHe ? 'מרכז אמריקה (מקסיקו, גואטמלה, קוסטה ריקה)' : 'Central America (Mexico, Guatemala, CR)'}</span></li>
+                <li><span>{isHe ? 'דרום-מזרח אסיה (תאילנד, וייטנאם, לאוס)' : 'Southeast Asia (Thailand, Vietnam, Laos)'}</span></li>
+                <li><span>{isHe ? 'תת-היבשת ההודית ונפאל' : 'India & Nepal Himalayas'}</span></li>
+              </ul>
+            </div>
+
+            {/* Legal Col */}
+            <div className="footer-col">
+              <h4>{t.footerLegalHead}</h4>
+              <ul className="footer-links">
+                <li><a href="#privacy">{t.privacyLink}</a></li>
+                <li><a href="#terms">{t.termsLink}</a></li>
+                <li><a href="#accessibility">{t.accessibilityLink}</a></li>
+                <li><a href="#contact">{t.contactLink}</a></li>
+                <li>
+                  <button 
+                    type="button" 
+                    className="footer-text-btn"
+                    onClick={reopenConsentBanner}
+                  >
+                    {t.cookieSettings}
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="footer-divider"></div>
+
+          <div className="footer-bottom-row">
+            <p className="footer-disclosure">{t.footerNotice}</p>
+            <p className="footer-copy">{t.footerCopyright}</p>
+          </div>
+
+        </div>
+      </footer>
+
+      {/* Live In-Browser Chat Widget (Preserved for interactive testing) */}
+      <ChatWidget 
+        externalIsOpen={isChatOpen} 
+        setExternalIsOpen={setIsChatOpen} 
+      />
+
+      {/* Cookie Banner */}
+      <CookieBanner lang={lang} />
+    </div>
   );
 }
 
