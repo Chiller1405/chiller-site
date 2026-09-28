@@ -23,7 +23,7 @@ const Email = () => (
 
 const he = {
   title: 'תנאי שימוש',
-  updated: 'עודכן לאחרונה: 24 בספטמבר 2026',
+  updated: 'עודכן לאחרונה: 28 בספטמבר 2026',
   intro:
     "ברוכים הבאים לצ'ילר. התנאים האלה חלים על השימוש בצ'ילר בווטסאפ, בצ'אט באתר ובאתר chiller-travel.com (יחד: \"השירות\"). השימוש בשירות מהווה הסכמה לתנאים ולמדיניות הפרטיות. בווטסאפ תתבקשו לאשר אותם במפורש לפני השימוש. התנאים מנוסחים בלשון רבים ופונים לכל המגדרים.",
   sections: [
@@ -68,7 +68,7 @@ const he = {
       h: '6. קישורי שותפים, תוכן ממומן והשפעה על ההמלצות',
       items: [
         'חלק מהקישורים הם קישורי שותפים. אם תזמינו דרכם, אנחנו עשויים לקבל עמלה מהספק, בלי שום תוספת למחיר שאתם משלמים.',
-        'כשכמה אפשרויות דומות זו לזו, הקשרים המסחריים שלנו עשויים להשפיע על הספק שיוצג לכם.',
+        'צ\'ילר תמיד מחפש את האפשרות שהכי טובה בשבילכם. רק כשכמה אפשרויות דומות זו לזו, הוא עשוי להעדיף ספק שותף.',
         'המלצות ממומנות הן חלק מהשירות: כשזה רלוונטי לשאלה שלכם, צ\'ילר עשוי להציג אפשרות של שותף ששילם עבור הצגתה, ששותפיו נבחרים בקפידה ומתאימים למטיילים. המלצה כזו תסומן תמיד במילה "ממומן" (Sponsored), ולא תוצג כהמלצה ניטרלית. המלצות ממומנות בתוך השיחה אינן דיוור שיווקי, ואינן תלויות בהסכמה לדיוור.',
       ],
     },
@@ -151,7 +151,7 @@ const he = {
 
 const en = {
   title: 'Terms of Service',
-  updated: 'Last updated: September 24, 2026',
+  updated: 'Last updated: September 28, 2026',
   intro:
     'Welcome to Chiller. These terms apply to using Chiller on WhatsApp, in the website chat and on chiller-travel.com (together, the "Service"). Using the Service means you accept these terms and the Privacy Policy. On WhatsApp you are asked to accept them explicitly before use. If the Hebrew and English versions differ, the Hebrew version prevails.',
   sections: [
@@ -195,7 +195,7 @@ const en = {
       h: '6. Affiliate links, sponsored content and influence on recommendations',
       items: [
         'Some links are affiliate links. If you book through them we may earn a commission from the provider, at no extra cost to you.',
-        'When several options are comparable, our commercial relationships may influence which provider is shown.',
+        'Chiller always looks for the option that is best for you. Only when several options are comparable may it prefer a partner provider.',
         'Sponsored recommendations are part of the Service: when relevant to your question, Chiller may show an option from a carefully chosen, traveler-relevant partner that paid to be shown. It is always labeled "Sponsored" ("ממומן") and never presented as a neutral recommendation. In-chat sponsored recommendations are not marketing messages and do not depend on marketing consent.',
       ],
     },
