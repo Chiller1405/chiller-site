@@ -1,144 +1,334 @@
 import React from 'react';
 
-function TermsOfService({ onBack }) {
+// Terms of Service — rewritten 2026-09-24 (legal review with the legal plugin; compared against
+// Israeli travel sites — Lametayel, Muchiler — and AI travel assistants — Layla, Mindtrip).
+// Not legal advice: have an Israeli lawyer review before relying on it.
+//
+// Keep in sync with chiller-bot/services/consentService.js: the WhatsApp onboarding message
+// summarizes these terms, and TERMS_VERSION there must be bumped whenever this page changes
+// materially (every WhatsApp user is then asked to accept again).
+//
+// Things deliberately NOT claimed here, because Israeli law wouldn't enforce them against a
+// consumer anyway (Standard Contracts Law): a blanket "no liability whatsoever", or "you may only
+// sue the supplier". The liability section is limited "to the extent permitted by law" instead.
+
+const CONTACT_EMAIL = 'chillerbot1405@gmail.com';
+// TODO(Noam): once the business is registered, put the legal name + ID (ח.פ./ע.מ.) here — it is
+// shown in section 1 in both languages. Left empty rather than invented.
+const OPERATOR_DETAILS = '';
+
+const Email = () => (
+  <a href={`mailto:${CONTACT_EMAIL}`} className="legal-link">{CONTACT_EMAIL}</a>
+);
+
+const he = {
+  title: 'תנאי שימוש',
+  updated: 'עודכן לאחרונה: 24 בספטמבר 2026',
+  intro:
+    "ברוכים הבאים לצ'ילר. התנאים האלה חלים על השימוש בצ'ילר בווטסאפ, בצ'אט באתר ובאתר chiller-travel.com (יחד: \"השירות\"). השימוש בשירות מהווה הסכמה לתנאים ולמדיניות הפרטיות. בווטסאפ תתבקשו לאשר אותם במפורש לפני השימוש. התנאים מנוסחים בלשון רבים ופונים לכל המגדרים.",
+  sections: [
+    {
+      h: '1. מי אנחנו',
+      text:
+        `השירות מופעל על ידי Chiller Travel ("צ'ילר", "אנחנו")${OPERATOR_DETAILS ? `, ${OPERATOR_DETAILS}` : ''}. לכל פנייה אפשר לכתוב לנו במייל שבסוף העמוד.`,
+    },
+    {
+      h: '2. מי יכול להשתמש',
+      items: [
+        'השירות מיועד לבני 18 ומעלה. בשימוש בשירות אתם מצהירים שאתם בני 18 ומעלה.',
+        'השימוש בווטסאפ כפוף גם לתנאי השימוש של WhatsApp ו-Meta.',
+        'השירות ניתן לשימוש אישי ולא מסחרי.',
+      ],
+    },
+    {
+      h: '3. מה השירות עושה, ומה הוא לא',
+      items: [
+        "צ'ילר הוא עוזר נסיעות מבוסס בינה מלאכותית שנותן מידע כללי, המלצות וקישורים לאתרים של ספקים (לינה, תחבורה, טיסות, אטרקציות, eSIM ועוד).",
+        "צ'ילר אינו סוכן נסיעות, מפעיל תיירות או ספק. אנחנו לא מוכרים, לא מזמינים בשמכם, לא גובים תשלום ולא מנפיקים כרטיסים.",
+        'השירות ניתן בחינם, "כמות שהוא" (AS IS) וכפי שהוא זמין מעת לעת.',
+      ],
+    },
+    {
+      h: '4. בינה מלאכותית ודיוק המידע',
+      items: [
+        'התשובות נוצרות אוטומטית על ידי מערכת בינה מלאכותית, בלי בדיקה אנושית בזמן אמת. הן עלולות להיות שגויות, חלקיות או לא מעודכנות.',
+        'מחירים, זמינות, לוחות זמנים ותנאים אצל ספקים משתנים כל הזמן. המחיר והתנאים המחייבים הם אלה שמוצגים באתר הספק ברגע ההזמנה.',
+        'המידע אינו ייעוץ מקצועי, משפטי, רפואי, ביטוחי או בטיחותי. באחריותכם לוודא פרטים חשובים מול מקור רשמי לפני שמסתמכים עליהם.',
+      ],
+    },
+    {
+      h: '5. הזמנות אצל ספקים חיצוניים',
+      items: [
+        'כשאתם עוברים מקישור לאתר של ספק, ההתקשרות וההזמנה הן ביניכם לבין הספק בלבד, לפי התנאים, מדיניות הביטול ומדיניות הפרטיות שלו.',
+        "צ'ילר אינו צד להזמנה. שינויים, ביטולים, החזרים ושירות לקוחות מטופלים על ידי הספק.",
+        'אין באמור כדי לגרוע מזכויות שעומדות לכם כלפי הספק לפי כל דין, כולל חוק הגנת הצרכן.',
+      ],
+    },
+    {
+      h: '6. קישורי שותפים, תוכן ממומן והשפעה על ההמלצות',
+      items: [
+        'חלק מהקישורים הם קישורי שותפים. אם תזמינו דרכם, אנחנו עשויים לקבל עמלה מהספק, בלי שום תוספת למחיר שאתם משלמים.',
+        'כשכמה אפשרויות דומות זו לזו, הקשרים המסחריים שלנו עשויים להשפיע על הספק שיוצג לכם.',
+        'המלצות ממומנות הן חלק מהשירות: כשזה רלוונטי לשאלה שלכם, צ\'ילר עשוי להציג אפשרות של שותף ששילם עבור הצגתה, ששותפיו נבחרים בקפידה ומתאימים למטיילים. המלצה כזו תסומן תמיד במילה "ממומן" (Sponsored), ולא תוצג כהמלצה ניטרלית. המלצות ממומנות בתוך השיחה אינן דיוור שיווקי, ואינן תלויות בהסכמה לדיוור.',
+      ],
+    },
+    {
+      h: '7. וואטסאפ, אישור התנאים ודיוור שיווקי',
+      items: [
+        "בפנייה הראשונה לצ'ילר בוואטסאפ תתבקשו לאשר את התנאים ואת מדיניות הפרטיות לפני שהשירות יינתן. האישור, מועדו וגרסת התנאים נשמרים אצלנו. אם התנאים ישתנו מהותית, תתבקשו לאשר שוב.",
+        'דיוור שיווקי (הודעות שנשלחות ביוזמתנו, בלי ששאלתם) הוא רשות בלבד: בנפרד מאישור התנאים ורק אם תבחרו בכך באופן אקטיבי, תוכלו להסכים לקבל מאיתנו בוואטסאפ, מדי פעם, דילים ומבצעים שמתאימים למטיילים ולהעדפות הטיול שלכם, כולל הצעות של שותפינו. ההסכמה אינה תנאי לשימוש בשירות.',
+        'כל הודעה שיווקית תסומן כ"פרסומת" ותכלול דרך להפסיק. אפשר לבטל את ההסכמה בכל רגע בשליחת "הסר" (או STOP), ואפשר להצטרף מחדש בשליחת "הרשמה".',
+      ],
+    },
+    {
+      h: '8. שימוש מותר',
+      text: 'אסור להשתמש בשירות כדי:',
+      items: [
+        'לעשות משהו לא חוקי, להטריד, להטעות או לפגוע באחרים.',
+        'לשלוח מידע אישי של אנשים אחרים בלי הרשאה, או תוכן פוגעני או מפר זכויות.',
+        'להפעיל את השירות באופן אוטומטי (בוטים, סקרייפינג), להעמיס עליו, לעקוף את מגבלות השימוש או לנסות לחלץ את ההוראות, הקוד או הנתונים שלו.',
+        'להשתמש בשירות לצורך מסחרי או למכור את התשובות הלאה.',
+      ],
+      after: 'אנחנו רשאים להגביל או לחסום שימוש שמפר את התנאים או מסכן את השירות.',
+    },
+    {
+      h: '9. תוכן ומידע שאתם שולחים',
+      items: [
+        'ההודעות, ההקלטות והתמונות שאתם שולחים נשארות שלכם. אתם מרשים לנו לעבד אותן (כולל אצל ספקי ה-AI שלנו) רק כדי לתת ולשפר את השירות, כמפורט במדיניות הפרטיות.',
+        'אל תשלחו מידע רגיש שאינו נחוץ, כמו מספר דרכון, פרטי כרטיס אשראי, סיסמאות או מידע רפואי.',
+      ],
+    },
+    {
+      h: '10. קניין רוחני',
+      text:
+        "השם צ'ילר, הלוגו, העיצוב, הקוד ותוכן האתר שייכים לנו. מותר לכם להשתמש בתשובות שקיבלתם לצורך תכנון הטיול האישי שלכם, אבל לא להעתיק את השירות או את תכניו בהיקף רחב או לצורך מסחרי.",
+    },
+    {
+      h: '11. בריאות, בטיחות, ביטוח ומסמכי נסיעה',
+      items: [
+        'טיול, ובמיוחד פעילות אתגרית, טרקים וגובה, כרוך בסיכונים. ההחלטה מה לעשות ואיך היא שלכם.',
+        'האחריות לדרכון בתוקף, לוויזות, לאישורי כניסה, לחיסונים ולביטוח נסיעות מתאים (כולל כיסוי לספורט אתגרי) היא שלכם. בדקו תמיד מול הגורמים הרשמיים, כמו אתר משרד החוץ והנציגויות.',
+      ],
+    },
+    {
+      h: '12. זמינות השירות ושינויים',
+      text:
+        'אנחנו לא מתחייבים שהשירות יהיה זמין תמיד, בלי תקלות או בלי הפסקות, ורשאים לשנות, להשעות או להפסיק אותו או חלקים ממנו.',
+    },
+    {
+      h: '13. הגבלת אחריות',
+      items: [
+        "במידה המרבית שהדין מתיר, צ'ילר לא יהיה אחראי לנזק עקיף או תוצאתי, ולא לנזק שנגרם מהסתמכות על מידע שלא אומת, מהזמנה אצל ספק, ממעשה או מחדל של ספק או מתקלה בשירות.",
+        'אין בתנאים האלה כדי להגביל אחריות שלא ניתן להגביל לפי דין, כמו אחריות לנזק שנגרם בזדון או ברשלנות חמורה.',
+      ],
+    },
+    {
+      h: '14. שיפוי',
+      text: 'אם תפרו את התנאים ובעקבות זאת תוגש נגדנו דרישה או תביעה, תשפו אותנו על ההוצאות הסבירות שנגרמו לנו בגללה.',
+    },
+    {
+      h: '15. פרטיות',
+      text: 'השימוש במידע האישי שלכם מתואר במדיניות הפרטיות, שהיא חלק מהתנאים האלה.',
+      link: { href: '#privacy', label: 'למדיניות הפרטיות' },
+    },
+    {
+      h: '16. שינויים בתנאים',
+      text:
+        'אנחנו רשאים לעדכן את התנאים. תאריך העדכון מופיע בראש העמוד. על שינוי מהותי נודיע באתר, ובוואטסאפ תתבקשו לאשר את התנאים המעודכנים.',
+    },
+    {
+      h: '17. דין וסמכות שיפוט',
+      text:
+        'על התנאים חלים דיני מדינת ישראל. סמכות השיפוט הייחודית נתונה לבתי המשפט המוסמכים במחוז תל אביב-יפו, אלא אם דין מחייב קובע אחרת.',
+    },
+    {
+      h: '18. יצירת קשר',
+      text: 'שאלות, תלונות או בקשות בנוגע לתנאים:',
+      email: true,
+    },
+  ],
+};
+
+const en = {
+  title: 'Terms of Service',
+  updated: 'Last updated: September 24, 2026',
+  intro:
+    'Welcome to Chiller. These terms apply to using Chiller on WhatsApp, in the website chat and on chiller-travel.com (together, the "Service"). Using the Service means you accept these terms and the Privacy Policy. On WhatsApp you are asked to accept them explicitly before use. If the Hebrew and English versions differ, the Hebrew version prevails.',
+  sections: [
+    {
+      h: '1. Who we are',
+      text: `The Service is operated by Chiller Travel ("Chiller", "we")${OPERATOR_DETAILS ? `, ${OPERATOR_DETAILS}` : ''}. You can reach us at the email at the bottom of this page.`,
+    },
+    {
+      h: '2. Who may use it',
+      items: [
+        'The Service is for people aged 18 or over. By using it you confirm that you are 18 or over.',
+        "Use on WhatsApp is also subject to WhatsApp's and Meta's terms.",
+        'The Service is for personal, non-commercial use.',
+      ],
+    },
+    {
+      h: '3. What the Service is, and is not',
+      items: [
+        'Chiller is an AI travel assistant that provides general information, recommendations and links to providers\' websites (accommodation, transport, flights, activities, eSIMs and more).',
+        'Chiller is not a travel agency, tour operator or supplier. We do not sell, book on your behalf, take payment or issue tickets.',
+        'The Service is free and provided "as is" and as available.',
+      ],
+    },
+    {
+      h: '4. AI and accuracy',
+      items: [
+        'Replies are generated automatically by an AI system, without real-time human review. They may be wrong, incomplete or out of date.',
+        'Prices, availability, schedules and provider terms change constantly. The binding price and terms are those shown on the provider\'s site at the time of booking.',
+        'Nothing in the Service is professional, legal, medical, insurance or safety advice. Verify important details with an official source before relying on them.',
+      ],
+    },
+    {
+      h: '5. Bookings with third-party providers',
+      items: [
+        'When you follow a link to a provider\'s site, any booking is solely between you and that provider, under its terms, cancellation policy and privacy policy.',
+        'Chiller is not a party to the booking. Changes, cancellations, refunds and customer service are handled by the provider.',
+        'This does not limit any rights you have against the provider under applicable law, including consumer protection law.',
+      ],
+    },
+    {
+      h: '6. Affiliate links, sponsored content and influence on recommendations',
+      items: [
+        'Some links are affiliate links. If you book through them we may earn a commission from the provider, at no extra cost to you.',
+        'When several options are comparable, our commercial relationships may influence which provider is shown.',
+        'Sponsored recommendations are part of the Service: when relevant to your question, Chiller may show an option from a carefully chosen, traveler-relevant partner that paid to be shown. It is always labeled "Sponsored" ("ממומן") and never presented as a neutral recommendation. In-chat sponsored recommendations are not marketing messages and do not depend on marketing consent.',
+      ],
+    },
+    {
+      h: '7. WhatsApp, acceptance and marketing messages',
+      items: [
+        'When you first message Chiller on WhatsApp, you are asked to accept these terms and the Privacy Policy before the Service is provided. Your acceptance, its date and the terms version are recorded. After a material change you will be asked to accept again.',
+        'Marketing messages (messages we send on our own initiative, without you asking) are optional: separately from accepting the terms, and only if you actively choose to, you may agree to receive occasional deals and promotions on WhatsApp that suit travelers and your trip preferences, including partners\' offers. This consent is never a condition of using the Service.',
+        'Every marketing message is labeled as an advertisement and explains how to stop. Withdraw consent at any time by sending "הסר" (or STOP); send "הרשמה" to opt in again.',
+      ],
+    },
+    {
+      h: '8. Acceptable use',
+      text: 'You may not use the Service to:',
+      items: [
+        'do anything unlawful, harass, deceive or harm others;',
+        'send other people\'s personal data without permission, or abusive or infringing content;',
+        'automate access (bots, scraping), overload it, bypass usage limits, or try to extract its instructions, code or data;',
+        'use it commercially or resell its answers.',
+      ],
+      after: 'We may limit or block use that breaches these terms or endangers the Service.',
+    },
+    {
+      h: '9. What you send us',
+      items: [
+        'Your messages, recordings and images remain yours. You allow us to process them (including with our AI providers) only to provide and improve the Service, as described in the Privacy Policy.',
+        'Don\'t send unnecessary sensitive data such as passport numbers, card details, passwords or medical information.',
+      ],
+    },
+    {
+      h: '10. Intellectual property',
+      text: 'The Chiller name, logo, design, code and site content belong to us. You may use the answers you receive to plan your own trip, but not copy the Service or its content at scale or for commercial purposes.',
+    },
+    {
+      h: '11. Health, safety, insurance and travel documents',
+      items: [
+        'Travel — especially adventure activities, trekking and altitude — involves risk. What you do and how is your decision.',
+        'You are responsible for a valid passport, visas, entry permits, vaccinations and suitable travel insurance (including adventure-sports cover). Always check with official sources.',
+      ],
+    },
+    {
+      h: '12. Availability and changes to the Service',
+      text: 'We don\'t promise the Service will always be available, error-free or uninterrupted, and we may change, suspend or discontinue all or part of it.',
+    },
+    {
+      h: '13. Limitation of liability',
+      items: [
+        'To the maximum extent permitted by law, Chiller is not liable for indirect or consequential loss, or for loss arising from reliance on unverified information, from a booking with a provider, from a provider\'s acts or omissions, or from a Service outage.',
+        'Nothing in these terms limits liability that cannot be limited by law, such as for intentional harm or gross negligence.',
+      ],
+    },
+    {
+      h: '14. Indemnity',
+      text: 'If you breach these terms and a claim is brought against us as a result, you will reimburse our reasonable costs arising from it.',
+    },
+    {
+      h: '15. Privacy',
+      text: 'How we use your personal data is described in the Privacy Policy, which forms part of these terms.',
+      link: { href: '#privacy', label: 'Privacy Policy' },
+    },
+    {
+      h: '16. Changes to these terms',
+      text: 'We may update these terms; the date at the top shows the latest version. We will announce material changes on the site, and on WhatsApp you will be asked to accept the updated terms.',
+    },
+    {
+      h: '17. Governing law and jurisdiction',
+      text: 'These terms are governed by the laws of the State of Israel. The competent courts of the Tel Aviv-Jaffa district have exclusive jurisdiction, unless mandatory law provides otherwise.',
+    },
+    {
+      h: '18. Contact',
+      text: 'Questions, complaints or requests about these terms:',
+      email: true,
+    },
+  ],
+};
+
+function TermsBody({ data, rtl }) {
+  const boxStyle = rtl
+    ? { borderLeft: 'none', borderRight: '4px solid #38bdf8', borderRadius: '12px 0 0 12px' }
+    : undefined;
+  const listStyle = rtl ? { paddingRight: '24px', paddingLeft: 0 } : undefined;
+  return (
+    <>
+      <header className="legal-header">
+        <h1 className="legal-title" style={rtl ? { fontSize: '2.4rem' } : undefined}>{data.title}</h1>
+        <div className="legal-meta">{data.updated}</div>
+      </header>
+      <section className="legal-section">
+        <p className="legal-text">{data.intro}</p>
+      </section>
+      {data.sections.map((s) => (
+        <section className="legal-section" key={s.h}>
+          <h2>{s.h}</h2>
+          {s.text && <p className="legal-text">{s.text}</p>}
+          {s.items && (
+            <ul className="legal-list" style={listStyle}>
+              {s.items.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          )}
+          {s.after && <p className="legal-text">{s.after}</p>}
+          {s.link && (
+            <p className="legal-text">
+              <a href={s.link.href} className="legal-link">{s.link.label}</a>
+            </p>
+          )}
+          {s.email && (
+            <div className="legal-highlight-box" style={boxStyle}>
+              <p><Email /></p>
+            </div>
+          )}
+        </section>
+      ))}
+    </>
+  );
+}
+
+const goHome = () => { window.location.hash = 'home'; };
+
+function TermsOfService({ onBack = goHome }) {
   return (
     <div className="legal-container">
-      <button className="back-btn" onClick={onBack} aria-label="Back to Home">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="19" y1="12" x2="5" y2="12"></line>
-          <polyline points="12 19 5 12 12 5"></polyline>
-        </svg>
+      <button type="button" className="back-btn" onClick={onBack}>
         <span>חזרה לדף הבית / Back to Home</span>
       </button>
 
-      <header className="legal-header">
-        <h1 className="legal-title">Terms of Service</h1>
-        <div className="legal-meta">Last Updated: August 2026</div>
-      </header>
-
-      <section className="legal-section">
-        <h2>1. Acceptance & The Service</h2>
-        <p className="legal-text">
-          By accessing, browsing, or using the Chiller Travel website and our AI-powered travel planning companion, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. Chiller Travel provides an artificial intelligence planning utility designed to suggest itineraries, routes, activities, and accommodation options. All outputs and recommendations generated by our bot are provided for general informational and travel planning purposes only, and should not be relied upon as absolute or final.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>2. Affiliate Disclosure</h2>
-        <p className="legal-text">
-          Chiller Travel participates in affiliate marketing programs. This means that we embed specialized referral links to third-party travel, lodging, flight, and tour providers. When users click on these links and complete a purchase or booking, Chiller Travel receives a referral commission from the respective provider. These transactions occur at absolutely no additional cost to the user, and our affiliate relationships do not influence the price you pay.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>3. Dynamic Pricing & Availability</h2>
-        <p className="legal-text">
-          All rates, fees, timetables, and booking availability details displayed or suggested by the AI travel bot fluctuate in real-time based on supplier demand, seasonal changes, and inventory updates. Chiller Travel does not guarantee pricing or room/seat availability. Prices and bookings are only locked and legally binding once they are fully paid, confirmed, and receipted on the external third-party provider's official platform.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>4. Medical, Safety & Backpacker Insurance</h2>
-        <p className="legal-text">
-          The travel and itinerary recommendations provided by our AI assistant are for general guidance and backpacking inspiration only. They do not constitute professional, legal, medical, or official safety advice. Backpacker travel and adventure activities involve inherent dangers. Users are solely and exclusively responsible for obtaining comprehensive travel insurance that includes coverage for high-risk activities, extreme sports, and high-altitude trekking, as well as obtaining professional medical advice, required vaccines, and assessing the safety, weather, and physical conditions at their destinations. Chiller Travel assumes no liability whatsoever for injuries, illnesses, accidents, property damage, or financial losses incurred during travel.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>5. Visas, Passports & Border Crossings</h2>
-        <p className="legal-text">
-          Crossing international borders, accessing remote regions, or entering foreign countries requires strict legal documentation. You are solely and exclusively responsible for verifying your passport validity, acquiring required visas, permits, or tourist cards, and checking land, sea, or air border crossing regulations for any route suggested by our AI bot. Chiller Travel is not responsible for entry denials, detentions, or travel cancellations resulting from visa or documentation issues.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>6. Cancellations & Consumer Law</h2>
-        <p className="legal-text">
-          Chiller Travel functions strictly as an affiliate referral platform. We are not a travel agency, tour operator, booking merchant, or merchant of record. We do not collect payments, issue tickets, or handle reservation modifications. Consequently, any cancellations, refund requests, scheduling modifications, or customer service issues are subject strictly to the terms, conditions, cancellation policies, and local consumer protection laws (including the Israeli Consumer Protection Law, where legally applicable) of the end supplier or third-party service provider. Any legal claims, disputes, or complaints must be filed directly against the end supplier, and not against Chiller Travel.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>7. Intellectual Property & User Conduct</h2>
-        <p className="legal-text">
-          All text, graphics, user interface designs, logos, software, and AI-generated outputs (including custom travel itineraries) displayed on Chiller Travel are protected by intellectual property laws. Users are strictly prohibited from scraping, copying, replicating, reverse-engineering, commercializing, reselling, or republishing the AI-generated itineraries, site data, database contents, or bot outputs for any commercial or public purpose without our prior written consent.
-        </p>
-      </section>
-
-      <section className="legal-section">
-        <h2>8. Contact Info</h2>
-        <div className="legal-highlight-box">
-          <p>
-            For any inquiries, contact us at <a href="mailto:chillerbot1405@gmail.com" className="legal-link">chillerbot1405@gmail.com</a>. Please include your full name in your message.
-          </p>
-        </div>
-      </section>
+      <div dir="rtl" lang="he" style={{ width: '100%', textAlign: 'right' }}>
+        <TermsBody data={he} rtl />
+      </div>
 
       <hr className="legal-divider" />
 
-      <div className="rtl-container" dir="rtl">
-        <header className="legal-header" style={{ borderBottomColor: 'rgba(255, 255, 255, 0.08)' }}>
-          <h1 className="legal-title" style={{ fontSize: '2.4rem' }}>תנאי שימוש</h1>
-          <div className="legal-meta" style={{ textAlign: 'right' }}>עודכן לאחרונה: אוגוסט 2026</div>
-        </header>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>1. קבלת התנאים והשירות</h2>
-          <p className="legal-text">
-            בעצם הגישה, הגלישה או השימוש באתר Chiller Travel ובכלי תכנון הנסיעות מבוסס הבינה המלאכותית (AI) שלנו, אתם מאשרים כי קראתם, הבנתם ואתם מסכימים להיות כפופים לתנאי שימוש אלה. Chiller Travel מספקת כלי תכנון המבוסס על בינה מלאכותית שנועד להציע מסלולי טיול, דרכי הגעה, פעילויות ואפשרויות לינה. כל הפלטים וההמלצות המופקים על ידי הבוט שלנו מסופקים לצורכי תכנון כללי ומידע בלבד, ואין להסתמך עליהם כנתונים מוחלטים או סופיים.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>2. גילוי נאות שותפים</h2>
-          <p className="legal-text">
-            Chiller Travel משתתפת בתוכניות שיווק שותפים. משמעות הדבר היא שאנו מטמיעים קישורי הפניה ייעודיים לספקי נסיעות, לינה, טיסות וסיורים של צד שלישי. כאשר משתמשים לוחצים על קישורים אלה ומבצעים רכישה או הזמנה, Chiller Travel מקבלת עמלת הפניה מהספק הרלוונטי. עסקאות אלו מתבצעות ללא כל עלות נוספת מצד המשתמש, ומערכות היחסים שלנו עם השותפים אינן משפיעות על המחיר שאתם משלמים.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>3. תמחור דינמי וזמינות</h2>
-          <p className="legal-text">
-            כל התעריפים, העמלות, לוחות הזמנים ופרטי זמינות ההזמנות המוצגים או המוצעים על ידי בוט הנסיעות משתנים בזמן אמת בהתאם לביקושים אצל הספקים, שינויים עונתיים ועדכוני מלאי. Chiller Travel אינה מבטיחה תמחור או זמינות של חדרים או מושבים. המחירים וההזמנות ננעלים והופכים למחייבים מבחינה משפטית רק לאחר תשלום מלא, אישור וקבלת קבלה רשמית בפלטפורמה של ספק הקצה (הצד השלישי).
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>4. ספורט, בטיחות וביטוח מטיילים</h2>
-          <p className="legal-text">
-            המלצות הנסיעה ומסלולי הטיול המסופקים על ידי סוכן הבינה המלאכותית שלנו מיועדים להשראה והכוונה כללית בלבד. הם אינם מהווים ייעוץ מקצועי, משפטי, רפואי או ייעוץ בטיחות רשמי. טיולי תרמילאים ופעילויות אקסטרים כרוכים בסכנות אינהרנטיות. המשתמשים אחראים באופן בלעדי ומלא לרכישת ביטוח נסיעות מקיף הכולל כיסוי לפעילויות בסיכון גבוה, ספורט אתגרי וטרקים בגבהים, כמו גם לקבלת ייעוץ רפואי מקצועי (כולל חיסונים נדרשים) והערכת תנאי הבטיחות, מזג האוויר והתנאים הפיזיים ביעדים. Chiller Travel אינה נושאת בכל אחריות לפציעות, מחלות, תאונות, נזק לרכוש או הפסדים כספיים שייגרמו במהלך הטיול.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>5. אשרות, דרכונים ומעברי גבול</h2>
-          <p className="legal-text">
-            מעבר גבולות בינלאומיים, גישה לאזורים מרוחקים או כניסה למדינות זרות דורשים תיעוד משפטי קפדני. אתם אחראים באופן בלעדי ומלא לוודא את תוקף הדרכון שלכם, להנפיק אשרות כניסה (ויזות) נדרשות, אישורים או כרטיסי תייר, ולבדוק את תקנות מעבר הגבול היבשתי, הימי או האווירי עבור כל מסלול המוצע על ידי הבוט שלנו. Chiller Travel אינה אחראית לסירובי כניסה, עיכובים או ביטולי נסיעות הנובעים מבעיות באשרות או במסמכים.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>6. ביטולים וחוקי הגנת הצרכן</h2>
-          <p className="legal-text">
-            Chiller Travel פועלת אך ורק כפלטפורמת הפניה של שותפים. איננו סוכנות נסיעות, מפעיל טיולים או ספק הזמנות ישיר (Merchant of Record). איננו גובים תשלומים, מנפיקים כרטיסים או מטפלים בשינויי הזמנות. כפועל יוצא מכך, כל הביטולים, בקשות ההחזר, שינויי לוחות הזמנים או בעיות שירות הלקוחות כפופים אך ורק לתנאים, למדיניות הביטולים ולחוקי הגנת הצרכן המקומיים (כולל חוק הגנת הצרכן הישראלי, ככל שהוא חל על פי דין) של ספק הקצה או ספק השירות השלישי. כל תביעה משפטית, מחלוקת או תלונה יש להגיש ישירות נגד ספק הקצה, ולא נגד Chiller Travel.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>7. קניין רוחני והתנהגות משתמשים</h2>
-          <p className="legal-text">
-            כל הטקסטים, הגרפיקה, עיצובי ממשק המשתמש, הלוגואים, התוכנה והפלטים המופקים על ידי הבינה המלאכותית (כולל מסלולי טיול מותאמים אישית) המוצגים ב-Chiller Travel מוגנים על ידי חוקי קניין רוחני. חל איסור מוחלט על המשתמשים לגרד מידע (scraping), להעתיק, לשכפל, להנדס לאחור, למסחר, למכור מחדש או לפרסם מחדש את המסלולים המופקים על ידי ה-AI, נתוני האתר, תכני מסד הנתונים או פלטי הבוט לכל מטרה מסחרית או ציבורית ללא קבלת אישור מראש ובכתב.
-          </p>
-        </section>
-
-        <section className="legal-section">
-          <h2 style={{ fontSize: '1.4rem', color: '#38bdf8' }}>8. יצירת קשר</h2>
-          <div className="legal-highlight-box" style={{ borderLeft: 'none', borderRight: '4px solid #38bdf8', borderRadius: '12px 0 0 12px' }}>
-            <p>
-              לכל פנייה, שלחו הודעה עם שמכם המלא ל-<a href="mailto:chillerbot1405@gmail.com" className="legal-link">chillerbot1405@gmail.com</a>.
-            </p>
-          </div>
-        </section>
+      <div dir="ltr" lang="en" style={{ width: '100%' }}>
+        <TermsBody data={en} rtl={false} />
       </div>
     </div>
   );

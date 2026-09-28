@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-function ContactUs({ onBack }) {
+const goHome = () => { window.location.hash = 'home'; };
+
+function ContactUs({ onBack = goHome }) {
   const [fullName, setFullName] = useState('');
   const [message, setMessage] = useState('');
 

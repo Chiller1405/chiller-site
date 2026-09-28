@@ -3,7 +3,9 @@ import React from 'react';
 // Accessibility statement (2026-09-23, legal-checklist review). Worded as "we aim to meet" rather
 // than "we comply with" on purpose: no formal accessibility audit has been done yet, so claiming
 // full compliance would itself be an overstated promise.
-function AccessibilityStatement({ onBack }) {
+const goHome = () => { window.location.hash = 'home'; };
+
+function AccessibilityStatement({ onBack = goHome }) {
   return (
     <div className="legal-container" dir="rtl" style={{ textAlign: 'right', alignItems: 'stretch' }}>
       <button type="button" className="back-btn" onClick={onBack} style={{ alignSelf: 'flex-start' }}>
@@ -12,7 +14,7 @@ function AccessibilityStatement({ onBack }) {
 
       <header className="legal-header">
         <h1 className="legal-title" style={{ fontSize: '2.4rem' }}>הצהרת נגישות</h1>
-        <div className="legal-meta">עודכן לאחרונה: ספטמבר 2026</div>
+        <div className="legal-meta">עודכן לאחרונה: 24 בספטמבר 2026</div>
       </header>
 
       <section className="legal-section">
@@ -35,6 +37,16 @@ function AccessibilityStatement({ onBack }) {
       </section>
 
       <section className="legal-section">
+        <h2>היקף ובדיקה</h2>
+        <ul className="legal-list" style={{ paddingRight: '24px', paddingLeft: 0 }}>
+          <li>ההצהרה חלה על האתר chiller-travel.com ועל הצ'אט שבו. לצ'ילר אין משרד או נקודת שירות פיזית לקהל.</li>
+          <li>השירות בווטסאפ פועל בתוך אפליקציית WhatsApp, והנגישות שלה (כמו תמיכה בקוראי מסך והודעות קוליות) באחריות Meta. אפשר לשלוח לצ'ילר גם הודעות קוליות.</li>
+          <li>האתר נבדק בדפדפן Chrome במחשב ובתצוגת טלפון, כולל ניווט במקלדת. עוד לא בוצעה בדיקת נגישות מלאה על ידי מורשה נגישות.</li>
+          <li>בדף הבית יש הדגמות מונפשות של שיחות. הן להמחשה בלבד, והמידע שבהן אינו נדרש לשימוש בשירות.</li>
+        </ul>
+      </section>
+
+      <section className="legal-section">
         <h2>מגבלות ידועות</h2>
         <p className="legal-text">
           התשובות בצ'אט נוצרות אוטומטית על ידי בינה מלאכותית, ולפעמים כוללות קישורים לאתרים של ספקים חיצוניים
@@ -48,7 +60,7 @@ function AccessibilityStatement({ onBack }) {
           <p>
             אם משהו באתר לא נגיש לכם, נשמח לשמוע ולתקן. כתבו לנו ל-
             <a href="mailto:chillerbot1405@gmail.com" className="legal-link">chillerbot1405@gmail.com</a>
-            {' '}ותארו את הבעיה ואת העמוד שבו נתקלתם בה. נחזור אליכם בהקדם.
+            {' '}ותארו את הבעיה ואת העמוד שבו נתקלתם בה. נשתדל לחזור אליכם תוך 7 ימי עסקים. אם קשה לכם להשתמש באתר, אפשר לקבל את אותו מידע ועזרה גם במייל.
           </p>
         </div>
       </section>

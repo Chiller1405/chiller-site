@@ -327,7 +327,8 @@ export default function ChatWidget({ externalIsOpen, setExternalIsOpen }) {
               terms and privacy policy — before the first message goes out. The window opens as soon
               as the input is focused (onFocus below), so this is visible while typing. */}
           <p className="chiller-consent-notice" dir="rtl">
-            צ'ילר הוא בינה מלאכותית ועלול לטעות. בשליחת הודעה אתם מסכימים ל
+            צ'ילר הוא בינה מלאכותית ועלול לטעות, ואינו צד להזמנות אצל הספקים. חלק מהקישורים הם קישורי שותפים.
+            {' '}בשליחת הודעה אתם מאשרים שאתם בני 18 ומעלה ומסכימים ל
             <a href="#terms">תנאי השימוש</a> ול<a href="#privacy">מדיניות הפרטיות</a>.
             {' '}אל תשתפו מידע רגיש כמו מספר דרכון או פרטי אשראי.
           </p>
