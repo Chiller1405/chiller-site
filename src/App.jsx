@@ -60,7 +60,7 @@ const translations = {
       yesim: { name: "Yesim", desc: "כרטיסי eSIM המאפשרים חיבור יציב לאינטרנט סלולרי ברחבי העולם." }
     },
     bookBtn: "מעבר לאתר ההזמנה",
-    footerNotice: "Chiller Travel משתתפת בתוכניות שותפים. אנו עשויים להרוויח עמלה על הזמנות המתבצעות דרך הקישורים שלנו ללא עלות נוספת עבורכם.",
+    footerNotice: "Chiller Travel משתתפת בתוכניות שותפים. אנו עשויים להרוויח עמלה על הזמנות דרך הקישורים שלנו, ללא עלות נוספת עבורכם, והמלצות ממומנות מסומנות. צ'ילר מבוסס בינה מלאכותית ועלול לטעות; ההזמנה והתשלום נעשים אצל הספק ובאחריותו.",
     footerCopyright: "כל הזכויות שמורות ל-Chiller Travel."
   },
   en: {
@@ -113,7 +113,7 @@ const translations = {
       yesim: { name: "Yesim", desc: "eSIM cards offering stable mobile data connection in countries worldwide." }
     },
     bookBtn: "Go to booking site",
-    footerNotice: "Chiller Travel participates in affiliate programs. We may earn a commission on bookings made through our links at no extra cost to you.",
+    footerNotice: "Chiller Travel participates in affiliate programs. We may earn a commission on bookings made through our links at no extra cost to you, and sponsored recommendations are labeled. Chiller is AI-based and can make mistakes; bookings and payments happen with, and are the responsibility of, the provider.",
     footerCopyright: "All rights reserved. Chiller Travel."
   }
 };
