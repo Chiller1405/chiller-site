@@ -7,7 +7,7 @@
     "dev": "vite",
     "predev": "node scripts/render-legal.mjs",
     "build": "vite build",
-    "prebuild": "node scripts/render-legal.mjs",
+    "prebuild": "node scripts/render-legal.mjs && node scripts/check-aff-map.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },
