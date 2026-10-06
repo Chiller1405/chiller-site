@@ -1,7 +1,6 @@
 ---
 name: opus-plan
-description: Saves tokens on implementation work — the main session (Opus) does the thinking (reads the code, decides, writes a precise plan), then hands the hands-on execution (edits, test runs, fix loops) to the `sonnet-executor` subagent running on Sonnet, and finally reviews the result. Use when Noam runs /opus-plan <task>, or asks to "think with Opus and execute with Sonnet" / "תחשוב עם אופוס ותבצע עם סונט".
-disable-model-invocation: true
+description: Saves tokens on implementation work — the main session (Opus) does the thinking (reads the code, decides, writes a precise plan), then hands the hands-on execution (edits, test runs, fix loops) to the `sonnet-executor` subagent running on Sonnet, and finally reviews the result. Use by default for every task that changes files (CLAUDE.md makes this the standing rule) — skip only for questions, research without edits, or 1–2 trivial edits. Also when Noam runs /opus-plan <task>.
 argument-hint: <המשימה>
 ---
 
