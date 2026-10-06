@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "predev": "node scripts/render-legal.mjs",
     "build": "vite build",
+    "prebuild": "node scripts/render-legal.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },
