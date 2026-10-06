@@ -551,7 +551,12 @@ footer button.lnk:hover{color:#fff}
   .msg,.typing,.rcard,.rv{opacity:1!important;transform:none!important}
 }
 
-dialog#tryDlg .try-notice{margin:0;padding:12px clamp(18px,5vw,64px) 0;font-size:12.5px;line-height:1.65;color:var(--wa-meta);background:#1F2C34}
+dialog#tryDlg .try-notice{margin:0;padding:12px clamp(18px,5vw,64px) 0;font-size:12.5px;line-height:1.65;color:var(--wa-meta);background:#1F2C34;display:flex;align-items:flex-start;gap:10px}
+dialog#tryDlg .try-notice[hidden]{display:none}
+dialog#tryDlg .try-notice-text{flex:1;min-width:0}
+dialog#tryDlg .try-notice-x{flex:none;width:28px;height:28px;margin:-4px 0 0;margin-inline-end:-6px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--wa-meta);cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+dialog#tryDlg .try-notice-x:hover{background:rgba(255,255,255,.08);color:var(--wa-text)}
+dialog#tryDlg .try-notice-x svg{width:14px;height:14px}
 dialog#tryDlg .try-notice a{color:#53BDEB;font-weight:600}
 /* ===== web chat window — final, authoritative sizing ===== */
 dialog#tryDlg .try-box{width:min(1120px,96vw);height:min(94vh,980px);border-radius:30px}
@@ -895,7 +900,7 @@ dialog#tryDlg .try-form button svg{width:24px;height:24px}
       <button type="button">טיסה לבנגקוק בנובמבר</button>
     </div>
     <div class="try-cta" id="tryCta" hidden><span>רוצים תשובה מלאה וחיה?</span><a href="https://wa.me/972552584589?text=%D7%94%D7%99%D7%99%20%D7%A6%D7%B3%D7%99%D7%9C%D7%A8" target="_blank" rel="noopener noreferrer" id="tryWa"><svg><use href="#wa"/></svg>המשיכו בוואטסאפ · פתח שיחה</a></div>
-    <p class="try-notice" id="tryNotice"></p>
+    <p class="try-notice" id="tryNotice"><span class="try-notice-text" id="tryNoticeText"></span><button class="try-notice-x" type="button" id="tryNoticeX" aria-label="סגירה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></p>
     <form class="try-form" id="tryForm" autocomplete="off">
       <label for="tryInput" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">כתבו שאלה לצ׳ילר</label>
       <input id="tryInput" placeholder="כתבו שאלה, כמו לחבר…" maxlength="200">
@@ -1207,6 +1212,12 @@ loadAnalyticsIfConsented();
   const now = () => new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',hour12:false});
   const tadd = html => { tryBody.insertAdjacentHTML('beforeend', html); tryBody.scrollTop = tryBody.scrollHeight; return tryBody.lastElementChild; };
   const setWa = q => { tryWa.href = 'https://wa.me/' + WA_NUM + '?text=' + encodeURIComponent(q || T('היי צ׳ילר','Hi Chiller')); tryWa.target = '_blank'; tryWa.rel = 'noopener noreferrer'; };
+  /* consent notice above the chat input: visible until the first message is sent or it's dismissed; then hidden for the rest of the browser session */
+  const tryNotice = document.getElementById('tryNotice'), NOTICE_KEY = 'chiller_try_notice_hidden';
+  const noticeHidden = () => { try { return sessionStorage.getItem(NOTICE_KEY) === '1'; } catch { return false; } };
+  function hideNotice(){ tryNotice.hidden = true; try { sessionStorage.setItem(NOTICE_KEY, '1'); } catch {} }
+  if (noticeHidden()) tryNotice.hidden = true;
+  document.getElementById('tryNoticeX').addEventListener('click', () => { hideNotice(); tryInput.focus(); });
   let busy = false;
   async function ask(q){
     q = q.trim(); if (!q || busy) return;
@@ -1226,7 +1237,7 @@ loadAnalyticsIfConsented();
       html = e.name === 'AbortError'
         ? T('לוקח לי יותר זמן מהרגיל לענות. נסו שוב עוד רגע — או המשיכו איתי ישר בוואטסאפ.','This is taking longer than usual. Try again in a moment — or continue with me on WhatsApp.')
         : T('לא הצלחתי להתחבר כרגע. אפשר להמשיך איתי ישר בוואטסאפ 👇','I couldn\'t connect right now. You can continue with me on WhatsApp 👇');
-    } finally { clearTimeout(timer); }
+    } finally { clearTimeout(timer); hideNotice(); }
     typ.remove(); tryStatus.textContent = T('מחובר','Online'); tryStatus.classList.remove('typing');
     tadd(`<div class="msg in${err ? ' err' : ''}">${html}<span class="meta">${now()}</span></div>`);
     tryCta.hidden = false; setWa(q);
@@ -1235,6 +1246,7 @@ loadAnalyticsIfConsented();
   setWa('');
   document.getElementById('openTry').addEventListener('click', () => {
     openDlg(tryDlg);
+    if (noticeHidden()) tryNotice.hidden = true;
     if (!tryBody.children.length) {
       tadd(`<div class="msg in">${T('היי! 🎒 אני צ׳ילר, הסוכן החכם שלך לטיולים. איך אפשר לעזור לך לתכנן את ההרפתקה הבאה?','Hi! 🎒 I\'m Chiller, your smart travel sidekick. How can I help you plan your next adventure?')}<span class="meta">${now()}</span></div>`);
       getToken(false).catch(() => {});
@@ -1361,7 +1373,7 @@ loadAnalyticsIfConsented();
     attrs.forEach(x => x.el.setAttribute(x.a, l === 'en' ? EN[x.he] : x.he));
     document.title = l === 'en' ? EN[TITLE_HE] : TITLE_HE;
     document.getElementById('copy').textContent = '© ' + new Date().getFullYear() + ' Chiller Travel. ' + T('כל הזכויות שמורות ל-Chiller Travel.', 'All rights reserved. Chiller Travel.');
-    document.getElementById('tryNotice').innerHTML = l === 'en' ? "Chiller is AI and can make mistakes, and is not a party to bookings with providers. Some links are affiliate links. By sending a message you confirm you are 18 or older and agree to the <a href=\"#terms\">Terms of Use</a> and <a href=\"#privacy\">Privacy Policy</a>. Don't share sensitive information such as passport or card details." : "צ׳ילר הוא בינה מלאכותית ועלול לטעות, ואינו צד להזמנות אצל הספקים. חלק מהקישורים הם קישורי שותפים. בשליחת הודעה אתם מאשרים שאתם בני 18 ומעלה ומסכימים ל<a href=\"#terms\">תנאי השימוש</a> ול<a href=\"#privacy\">מדיניות הפרטיות</a>. אל תשתפו מידע רגיש כמו מספר דרכון או פרטי אשראי.";
+    document.getElementById('tryNoticeText').innerHTML = l === 'en' ? "Chiller is AI and can make mistakes, and isn't a party to bookings. Some links are affiliate links. By sending a message you confirm you're 18+ and agree to the <a href=\"#terms\">Terms of Use</a> and <a href=\"#privacy\">Privacy Policy</a>. Don't share passport or card details." : "צ׳ילר הוא AI ועלול לטעות, ואינו צד להזמנות. חלק מהקישורים הם קישורי שותפים. בשליחת הודעה אתם מאשרים שאתם בני 18+ ומסכימים ל<a href=\"#terms\">תנאי השימוש</a> ול<a href=\"#privacy\">מדיניות הפרטיות</a>. אל תשתפו פרטי דרכון או אשראי.";
     langBtn.textContent = l === 'en' ? 'עב' : 'EN';
     langBtn.lang = l === 'en' ? 'he' : 'en';
     langBtn.setAttribute('aria-label', l === 'en' ? 'מעבר לעברית' : 'Switch to English');
