@@ -1,15 +1,1384 @@
 <!doctype html>
-<html lang="he">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chiller - עוזר נסיעות חכם לתרמילאים</title>
-    <meta name="description" content="צ'ילר הוא עוזר נסיעות מבוסס AI לתרמילאים: לינה, מעברים, טיסות, אטרקציות ו-eSIM, בווטסאפ ובאתר." />
-    <meta name='impact-site-verification' value='ca546d15-1944-4062-bb63-e30785205d8a'>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="description" content="צ׳ילר הוא עוזר נסיעות מבוסס AI לתרמילאים: לינה, מעברים, טיסות, אטרקציות ו-eSIM, בווטסאפ ובאתר.">
+<meta name='impact-site-verification' value='ca546d15-1944-4062-bb63-e30785205d8a'>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chiller Travel">
+<meta property="og:title" content="צ׳ילר — לאן שלא תגיע, צ׳ילר כבר יודע">
+<meta property="og:description" content="צ׳ילר הוא עוזר נסיעות מבוסס AI לתרמילאים: לינה, מעברים, טיסות, אטרקציות ו-eSIM, בווטסאפ ובאתר.">
+<meta property="og:url" content="https://chiller-travel.com/">
+<meta property="og:image" content="https://chiller-travel.com/img/cusco.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://chiller-travel.com/">
+<title>צ׳ילר — לאן שלא תגיע, צ׳ילר כבר יודע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Gveret+Levin&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0D10; --ink-2:#12151A; --ink-3:#1A1E25; --line-d:rgba(255,255,255,.08);
+  --paper:#F3EADB; --paper-2:#EADFCB; --card:#FFFAF1; --line:#E0D3BD;
+  --text:#14161A; --muted:#5E5A53; --muted-d:#9AA0A8;
+  --orange:#FF5B22; --orange-2:#FF7A45; --orange-deep:#C2410C;
+  --wa:#25D366; --lime:#C8F04A;
+  --wa-bg:#0B141A; --wa-in:#202C33; --wa-out:#005C4B; --wa-text:#E9EDEF; --wa-meta:#8696A0;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1100px 620px at 88% 18%,rgba(255,150,90,.16),transparent 62%),radial-gradient(900px 700px at 4% 58%,rgba(205,160,95,.16),transparent 60%),radial-gradient(800px 500px at 70% 92%,rgba(255,120,60,.10),transparent 60%),var(--paper);background-attachment:fixed;color:var(--text);font-family:'Heebo',system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.16;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .30 0 0 0 0 .18 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+img{display:block;max-width:100%}
+.mono{font-family:'IBM Plex Mono',monospace}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-weight:900;letter-spacing:-.035em;line-height:1.02;margin:0}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.12em;color:var(--orange-deep);display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:18px;height:2px;background:currentColor;border-radius:2px}
+section{position:relative}
+
+/* buttons */
+.btn-wa{position:relative;display:inline-flex;align-items:center;gap:12px;background:var(--wa);color:#062A14;font-weight:800;font-size:18px;text-decoration:none;border-radius:999px;padding:16px 28px 16px 24px;box-shadow:0 10px 30px rgba(37,211,102,.28);transition:transform .25s var(--ease),box-shadow .35s var(--ease),background .2s}
+.btn-wa::after{content:"";position:absolute;inset:-6px;border-radius:999px;border:1.5px solid rgba(37,211,102,.45);opacity:0;transform:scale(.96);transition:.35s var(--ease)}
+.btn-wa:hover{transform:translateY(-2px);background:#2EE070;box-shadow:0 0 40px rgba(37,211,102,.45),0 14px 34px rgba(37,211,102,.35)}
+.btn-wa:hover::after{opacity:1;transform:scale(1)}
+.btn-wa svg{width:24px;height:24px;flex:none}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-weight:600;font-size:16px;border-radius:999px;padding:14px 22px;border:1px solid currentColor;opacity:.85;transition:.2s}
+.btn-ghost:hover{opacity:1;background:rgba(255,255,255,.06)}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:8px}
+
+/* nav */
+.nav{position:fixed;top:0;inset-inline:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav .wrap{height:72px;display:flex;align-items:center;gap:36px;max-width:1240px;padding:0 clamp(24px,4vw,40px)}
+.nav.solid{background:rgba(11,13,16,.86);backdrop-filter:blur(10px);border-color:var(--line-d)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:900;font-size:24px;letter-spacing:-.02em}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:var(--orange);position:relative;display:grid;place-items:center;flex:none}
+.logo-mark::before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:var(--ink);inset-inline-end:-5px;top:calc(50% - 5px)}
+.logo-mark svg{width:18px;height:18px;color:var(--ink)}
+.nav-links{display:flex;gap:28px;flex:1}
+.nav-links a{color:#C9CDD3;text-decoration:none;font-size:15px;font-weight:500;white-space:nowrap}
+.nav-links a:hover{color:#fff}
+.nav .btn-wa{padding:10px 18px 10px 16px;font-size:15px;box-shadow:none}
+.nav .btn-wa svg{width:18px;height:18px}
+
+/* hero */
+.hero{background:var(--ink);color:#fff;padding:150px 0 110px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line-d) 1px,transparent 1px),linear-gradient(90deg,var(--line-d) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 30% 40%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 30% 40%,#000 20%,transparent 75%);opacity:.6}
+.glow{position:absolute;width:640px;height:640px;border-radius:50%;left:4%;top:12%;background:radial-gradient(circle,rgba(255,91,34,.30),rgba(255,91,34,0) 65%);pointer-events:none}
+.glow.g2{left:22%;top:48%;width:420px;height:420px;background:radial-gradient(circle,rgba(37,211,102,.16),rgba(37,211,102,0) 65%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.hero h1{font-size:clamp(44px,5.7vw,88px);line-height:1}
+.hero h1 .u{position:relative;display:inline-block;white-space:nowrap}
+.u-line{position:absolute;inset-inline:-2%;width:104%;bottom:-.14em;height:.26em;overflow:visible}
+.u-line path{fill:none;stroke:var(--orange);stroke-width:7;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:draw 1.1s cubic-bezier(.65,0,.35,1) .5s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero p.lead{font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:#B5BAC2;max-width:520px;margin:26px 0 34px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hero-cta .btn-ghost{color:#E6E8EB;border-color:rgba(255,255,255,.22)}
+.badge{display:inline-flex;align-items:center;gap:10px;font-size:13px;color:#C9CDD3;border:1px solid var(--line-d);background:rgba(255,255,255,.03);border-radius:999px;padding:7px 14px 7px 12px;margin-bottom:26px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--lime);animation:ping 1.8s infinite;flex:none}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(200,240,74,.6)}70%{box-shadow:0 0 0 9px rgba(200,240,74,0)}100%{box-shadow:0 0 0 0 rgba(200,240,74,0)}}
+.pills-label{font-size:13px;color:var(--muted-d);margin:40px 0 12px}
+.pills{display:flex;gap:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px}
+.pills::-webkit-scrollbar{display:none}
+.pill{flex:none;font:inherit;font-size:15px;font-weight:500;color:#D5D9DE;background:transparent;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:10px 18px;cursor:pointer;transition:.25s var(--ease);min-height:44px}
+.pill:hover{border-color:rgba(255,255,255,.4);color:#fff}
+.pill.active{background:#fff;color:var(--ink);border-color:#fff;font-weight:700}
+
+/* chat */
+.chat-stage{position:relative;display:flex;justify-content:center}
+.chat{width:100%;max-width:430px;background:var(--wa-bg);border-radius:28px;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 8px rgba(255,255,255,.02),0 0 120px rgba(255,91,34,.18);overflow:hidden;position:relative}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.chat-head{display:flex;align-items:center;gap:12px;padding:14px 18px;background:#1F2C34;border-bottom:1px solid rgba(255,255,255,.05)}
+.chat-av{width:40px;height:40px;border-radius:50%;background:var(--orange);display:grid;place-items:center;flex:none}
+.chat-av svg{width:20px;height:20px;color:var(--ink)}
+.chat-name{font-weight:700;font-size:16px;color:var(--wa-text);display:flex;align-items:center;gap:6px}
+.verified{width:15px;height:15px}
+.chat-status{font-size:12.5px;color:var(--wa-meta);transition:color .2s}
+.chat-status.typing{color:var(--wa)}
+.chat-body{height:480px;padding:18px 14px;display:flex;flex-direction:column;gap:8px;overflow:hidden;background-color:var(--wa-bg);background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:18px 18px}
+.chat-tag{align-self:center;font-size:11.5px;color:var(--wa-meta);background:#182229;border-radius:8px;padding:4px 10px;margin-bottom:6px}
+.msg{max-width:84%;padding:8px 11px 6px;border-radius:10px;font-size:15px;line-height:1.5;color:var(--wa-text);opacity:0;transform:translateY(10px) scale(.98);animation:in .45s var(--ease) forwards;white-space:pre-line}
+@keyframes in{to{opacity:1;transform:none}}
+.msg.out{align-self:flex-start;background:var(--wa-out);border-top-left-radius:3px}
+.msg.in{align-self:flex-end;background:var(--wa-in);border-top-right-radius:3px}
+.msg b{font-weight:700}
+.meta{display:block;text-align:left;font-size:11px;color:var(--wa-meta);margin-top:2px}
+.meta .tick{color:#53BDEB}
+.typing{align-self:flex-end;background:var(--wa-in);border-radius:10px;border-top-right-radius:3px;padding:12px 14px;display:flex;gap:4px;opacity:0;animation:in .3s var(--ease) forwards}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--wa-meta);animation:bl 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.18s}.typing span:nth-child(3){animation-delay:.36s}
+@keyframes bl{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-2px)}}
+.rcard{align-self:flex-end;width:84%;background:#1A252C;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;opacity:0;animation:in .5s var(--ease) forwards}
+.rcard .rtop{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 14px 9px;color:var(--wa-text);font-weight:700;font-size:14.5px}
+.live-chip{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--lime);display:inline-flex;align-items:center;gap:6px;font-weight:500;letter-spacing:.04em;white-space:nowrap}
+.live-chip i{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+.rcard .rrow{display:flex;justify-content:space-between;padding:8px 14px;border-top:1px dashed rgba(255,255,255,.1);font-size:13.5px;color:#C7CED3}
+.rcard .rrow .mono{color:var(--wa-text)}
+.rcard .rlink{display:block;padding:10px 14px;border-top:1px solid rgba(255,255,255,.07);color:#53BDEB;font-size:13.5px;font-weight:600;text-decoration:none}
+.chat-input{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#1F2C34}
+.chat-input span{flex:1;background:#2A3942;border-radius:999px;padding:10px 16px;color:var(--wa-meta);font-size:14px}
+.chat-input i{width:40px;height:40px;border-radius:50%;background:var(--wa);display:grid;place-items:center}
+.float-note-removed{position:absolute;font-family:'Gveret Levin',cursive;color:var(--orange-2);font-size:24px;inset-inline-start:-40px;bottom:40px;transform:rotate(-6deg);white-space:nowrap}
+.chat-ambient{position:absolute;inset:-50px -60px;z-index:0;border-radius:60px;overflow:hidden;filter:blur(46px) saturate(1.35);opacity:.6;pointer-events:none}
+.chat-ambient img{width:100%;height:100%;object-fit:cover;transition:opacity .6s var(--ease)}
+.chat-stage .chat{z-index:1}
+.dest-tag{position:absolute;z-index:2;inset-inline-end:-22px;top:26px;display:flex;align-items:center;gap:10px;background:rgba(16,19,24,.78);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:6px 14px 6px 6px;transform:rotate(3deg);transition:opacity .35s var(--ease);box-shadow:0 14px 30px rgba(0,0,0,.35)}
+.dest-tag img{width:42px;height:42px;border-radius:9px;object-fit:cover}
+.dest-tag b{display:block;font-size:14px;color:#fff;line-height:1.2}
+.dest-tag small{display:block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:#FFB08F}
+.chat-input{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#1F2C34}
+.chat-input .field{flex:1;display:flex;align-items:center;gap:10px;background:#2A3942;border-radius:999px;padding:9px 14px;color:var(--wa-meta);font-size:14.5px;height:40px}
+.chat-input .field svg{width:20px;height:20px;color:var(--wa-meta);flex:none}
+.chat-input .mic{width:40px;height:40px;border-radius:50%;background:var(--wa);display:grid;place-items:center;flex:none}
+.chat-input .mic svg{width:18px;height:18px}
+
+/* destination strip */
+.strip{padding:56px 0 0;overflow:hidden}
+.strip-track{display:flex;gap:16px;width:max-content;animation:marquee 60s linear infinite}
+.strip:hover .strip-track{animation-play-state:paused}
+@keyframes marquee{to{transform:translateX(50%)}}
+.dcard{position:relative;width:250px;height:160px;border-radius:18px;overflow:hidden;flex:none;box-shadow:0 10px 26px rgba(60,40,20,.14)}
+.dcard img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.dcard:hover img{transform:scale(1.06)}
+.dcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,12,16,.72))}
+.dcard span{position:absolute;z-index:1;bottom:12px;inset-inline:14px;color:#fff;display:flex;justify-content:space-between;align-items:flex-end}
+.dcard b{font-size:17px;font-weight:800}
+.dcard small{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;opacity:.85}
+
+
+/* chaos */
+.chaos{padding:110px 0 120px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:56px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(40px,5vw,68px);margin-top:14px}
+.sec-head p{max-width:420px;color:var(--muted);margin:0;font-size:18px}
+.compare{position:relative;display:grid;grid-template-columns:1fr 64px 1fr;gap:32px;align-items:stretch}
+.panel{border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.panel-head{display:flex;justify-content:space-between;align-items:center}
+.panel-head h3{font-size:22px;letter-spacing:-.02em}
+.panel-head .mono{font-size:12px;letter-spacing:.08em}
+.p-chaos{background:var(--card);border:1px solid var(--line);box-shadow:0 18px 50px rgba(80,55,25,.07)}
+.p-chaos .panel-head .mono{color:#B4412A}
+.p-calm{background:var(--wa-bg);border:1px solid #1C262D;color:var(--wa-text);box-shadow:0 30px 70px rgba(20,22,26,.2)}
+.p-calm .panel-head .mono{color:var(--wa)}
+.frags{display:flex;flex-direction:column;gap:8px}
+.frag{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 14px;transition:opacity .5s var(--ease),background .4s,border-color .4s,transform .4s var(--ease),box-shadow .4s}
+.frag .ic{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);transition:.4s}
+.frag .ic svg{width:19px;height:19px}
+.frag b{font-size:15px;font-weight:700;display:block;line-height:1.3}
+.frag small{font-size:13px;color:var(--muted)}
+.frag .x{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#B4412A;background:#FBE2D6;border-radius:6px;padding:3px 8px;white-space:nowrap}
+.frag.active{background:#fff;border-color:var(--orange);transform:translateX(-6px);box-shadow:0 10px 26px rgba(255,91,34,.18)}
+.frag.active .ic{background:var(--orange);border-color:var(--orange);color:#0B0D10}
+.frag.done{opacity:.38}
+.frag.done b{text-decoration:line-through;text-decoration-color:rgba(180,65,42,.6)}
+.flow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--orange)}
+.flow svg{width:56px;height:56px}
+.flow .mono{font-size:11px;color:var(--muted);letter-spacing:.1em;writing-mode:horizontal-tb}
+.flow .line{width:2px;flex:1;max-height:120px;background:repeating-linear-gradient(to bottom,var(--orange) 0 4px,transparent 4px 12px);opacity:.5}
+.chat-mini{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)}
+.thread-body{display:flex;flex-direction:column;gap:6px;flex:1}
+.thread-body .msg{animation:none;opacity:1;transform:none;margin-bottom:4px}
+.tick-row{display:grid;grid-template-columns:22px 1fr;align-items:center;gap:12px;background:#16212A;border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:8px 12px;font-size:14px;color:#6F7C85;transition:color .4s,background .4s,border-color .4s}
+.tick-row .ok{width:22px;height:22px;border-radius:50%;border:1.5px dashed #3A4A54;display:grid;place-items:center;transition:background .35s,border-color .35s,transform .35s var(--ease)}
+.tick-row .ok svg{width:12px;height:12px;opacity:0;transition:opacity .3s}
+.tick-row.on{color:var(--wa-text);background:#1A2A30;border-color:rgba(37,211,102,.28)}
+.tick-row.on .ok{background:var(--wa);border-color:var(--wa);border-style:solid;transform:scale(1.08)}
+.tick-row.on .ok svg{opacity:1}
+.flyer{position:absolute;z-index:5;display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:#0B0D10;font-weight:800;font-size:14px;border-radius:999px;padding:8px 14px 8px 12px;box-shadow:0 14px 30px rgba(255,91,34,.35);pointer-events:none;white-space:nowrap}
+.flyer svg{width:16px;height:16px}
+.compare-foot{display:flex;justify-content:center;margin-top:32px}
+.pill-btn{display:inline-flex;align-items:center;gap:10px;font:inherit;font-size:14.5px;font-weight:600;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:10px 20px 10px 16px;cursor:pointer;min-height:44px;transition:.25s var(--ease)}
+.pill-btn .pi{width:26px;height:26px;border-radius:50%;background:var(--text);color:var(--paper);display:grid;place-items:center}
+.pill-btn .pi svg{width:12px;height:12px}
+.pill-btn:hover{border-color:var(--text);box-shadow:0 8px 22px rgba(20,22,26,.1)}
+
+/* ask */
+.ask{padding:120px 0}
+.ask-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.q{position:relative;text-align:right;font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:0;cursor:pointer;height:236px;overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s,opacity .8s var(--ease);width:100%}
+.q:hover,.q.open{box-shadow:0 22px 50px rgba(20,22,26,.12);border-color:#C9B38E}
+.q-face{position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between;transition:opacity .35s var(--ease),transform .45s var(--ease)}
+.q-top{display:flex;justify-content:space-between;align-items:center}
+.q-cat{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--muted)}
+.q-cat .ic{width:30px;height:30px;border-radius:9px;background:#FFE9DF;display:grid;place-items:center}
+.q-cat svg{width:17px;height:17px;color:var(--orange-deep)}
+.q-plus{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:18px;line-height:1;color:var(--muted)}
+.q-text{font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.3}
+.q-cta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted)}
+.q-place{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 12px 4px 4px;font-size:13px;font-weight:600;color:var(--text)}
+.q-place img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+.q-back .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18;filter:saturate(1.2)}
+.q-back>*{position:relative}
+.q-back{position:absolute;inset:0;padding:22px 24px;background:var(--ink-2);color:#E6E8EB;display:flex;flex-direction:column;justify-content:space-between;opacity:0;transform:translateY(16px);transition:opacity .35s var(--ease),transform .45s var(--ease);pointer-events:none}
+.q-back .who{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted-d);font-family:'IBM Plex Mono',monospace}
+.q-back .who i{width:18px;height:18px;border-radius:50%;background:var(--orange)}
+.q-back .ans{font-size:16px;line-height:1.55}
+.q-back .go{color:var(--wa);font-weight:700;font-size:14px}
+.q:hover .q-face,.q.open .q-face{opacity:0;transform:translateY(-12px)}
+.q:hover .q-back,.q.open .q-back{opacity:1;transform:none}
+.q-hint{font-size:13px;color:var(--muted);margin-top:22px;text-align:center}
+.q{height:262px;background:var(--card);border-color:var(--line);box-shadow:0 14px 34px rgba(110,70,30,.10)}
+.q-face{padding:0;justify-content:flex-start}
+.q-banner{position:relative;height:104px;flex:none;overflow:hidden}
+.q-banner img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.q:hover .q-banner img{transform:scale(1.06)}
+.q-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,14,8,.05),rgba(20,14,8,.55))}
+.q-banner .q-place2{position:absolute;z-index:1;bottom:10px;inset-inline-start:14px;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;gap:6px}
+.q-banner .q-place2::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange)}
+.q-banner .q-plus{position:absolute;z-index:1;top:10px;inset-inline-end:10px;background:rgba(255,255,255,.92);border:none;color:var(--text)}
+.q-body{flex:1;display:flex;flex-direction:column;gap:10px;padding:16px 22px 20px}
+.q-body .q-text{font-size:21px}
+.q-cat .ic{background:#F6D9C3}
+
+/* plan b */
+.planb{padding:40px 0 120px}
+.night{position:relative;background:var(--ink);color:#fff;border-radius:32px;padding:72px 64px;overflow:hidden;box-shadow:0 40px 90px rgba(60,35,15,.25);isolation:isolate}
+.night-bg{position:absolute;z-index:-1;inset:0;width:100%;height:100%;object-fit:cover;opacity:.32;filter:saturate(.9)}
+.night::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(270deg,rgba(11,13,16,.55) 0%,rgba(11,13,16,.92) 60%)}
+.planb-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.planb h2{font-size:clamp(44px,5.2vw,78px)}
+.planb h2 span{color:#CFC3B2;font-weight:700}
+.planb p{color:#B5BAC2;font-size:19px;max-width:460px;margin:22px 0 0}
+.rain{position:absolute;inset:0;background-image:linear-gradient(transparent 60%,rgba(255,255,255,.06) 60%);background-size:2px 26px;opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent,#000 60%);mask-image:linear-gradient(90deg,transparent,#000 60%);animation:rain .6s linear infinite}
+@keyframes rain{to{background-position:0 26px}}
+.stamp-d{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.12em;color:var(--lime);border:1.5px solid var(--lime);border-radius:999px;padding:7px 14px;margin-bottom:22px;transform:rotate(-3deg)}
+.planb .chat{animation:none;max-width:440px;box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.planb .chat-body{height:auto;min-height:320px}
+.planb .msg,.planb .rcard{animation:none;opacity:1;transform:none}
+
+/* live */
+.live{padding:120px 0}
+.live-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:center}
+.live h2{font-size:clamp(40px,5vw,66px);margin-top:14px}
+.live .copy p{color:var(--muted);font-size:18px}
+.term{--g:#16A34A;background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:0 1px 0 rgba(20,22,26,.04),0 24px 60px rgba(20,22,26,.08);overflow:hidden;padding:8px}
+.term-bar{display:flex;align-items:center;gap:12px;padding:12px 16px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)}
+.term-bar .ttl{font-weight:600;color:var(--text);letter-spacing:.02em}
+.term-bar .livetag{margin-inline-start:auto;display:inline-flex;align-items:center;gap:8px;color:var(--g);background:#E8F7EC;border:1px solid #C9EBD3;border-radius:999px;padding:5px 12px;letter-spacing:.08em;font-weight:600}
+.term-bar .livetag .dot{background:var(--g);animation:pingg 1.8s infinite}
+@keyframes pingg{0%{box-shadow:0 0 0 0 rgba(22,163,74,.45)}70%{box-shadow:0 0 0 8px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.term-table{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.term-head,.trow{display:grid;grid-template-columns:40px 1.6fr 1fr 1fr 1fr;gap:14px;align-items:center;padding:0 18px}
+.term-head{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);height:42px;border-bottom:1px solid var(--line)}
+.trow{height:62px;border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:14px;background:var(--card);transition:background .6s}
+.trow:last-child{border-bottom:none}
+.trow .ti{width:36px;height:36px;border-radius:10px;object-fit:cover;border:1px solid var(--line)}
+.trow .route{color:var(--text);font-weight:600}
+.trow .kind{font-family:'Heebo',sans-serif;color:var(--muted);font-size:14px}
+.trow .price{color:var(--text);font-weight:600;display:flex;align-items:center;gap:8px;transition:color .6s}
+.trow .delta{font-size:11px;font-weight:500}
+.trow .delta.up{color:#C2410C}.trow .delta.down{color:var(--g)}
+.trow .st{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.trow .st i{width:7px;height:7px;border-radius:50%;background:var(--g);box-shadow:0 0 0 3px rgba(22,163,74,.15);flex:none}
+.trow.flash{background:#F1FAF3}
+.trow.flash .price{color:var(--g)}
+.term-foot{padding:12px 16px 6px;font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* steps */
+.steps{padding:120px 0}
+.steps-grid{display:grid;grid-template-columns:1fr 1fr 1fr 340px;gap:20px;align-items:stretch}
+.step{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.step .n{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--orange-deep);width:36px;height:36px;border-radius:50%;border:1.5px solid var(--orange);display:grid;place-items:center;font-weight:600}
+.step h3{font-size:24px;letter-spacing:-.02em}
+.step p{margin:0;color:var(--muted);font-size:16px}
+.qr-card{position:relative;background:var(--card);color:var(--text);border:1px solid var(--line);border-top:4px solid var(--orange);border-radius:24px;padding:24px;box-shadow:0 24px 60px rgba(20,22,26,.08);display:flex;flex-direction:column;align-items:center;gap:14px;overflow:hidden}
+.qr-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(255,91,34,.10),transparent 60%);pointer-events:none}
+.qr-top{position:relative;width:100%;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.qr-box{position:relative;background:#fff;border-radius:18px;padding:14px;border:1px solid var(--line)}
+.qr-box svg{display:block;width:170px;height:170px}
+.qr-logo{position:absolute;inset:0;margin:auto;width:42px;height:42px;border-radius:12px;background:var(--orange);border:4px solid #fff;display:grid;place-items:center}
+.qr-logo svg{width:18px;height:18px;color:var(--ink)}
+.qr-card b{position:relative;font-size:19px;font-weight:800}
+.qr-card small{position:relative;color:var(--muted);font-size:13px}
+.mobile-cta{display:none}
+
+/* warm middle body */
+.midbody{position:relative;isolation:isolate;--card:#FBF2E2;--line:#DCC7A4;--paper:#F0E2C8;--muted:#6A5A45;background:linear-gradient(180deg,#F3EADB 0%,#EEDDC0 18%,#E8D3B2 42%,#EBD8B9 64%,#E4CCA6 86%,#DCC096 100%)}
+.midbody::before{content:"";position:absolute;inset:0;z-index:-1;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='520' height='520' viewBox='0 0 520 520'><g fill='none' stroke='%237A5A38' stroke-width='1'><path d='M60 260c0-110 90-190 200-190s200 70 200 180-100 200-210 200S60 370 60 260z'/><path d='M110 262c0-80 66-140 150-140s150 52 150 132-74 146-156 146-144-58-144-138z'/><path d='M160 264c0-52 44-92 100-92s100 34 100 86-48 96-102 96-98-38-98-90z'/><path d='M210 266c0-24 22-44 50-44s50 16 50 40-24 46-52 46-48-18-48-42z'/><path d='M-40 40c80-30 150 10 220-10s120-60 200-30'/><path d='M300 500c60-40 140-20 240-60'/></g></svg>");background-size:520px;opacity:.10;pointer-events:none}
+.midbody .p-chaos,.midbody .step,.midbody .term{box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 22px 50px rgba(110,70,30,.12)}
+.midbody .eyebrow{color:#A8391A}
+.midbody .sec-head p{color:#5C4D3A}
+.midbody .term-table{background:#F3E6CE}
+.midbody .trow{background:#FBF2E2}
+.midbody .trow.flash{background:#EAF5E4}
+.midbody .step .n{background:#FFE4D1}
+
+/* about */
+.about{padding:96px 0 40px}
+.about-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:center}
+.about-copy{grid-column:1;grid-row:1}
+.about-photo{grid-column:2;grid-row:1;margin:0;position:relative;border-radius:32px 32px 32px 120px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 30px 70px rgba(80,50,20,.22)}
+[dir=ltr] .about-photo{border-radius:32px 32px 120px 32px}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.about h2{font-size:clamp(34px,4vw,52px);margin-bottom:22px}
+.about-lead{font-size:clamp(19px,1.7vw,23px);line-height:1.75;font-weight:500;color:#2C251D;margin:0 0 36px;max-width:62ch}
+.about-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;border-top:2px solid #2C251D;padding-top:24px}
+.about-cols h3{font-size:19px;letter-spacing:-.01em;margin-bottom:8px}
+.about-cols p{margin:0;color:#5C4D3A;font-size:16.5px;line-height:1.65}
+
+.about-can{margin-top:34px;padding-top:26px;border-top:1px solid #CDB68F}
+.about-can h3{font-size:19px;margin-bottom:14px}
+.about-can ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
+.about-can li{display:flex;gap:12px;align-items:flex-start;font-size:16.5px;line-height:1.6;color:#3E3326}
+.ck{width:24px;height:24px;border-radius:50%;background:var(--orange);color:#0B0D10;display:grid;place-items:center;flex:none;margin-top:2px}
+.ck svg{width:13px;height:13px}
+@media (max-width:760px){.about-can ul{grid-template-columns:1fr}}
+
+/* partners */
+.partners{padding:110px 0}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.pcat{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 14px 34px rgba(110,70,30,.08)}
+.pcat-head{display:flex;gap:14px;align-items:flex-start}
+.pic{width:44px;height:44px;border-radius:12px;background:var(--ink);color:var(--orange);display:grid;place-items:center;flex:none}
+.pic svg{width:22px;height:22px}
+.pcat h3{font-size:20px;letter-spacing:-.02em}
+.pcat-head p{margin:2px 0 0;font-size:14px;color:var(--muted);line-height:1.45}
+.plist{display:flex;flex-direction:column;gap:8px}
+.prow{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;color:var(--text);background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:11px 14px;min-height:56px;transition:border-color .2s,transform .25s var(--ease),box-shadow .25s}
+.prow:hover{border-color:var(--orange);transform:translateX(-3px);box-shadow:0 8px 20px rgba(110,70,30,.10)}
+.pname b{display:block;font-size:15.5px;font-weight:800;direction:ltr;text-align:right}
+.pname small{font-size:13px;color:var(--muted)}
+.pgo{flex:none;font-size:13px;font-weight:700;color:#A8391A;background:#FFE4D1;border-radius:999px;padding:6px 12px;white-space:nowrap}
+.prow:hover .pgo{background:var(--orange);color:#0B0D10}
+
+/* trust */
+.trust{padding:120px 0}
+.trust-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.t-ic{width:44px;height:44px;border-radius:12px;background:var(--ink);color:var(--orange);display:grid;place-items:center;margin-bottom:14px}
+.t-ic svg{width:22px;height:22px}
+.t{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--orange);border-radius:20px;padding:24px;box-shadow:0 14px 34px rgba(110,70,30,.08)}
+.t .n{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--orange-deep)}
+.t h3{font-size:22px;letter-spacing:-.02em;margin:10px 0 8px}
+.t p{margin:0;color:var(--muted);font-size:15.5px}
+
+/* final */
+.final{background:var(--ink);color:#fff;padding:140px 0 50px;text-align:center;overflow:hidden}
+.final .glow{width:800px;height:500px;left:50%;top:10%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(255,91,34,.28),transparent 65%)}
+.final-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28;-webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 35%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse 70% 70% at 50% 35%,#000 30%,transparent 80%)}
+.credits{position:relative;font-size:11px;color:#565D66;margin-top:8px;text-align:right;line-height:1.6}
+.final h2{position:relative;font-size:clamp(64px,11vw,160px);line-height:.9}
+.final p{position:relative;color:#B5BAC2;font-size:20px;margin:24px 0 36px}
+.final .btn-wa{font-size:20px;padding:20px 34px 20px 28px}
+footer{position:relative;margin-top:120px;border-top:1px solid var(--line-d);padding-top:28px;display:flex;gap:26px;font-size:14px;color:#7D848E;flex-wrap:wrap;align-items:center}
+footer a{color:#7D848E;text-decoration:none}footer a:hover{color:#fff}
+footer .sp{flex:1}
+.foot-note{position:relative;font-size:13px;line-height:1.7;color:#8E959F;margin:20px 0 0;max-width:84ch;text-align:start}
+.copyright{position:relative;font-size:12px;color:#5F6670;margin-top:10px;text-align:start}
+.disclaimer{position:relative;font-size:12px;color:#5F6670;margin-top:18px;text-align:right}
+
+.mbar{display:none}
+/* language toggle */
+.lang-btn{font:inherit;font-size:14px;font-weight:700;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.28);border-radius:999px;min-width:48px;height:40px;padding:0 14px;cursor:pointer;transition:.2s;letter-spacing:.04em}
+.lang-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5)}
+/* LTR adjustments */
+[dir=ltr] .msg.out{align-self:flex-end;border-radius:10px;border-top-right-radius:3px}
+[dir=ltr] .msg.in,[dir=ltr] .typing,[dir=ltr] .rcard{align-self:flex-start}
+[dir=ltr] .msg.in,[dir=ltr] .typing{border-radius:10px;border-top-left-radius:3px}
+[dir=ltr] .meta{text-align:right}
+[dir=ltr] .q{text-align:left}
+[dir=ltr] .pname b{text-align:left}
+[dir=ltr] .flow svg{transform:scaleX(-1)}
+[dir=ltr] .try-form button svg{transform:scaleX(-1)}
+[dir=ltr] .strip-track{animation-name:marquee-ltr}
+@keyframes marquee-ltr{to{transform:translateX(-50%)}}
+[dir=ltr] .disclaimer,[dir=ltr] .credits{text-align:left}
+[dir=ltr] .frag.active{transform:translateX(6px)}
+[dir=ltr] .prow:hover{transform:translateX(3px)}
+/* final photo rotation */
+.final-bg{transition:opacity 1.8s ease}
+.final-bg.off{opacity:0}
+/* bigger, roomier chat window */
+.try-box{width:min(900px,94vw);height:min(840px,90vh);border-radius:28px}
+.try-box .chat-head{padding:18px 24px;gap:14px}
+.try-box .chat-av{width:48px;height:48px}
+.try-box .chat-av svg{width:24px;height:24px}
+.try-box .chat-name{font-size:19px}
+.try-box .chat-status{font-size:13.5px}
+.try-body{padding:26px clamp(16px,4vw,40px);gap:12px}
+.try-body .msg{font-size:16.5px;line-height:1.6;max-width:min(76%,620px);padding:11px 15px 8px;border-radius:14px}
+.try-body .msg.out{border-top-left-radius:4px}
+.try-body .msg.in{border-top-right-radius:4px}
+[dir=ltr] .try-body .msg.out{border-top-left-radius:14px;border-top-right-radius:4px}
+[dir=ltr] .try-body .msg.in{border-top-right-radius:14px;border-top-left-radius:4px}
+.try-body .meta{font-size:11.5px}
+.try-body .typing{padding:14px 18px}
+.try-chips{flex-wrap:wrap;overflow:visible;gap:10px;padding:14px clamp(16px,4vw,40px) 12px}
+.try-chips button{font-size:15px;padding:10px 18px;min-height:44px}
+.try-cta{margin:0 clamp(16px,4vw,40px) 14px;padding:12px 12px 12px 18px;font-size:15.5px;border-radius:18px}
+.try-cta a{padding:11px 20px;font-size:15.5px}
+.try-form{padding:14px clamp(16px,4vw,40px) 18px;gap:12px}
+.try-form input{height:56px;font-size:17px;padding:0 22px}
+.try-form button{width:56px;height:56px}
+.try-form button svg{width:22px;height:22px}
+.cookie{position:fixed;z-index:80;bottom:18px;inset-inline-end:18px;width:min(380px,calc(100vw - 32px));background:#FBF4E8;color:var(--text);border:1px solid #E3D4BA;border-radius:18px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.25);animation:pop .4s var(--ease)}
+.cookie[hidden]{display:none}
+.cookie b{font-size:16px}
+.cookie p{margin:6px 0 12px;font-size:14px;line-height:1.55;color:#4A4034}
+.cookie .inl{font:inherit;background:none;border:none;padding:0;color:#A8391A;font-weight:700;text-decoration:underline;cursor:pointer}
+.cookie-btns{display:flex;gap:8px}
+.cookie-btns button{font:inherit;font-weight:700;font-size:14px;border-radius:999px;padding:9px 18px;cursor:pointer;min-height:40px;border:none}
+.c-ok{background:var(--ink);color:#fff}.c-no{background:#EFE3CF;color:var(--text)}
+.try-body .msg a{color:#53BDEB;font-weight:600;word-break:break-word}
+.try-body .msg a.blink{display:inline-flex;align-items:center;gap:6px;margin:4px 0;padding:6px 14px;border-radius:999px;background:rgba(83,189,235,.12);border:1px solid rgba(83,189,235,.35);text-decoration:none;white-space:nowrap}
+.try-body .msg a.blink:hover{background:rgba(83,189,235,.22)}
+.try-body .msg.err{background:#3A2A22;border:1px solid rgba(255,91,34,.35)}
+
+/* modals */
+html.modal-open{overflow:hidden}
+dialog.modal{border:none;padding:0;background:transparent;max-width:none;max-height:none;overflow:visible}
+dialog.modal::backdrop{background:rgba(11,13,16,.62);backdrop-filter:blur(5px)}
+dialog.modal[open]{animation:pop .4s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+.x-btn{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.08);color:inherit;display:grid;place-items:center;cursor:pointer;flex:none;transition:background .2s}
+.x-btn:hover{background:rgba(255,255,255,.16)}
+.x-btn svg{width:18px;height:18px}
+.try-box{width:min(440px,94vw);height:min(700px,90vh);background:var(--wa-bg);color:var(--wa-text);border-radius:26px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08)}
+.try-box .chat-head{justify-content:flex-start}
+.try-box .chat-head .x-btn{margin-inline-start:auto;color:var(--wa-text)}
+.try-body{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:8px;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:18px 18px;scroll-behavior:smooth}
+.try-chips{display:flex;gap:8px;overflow-x:auto;padding:10px 12px;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.06)}
+.try-chips::-webkit-scrollbar{display:none}
+.try-chips button{flex:none;font:inherit;font-size:13.5px;color:var(--wa-text);background:#1F2C34;border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:38px}
+.try-chips button:hover{border-color:var(--wa)}
+.try-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 12px 10px;padding:10px 10px 10px 14px;border-radius:16px;background:linear-gradient(90deg,rgba(37,211,102,.16),rgba(37,211,102,.06));border:1px solid rgba(37,211,102,.35);font-size:14px;font-weight:600;animation:in .45s var(--ease)}
+.try-cta[hidden]{display:none}
+.try-cta a{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#062A14;text-decoration:none;font-weight:800;border-radius:999px;padding:9px 16px;white-space:nowrap;box-shadow:0 0 22px rgba(37,211,102,.35)}
+.try-cta a svg{width:18px;height:18px}
+.try-form{display:flex;gap:8px;padding:8px 10px 10px;background:#1F2C34}
+.try-form input{flex:1;min-width:0;font:inherit;font-size:15px;color:var(--wa-text);background:#2A3942;border:none;border-radius:999px;padding:0 16px;height:44px;outline:none}
+.try-form input::placeholder{color:var(--wa-meta)}
+.try-form input:focus-visible{box-shadow:0 0 0 2px var(--wa)}
+.try-form button{width:44px;height:44px;border-radius:50%;border:none;background:var(--wa);display:grid;place-items:center;cursor:pointer;flex:none}
+.try-form button:disabled{opacity:.5;cursor:default}
+.try-form button svg{width:18px;height:18px}
+.legal-box{width:min(720px,94vw);max-height:86vh;background:#FBF4E8;color:var(--text);border-radius:24px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.45)}
+.legal-head{display:flex;align-items:center;gap:14px;padding:20px 24px;border-bottom:1px solid #E3D4BA}
+.legal-head h2{font-size:26px;letter-spacing:-.02em;flex:1}
+.legal-head .x-btn{background:#EFE3CF;color:var(--text)}
+.legal-head .x-btn:hover{background:#E5D5BA}
+.legal-body{overflow-y:auto;padding:24px 28px 32px;font-size:16px;line-height:1.75;color:#3E3830}
+.legal-body h3{font-size:18px;letter-spacing:-.01em;margin:22px 0 6px;color:var(--text)}
+.legal-body .ph{background:#F1E4CC;border:1.5px dashed #CDB48C;border-radius:12px;padding:12px 14px;color:#6A5A45;font-size:14px;margin:6px 0}
+.legal-body .legal-meta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A7A62;margin-bottom:8px}
+.legal-body .legal-section{margin-bottom:18px}
+.legal-body h2{font-size:19px;letter-spacing:-.01em;margin:22px 0 8px;color:var(--text)}
+.legal-body p{margin:0 0 10px}
+.legal-body ul{margin:0 0 12px;padding-inline-start:22px}
+.legal-body li{margin-bottom:6px}
+.legal-body a{color:#A8391A;font-weight:600}
+.legal-body hr{border:none;border-top:1px solid #E3D4BA;margin:22px 0}
+.legal-body header{margin-bottom:10px}
+.cform{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.cform label{font-size:14px;font-weight:700;display:flex;flex-direction:column;gap:6px}
+.cform input,.cform textarea{font:inherit;font-size:16px;color:var(--text);background:#fff;border:1px solid #DCC7A4;border-radius:12px;padding:12px 14px}
+.cform textarea{min-height:140px;resize:vertical}
+.cform input:focus,.cform textarea:focus{outline:2px solid var(--orange);outline-offset:1px}
+.crow{display:flex;gap:10px;flex-wrap:wrap}
+.cbtn{font:inherit;font-weight:800;font-size:16px;border:none;border-radius:999px;padding:13px 22px;cursor:pointer;min-height:48px;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+.cbtn.dark{background:var(--ink);color:#fff}
+.cbtn.wa{background:var(--wa);color:#062A14}
+.cbtn.wa svg{width:20px;height:20px}
+.cbtn.ghost{background:#EFE3CF;color:var(--text)}
+.cstate{font-size:14px;background:#F1E4CC;border-radius:12px;padding:10px 14px;margin:10px 0}
+.legal-body .upd{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8A7A62}
+footer button.lnk{font:inherit;background:none;border:none;color:#7D848E;cursor:pointer;padding:6px 0}
+footer button.lnk:hover{color:#fff}
+@media (max-width:640px){
+  dialog.modal{margin:0;width:100%;height:100%}
+  .try-box{width:100vw;height:100dvh;border-radius:0}
+  .legal-box{width:100vw;max-height:100dvh;height:100dvh;border-radius:0}
+}
+.rv{opacity:1}
+.rv.on{opacity:1;transform:none}
+
+@media (max-width:1100px){.trust-grid{grid-template-columns:1fr 1fr}.nav-links{display:none}.lang-btn{margin-inline-start:auto}}
+@media (max-width:980px){
+  .hero{padding:110px 0 70px}
+  .hero-grid,.planb-grid,.live-grid{grid-template-columns:1fr;gap:48px}
+  .float-note{display:none}.float-stamp{inset-inline-end:6px;top:-14px}
+  .compare{grid-template-columns:1fr;gap:20px}
+  .flow{flex-direction:row}.flow svg{transform:rotate(-90deg);width:44px;height:44px}.flow .line{display:none}
+  .dest-tag{inset-inline-end:8px;top:-18px}
+  .night{padding:48px 28px}
+  .ask-grid{grid-template-columns:1fr 1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .qr-card{display:none}
+  .mobile-cta{display:flex;justify-content:center;margin-top:8px}
+  .mobile-cta .btn-wa{width:100%;justify-content:center;font-size:19px;padding:18px}
+  .trust-grid{grid-template-columns:1fr;gap:16px}
+  .partners{padding:84px 0}
+  .about-grid{grid-template-columns:1fr}
+  .about-photo{grid-column:1;grid-row:1;aspect-ratio:16/10;border-radius:24px 24px 24px 72px}
+  .about-copy{grid-row:2}
+  .about-cols{grid-template-columns:1fr}
+  .cookie{bottom:86px}
+  .try-chips{flex-wrap:nowrap;overflow-x:auto}
+  .try-body .msg{max-width:88%}
+  .nav-links{display:none}
+  .nav .wrap{justify-content:space-between}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .nav .wrap{height:62px;padding:0 20px}
+  .nav .btn-wa span{display:none}
+  .nav .btn-wa{padding:10px;min-width:44px;min-height:44px;justify-content:center}
+  .nav .wrap{gap:12px}
+  .lang-btn{height:44px}
+  .hero-cta .btn-wa,.hero-cta .btn-ghost{width:100%;justify-content:center}
+  .chat-body{height:430px}
+  .ask-grid,.trust-grid{grid-template-columns:1fr}
+  .term-head,.trow{grid-template-columns:32px 1.4fr 1fr .9fr;gap:10px;padding:0 12px}
+  .night{padding:40px 20px;border-radius:24px}
+  .planb{padding:20px 0 84px}
+  .q{height:220px}
+  .term-head .c-kind,.trow .kind{display:none}
+  .trow{font-size:13px}
+  .chaos,.ask,.live,.steps,.trust{padding:84px 0}
+  .mbar{display:block;position:fixed;bottom:0;inset-inline:0;z-index:60;padding:14px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,rgba(11,13,16,.92) 35%);transform:translateY(110%);transition:transform .4s var(--ease)}
+  .mbar.show{transform:none}
+  .mbar .btn-wa{width:100%;justify-content:center}
+  .final{padding-bottom:110px}
+}
+@media (max-width:640px){.dcard{width:200px;height:130px}.strip{padding-top:36px}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .msg,.typing,.rcard,.rv{opacity:1!important;transform:none!important}
+}
+
+dialog#tryDlg .try-notice{margin:0;padding:12px clamp(18px,5vw,64px) 0;font-size:12.5px;line-height:1.65;color:var(--wa-meta);background:#1F2C34}
+dialog#tryDlg .try-notice a{color:#53BDEB;font-weight:600}
+/* ===== web chat window — final, authoritative sizing ===== */
+dialog#tryDlg .try-box{width:min(1120px,96vw);height:min(94vh,980px);border-radius:30px}
+dialog#tryDlg .chat-head{padding:20px 28px;gap:16px}
+dialog#tryDlg .chat-av{width:52px;height:52px}
+dialog#tryDlg .chat-av svg{width:26px;height:26px}
+dialog#tryDlg .chat-name{font-size:21px}
+dialog#tryDlg .chat-status{font-size:14px}
+dialog#tryDlg .x-btn{width:46px;height:46px}
+dialog#tryDlg .try-body{padding:30px clamp(18px,5vw,64px);gap:14px}
+dialog#tryDlg .try-body .msg{font-size:18px;line-height:1.65;max-width:min(80%,760px);padding:13px 18px 9px;border-radius:16px}
+dialog#tryDlg .try-body .meta{font-size:12px}
+dialog#tryDlg .try-body .typing{padding:16px 20px}
+dialog#tryDlg .try-chips{flex-wrap:wrap;overflow:visible;gap:10px;padding:16px clamp(18px,5vw,64px) 12px}
+dialog#tryDlg .try-chips button{font-size:16px;padding:11px 20px;min-height:46px}
+dialog#tryDlg .try-cta{margin:0 clamp(18px,5vw,64px) 14px;padding:14px 14px 14px 20px;font-size:16.5px;border-radius:20px}
+dialog#tryDlg .try-cta a{padding:12px 24px;font-size:16.5px}
+dialog#tryDlg .try-form{padding:16px clamp(18px,5vw,64px) 22px;gap:14px}
+dialog#tryDlg .try-form input{height:62px;font-size:18px;padding:0 26px}
+dialog#tryDlg .try-form button{width:62px;height:62px}
+dialog#tryDlg .try-form button svg{width:24px;height:24px}
+@media (max-width:640px){
+  dialog#tryDlg .try-box{width:100vw;height:100dvh;border-radius:0}
+  dialog#tryDlg .try-body{padding:20px 14px}
+  dialog#tryDlg .try-body .msg{font-size:17px;max-width:90%}
+  dialog#tryDlg .try-chips{flex-wrap:nowrap;overflow-x:auto;padding:12px 14px 10px}
+  dialog#tryDlg .try-cta{margin:0 14px 12px}
+  dialog#tryDlg .try-form{padding:12px 14px calc(14px + env(safe-area-inset-bottom))}
+  dialog#tryDlg .try-form input{height:56px}
+  dialog#tryDlg .try-form button{width:56px;height:56px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.24 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></symbol>
+  <symbol id="bubble" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M4 20l1.5-4A8 8 0 1 1 8 19z"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V8M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/></g></symbol>
+  <symbol id="i-bus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 11h16"/><circle cx="8" cy="20" r="1.4"/><circle cx="16" cy="20" r="1.4"/></g></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M2.5 13.5l19-8-7.5 17-2.5-6.5z"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z"/></symbol>
+  <symbol id="i-sig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></g></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></g></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></g></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.8 0-3 .9-3 2s1 1.7 3 2 3 .9 3 2-1.2 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/></g></symbol>
+  <symbol id="i-buoy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M5.6 5.6l3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M8.8 12.2l2.3 2.3 4.3-4.6"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="#062A14" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top"><span class="logo-mark"><svg><use href="#bubble"/></svg></span>צ׳ילר</a>
+    <nav class="nav-links" aria-label="ראשי">
+      <a href="#about">מי זה צ׳ילר</a>
+      <a href="#ask">מה אפשר לשאול</a>
+      <a href="#live">מידע חי</a>
+      <a href="#how">איך זה עובד</a>
+      <a href="#partners">הזמנה ישירה</a>
+      <a href="#trust">אמון</a>
+    </nav>
+    <button class="lang-btn" id="langBtn" type="button" lang="en" aria-label="Switch to English">EN</button>
+    <a class="btn-wa" href="https://wa.me/972552584589?text=%D7%94%D7%99%D7%99%20%D7%A6%D7%B3%D7%99%D7%9C%D7%A8" target="_blank" rel="noopener noreferrer" aria-label="פתחו בוואטסאפ"><svg><use href="#wa"/></svg><span>פתחו בוואטסאפ</span></a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="glow"></div><div class="glow g2"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="badge"><span class="dot"></span>חבר מומחה בכיס, בוואטסאפ 24/7</div>
+      <h1>לאן שלא תגיע,<br><span class="u">צ׳ילר כבר יודע.<svg class="u-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M6 15 C 70 5, 150 4, 220 9 S 280 16, 294 11"/></svg></span></h1>
+      <p class="lead">שואלים את צ׳ילר בוואטסאפ איפה לישון, איך להגיע ומה עושים הערב — ומקבלים תשובה של חבר מנוסה, עם מחירים עדכניים ולינק ישר למקום.</p>
+      <div class="hero-cta">
+        <a class="btn-wa" href="https://wa.me/972552584589?text=%D7%94%D7%99%D7%99%20%D7%A6%D7%B3%D7%99%D7%9C%D7%A8" target="_blank" rel="noopener noreferrer"><svg><use href="#wa"/></svg>פתחו צ׳אט בוואטסאפ</a>
+        <button type="button" class="btn-ghost" id="openTry" style="font:inherit;font-weight:600;font-size:16px;background:none;cursor:pointer">או נסו כאן באתר</button>
+      </div>
+      <div class="pills-label">נסו לשאול:</div>
+      <div class="pills" role="tablist" aria-label="דוגמאות שאלות">
+        <button class="pill active" role="tab">מה עושים הערב?</button>
+        <button class="pill" role="tab">איפה לישון?</button>
+        <button class="pill" role="tab">יש אוטובוס הלילה?</button>
+        <button class="pill" role="tab">צריך eSIM</button>
+      </div>
+    </div>
+    <div class="chat-stage">
+      <div class="chat-ambient" aria-hidden="true"><img id="amb" src="/img/cusco.jpg" alt=""></div>
+      <div class="chat" aria-live="polite">
+        <div class="chat-head">
+          <span class="chat-av"><svg><use href="#bubble"/></svg></span>
+          <div>
+            <div class="chat-name">צ׳ילר <svg class="verified" viewBox="0 0 24 24" aria-hidden="true"><path fill="#25D366" d="M12 2l2.4 1.8 3 .1.9 2.9 2.4 1.8-.9 2.9.9 2.9-2.4 1.8-.9 2.9-3 .1L12 22l-2.4-1.8-3-.1-.9-2.9-2.4-1.8.9-2.9-.9-2.9 2.4-1.8.9-2.9 3-.1z"/><path d="M8 12.2l2.6 2.6L16 9.4" fill="none" stroke="#0B141A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="chat-status" id="status">מחובר</div>
+          </div>
+        </div>
+        <div class="chat-body" id="chat"></div>
+        <div class="chat-input"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c.9 1.2 2.1 1.8 3.5 1.8s2.6-.6 3.5-1.8M9 9.5h.01M15 9.5h.01"/></svg>הודעה</div><span class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="#062A14" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></span></div>
+      </div>
+      <div class="dest-tag" id="dest"><img id="destImg" src="/img/cusco.jpg" alt=""><span><b id="destName">קוסקו, פרו</b><small id="stamp">CUSCO · 14:20</small></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="midbody">
+<section class="strip" aria-label="יעדים"><div class="strip-track"><div class="dcard"><img src="/img/cusco.jpg" alt="קוסקו" loading="lazy"><span><b>קוסקו</b><small>PERU</small></span></div><div class="dcard"><img src="/img/pai.jpg" alt="פאי" loading="lazy"><span><b>פאי</b><small>THAILAND</small></span></div><div class="dcard"><img src="/img/hanoi.jpg" alt="האנוי" loading="lazy"><span><b>האנוי</b><small>VIETNAM</small></span></div><div class="dcard"><img src="/img/patagonia.jpg" alt="טורס דל פיינה" loading="lazy"><span><b>טורס דל פיינה</b><small>CHILE</small></span></div><div class="dcard"><img src="/img/uyuni.jpg" alt="סלאר דה אויוני" loading="lazy"><span><b>סלאר דה אויוני</b><small>BOLIVIA</small></span></div><div class="dcard"><img src="/img/halong.jpg" alt="הא לונג" loading="lazy"><span><b>הא לונג</b><small>VIETNAM</small></span></div><div class="dcard"><img src="/img/rainbow.jpg" alt="הר הקשת" loading="lazy"><span><b>הר הקשת</b><small>PERU</small></span></div><div class="dcard"><img src="/img/machu.jpg" alt="מאצ׳ו פיצ׳ו" loading="lazy"><span><b>מאצ׳ו פיצ׳ו</b><small>PERU</small></span></div><div class="dcard"><img src="/img/cusco.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>קוסקו</b><small>PERU</small></span></div><div class="dcard"><img src="/img/pai.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>פאי</b><small>THAILAND</small></span></div><div class="dcard"><img src="/img/hanoi.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>האנוי</b><small>VIETNAM</small></span></div><div class="dcard"><img src="/img/patagonia.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>טורס דל פיינה</b><small>CHILE</small></span></div><div class="dcard"><img src="/img/uyuni.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>סלאר דה אויוני</b><small>BOLIVIA</small></span></div><div class="dcard"><img src="/img/halong.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>הא לונג</b><small>VIETNAM</small></span></div><div class="dcard"><img src="/img/rainbow.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>הר הקשת</b><small>PERU</small></span></div><div class="dcard"><img src="/img/machu.jpg" alt="" aria-hidden="true" loading="lazy"><span><b>מאצ׳ו פיצ׳ו</b><small>PERU</small></span></div></div></section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <figure class="about-photo"><img src="/img/hiker.jpg" alt="תרמילאי חוצה נחל בדרך בין הרים" loading="lazy"></figure>
+    <div class="about-copy">
+      <h2>מי זה צ׳ילר?</h2>
+      <p class="about-lead">צ׳ילר הוא עוזר נסיעות חכם מבוסס AI שפותח במיוחד כדי לסייע לתרמילאים ומטיילים עצמאיים לתכנן את הרפתקת חייהם בטיול הגדול. צ׳ילר מתמחה במתן מענה לוגיסטי, מציאת מקומות לינה מתאימים, המלצה על אטרקציות, ותכנון מעברים ותחבורה (אוטובוסים, שאטלים, מעבורות וטיסות). צ׳ילר מיועד לתפקד כ״חבר מומחה בכיס״ עבור התרמילאי הישראלי ולעזור לו לבנות את חוויית הטיול המושלמת בשבילו.</p>
+      <div class="about-cols">
+        <div><h3>למי השירות מיועד</h3><p>למוצ׳ילרים ותרמילאים ישראלים המחפשים לחקור את העולם בצורה מתוחכמת, מותאמת אישית וחסכונית.</p></div>
+        <div><h3>החזון שלנו</h3><p>להנגיש את כלי התכנון והמענה הלוגיסטי המובילים ביותר לכל תרמילאי, ולאפשר לכם לצאת לדרך בראש שקט תוך חיבור לספקי שירות מוכרים בעולם הנסיעות והטיולים.</p></div>
+      </div>
+      <div class="about-can"><h3>מה צ׳ילר יודע לעשות</h3><ul><li><span class="ck" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>מציאת דרכי הגעה: אוטובוסים, טיסות ומעברי גבול יבשתיים וימיים, עם קישור להזמנה אצל הספק.</span></li><li><span class="ck" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>השוואה וחיפוש של הוסטלים ומקומות לינה, עם קישור ישיר להזמנה.</span></li><li><span class="ck" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>המלצות על אטרקציות, סיורים וחוויות אקסטרים, עם קישור להזמנה.</span></li><li><span class="ck" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>התאמה של חבילות תקשורת ו-eSIM לכל מדינה.</span></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="chaos" id="chaos">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><h2>7 אפליקציות.<br>שיחה אחת.</h2></div>
+      <p>טאבים, קבוצות, PDF של לוח זמנים ובלוג מלפני כמה שנים — ועדיין אין איפה לישון הלילה. צ׳ילר מכווץ את כל זה להודעה אחת.</p>
+    </div>
+    <div class="compare" id="merge">
+      <div class="panel p-chaos">
+        <div class="panel-head"><h3>בלי צ׳ילר</h3><span class="mono">7 אפליקציות</span></div>
+        <div class="frags">
+          <div class="frag" data-label="השוואת טיסות" data-ic="i-plane"><span class="ic"><svg><use href="#i-plane"/></svg></span><div><b>השוואת טיסות</b><small>14 טאבים פתוחים</small></div><span class="x">מתיש</span></div>
+          <div class="frag" data-label="אתר הוסטלים" data-ic="i-bed"><span class="ic"><svg><use href="#i-bed"/></svg></span><div><b>אתר הוסטלים</b><small>הסינון מתאפס שוב</small></div><span class="x">מבלבל</span></div>
+          <div class="frag" data-label="לוח זמנים לאוטובוס" data-ic="i-bus"><span class="ic"><svg><use href="#i-bus"/></svg></span><div><b>לוח זמנים לאוטובוס</b><small>PDF מלפני שנתיים</small></div><span class="x">לא מעודכן</span></div>
+          <div class="frag" data-label="קבוצת מטיילים" data-ic="i-chat"><span class="ic"><svg><use href="#i-chat"/></svg></span><div><b>קבוצת מטיילים</b><small>3 תשובות סותרות</small></div><span class="x">איטי</span></div>
+          <div class="frag" data-label="מפות" data-ic="i-map"><span class="ic"><svg><use href="#i-map"/></svg></span><div><b>מפות</b><small>כמה זמן זה באמת?</small></div><span class="x">חלקי</span></div>
+          <div class="frag" data-label="המרת מטבע" data-ic="i-coin"><span class="ic"><svg><use href="#i-coin"/></svg></span><div><b>המרת מטבע</b><small>עוד אפליקציה</small></div><span class="x">עוד טאב</span></div>
+          <div class="frag" data-label="אתר eSIM" data-ic="i-sig"><span class="ic"><svg><use href="#i-sig"/></svg></span><div><b>אתר eSIM</b><small>איזה מהם?</small></div><span class="x">ניחוש</span></div>
+        </div>
+      </div>
+      <div class="flow" aria-hidden="true"><span class="line"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11" fill="#FFE4D6" stroke="none"/><path d="M16.5 12h-9M11 8l-4 4 4 4"/></svg><span class="mono">מתכנס</span><span class="line"></span></div>
+      <div class="panel p-calm">
+        <div class="panel-head"><h3>עם צ׳ילר</h3><span class="mono">שיחה אחת</span></div>
+        <div class="chat-mini"><span class="chat-av"><svg><use href="#bubble"/></svg></span><div><div class="chat-name">צ׳ילר</div><div class="chat-status">מחובר</div></div></div>
+        <div class="thread-body">
+          <div class="msg out">מחר עובר מבנגקוק לצ׳יאנג מאי. תסדר לי הכל?<span class="meta">09:02 <span class="tick">✓✓</span></span></div>
+          <div class="msg in">סגור. הנה הכל במקום אחד:<span class="meta">09:02</span></div>
+          <div class="tick-row"><span class="ok"><svg><use href="#i-check"/></svg></span><span>טיסה נמצאה · 3 אופציות הושוו</span></div>
+          <div class="tick-row"><span class="ok"><svg><use href="#i-check"/></svg></span><span>הוסטל בעיר העתיקה · נבדק זמין</span></div>
+          <div class="tick-row"><span class="ok"><svg><use href="#i-check"/></svg></span><span>רכבת לילה · יציאה 20:00</span></div>
+          <div class="tick-row"><span class="ok"><svg><use href="#i-check"/></svg></span><span>תשובה אחת ברורה</span></div>
+          <div class="tick-row"><span class="ok"><svg><use href="#i-check"/></svg></span><span>12 דק׳ הליכה מהתחנה</span></div>
+          <div class="tick-row"><span class="ok"><svg><use href="#i-check"/></svg></span><span>המחירים כבר בדולרים</span></div>
+          <div class="tick-row"><span class="ok"><svg><use href="#i-check"/></svg></span><span>eSIM לתאילנד · 15 יום</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="compare-foot"><button class="pill-btn" id="playpause" aria-pressed="false"><span class="pi" id="ppIcon"></span><span id="ppLabel">השהה אנימציה</span></button></div>
+  </div>
+</section>
+
+<section class="ask" id="ask">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><h2>שואלים כמו<br>ששואלים חבר.</h2></div>
+      <p>בלי פילטרים ובלי טפסים. כותבים מה שצריך — וצ׳ילר מחזיר תשובה קצרה, חכמה ולינק.</p>
+    </div>
+    <div class="ask-grid" id="askgrid"></div>
+    <div class="q-hint">עוברים עם העכבר או לוחצים על שאלה כדי לראות את התשובה</div>
+  </div>
+</section>
+
+<section class="planb">
+  <div class="wrap"><div class="night">
+  <img class="night-bg" src="/img/cusco.jpg" alt="" aria-hidden="true">
+  <div class="rain"></div>
+  <div class="planb-grid">
+    <div class="rv">
+      <span class="stamp-d">CUSCO · 23:10 · גשם</span>
+      <h2>האוטובוס בוטל.<br><span>יש תוכנית ב׳.</span></h2>
+      <p>צ׳ילר לא רק לתכנון. הוא שם בדיוק כשמשהו נשבר — באמצע הלילה, בטרמינל, עם 4% סוללה.</p>
+    </div>
+    <div class="rv" style="display:flex;justify-content:center">
+      <div class="chat">
+        <div class="chat-head"><span class="chat-av"><svg><use href="#bubble"/></svg></span><div><div class="chat-name">צ׳ילר</div><div class="chat-status">מחובר</div></div></div>
+        <div class="chat-body">
+          <div class="msg out">האוטובוס לפונו בוטל 😩 מה עושים?<span class="meta">23:10 <span class="tick">✓✓</span></span></div>
+          <div class="msg in">נשימה. יש 2 אופציות הלילה:
+- <b>חברה אחרת יוצאת ב-23:55</b> מאותו טרמינל
+- <b>הוסטל 6 דק׳ הליכה</b> + אוטובוס בוקר ב-7:30
+
+לשלוח לינק לאחת מהן?<span class="meta">23:10</span></div>
+          <div class="msg out">תביא את של 23:55<span class="meta">23:11 <span class="tick">✓✓</span></span></div>
+          <div class="rcard"><div class="rtop">קוסקו ← פונו · 23:55<span class="live-chip"><i></i>LIVE</span></div><div class="rrow"><span>מקומות פנויים</span><span class="mono">יש</span></div><a class="rlink" href="https://wa.me/972552584589" target="_blank" rel="noopener noreferrer">להזמנה ←</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div></div>
+</section>
+
+<section class="live" id="live">
+  <div class="wrap live-grid">
+    <div class="copy rv">
+      
+      <h2>נבדק עכשיו.<br>בזמן אמת.</h2>
+      <p>צ׳ילר בודק מחירים, זמינות ולוחות זמנים בזמן אמת — איפה שיש מידע כזה. וכשאין לו נתון עדכני, הוא אומר את זה. לא ממציא.</p>
+    </div>
+    <div class="term rv">
+      <div class="term-bar"><span class="ttl">בדיקות חיות</span><span>· chiller</span><span class="livetag"><span class="dot"></span>LIVE <span id="clock"></span></span></div>
+      <div class="term-table">
+      <div class="term-head"><span></span><span>מסלול</span><span class="c-kind">סוג</span><span>מחיר</span><span>סטטוס</span></div>
+      <div id="rows"></div>
+      </div>
+      <div class="term-foot"><span>* נתוני המחשה בלבד</span><span>מתעדכן אוטומטית</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="steps" id="how">
+  <div class="wrap">
+    <div class="sec-head rv"><div><h2>בלי אפליקציה חדשה.<br>זה וואטסאפ.</h2></div></div>
+    <div class="steps-grid">
+      <div class="step rv"><span class="n">1</span><h3>פותחים צ׳אט</h3><p>לחיצה אחת, וצ׳ילר אצלכם בוואטסאפ.</p></div>
+      <div class="step rv"><span class="n">2</span><h3>שואלים כמו חבר</h3><p>בעברית או באנגלית, בטקסט, בהודעה קולית או בתמונה.</p></div>
+      <div class="step rv"><span class="n">3</span><h3>יוצאים לדרך</h3><p>תשובה ברורה ולינק ישר למקום הנכון.</p></div>
+      <div class="qr-card rv">
+        <div class="qr-top"><span class="logo" style="font-size:18px"><span class="logo-mark" style="width:26px;height:26px;border-radius:8px"></span>צ׳ילר</span><span>גולשים מהמחשב?</span></div>
+        <div class="qr-box"><svg id="qr" role="img" aria-label="קוד QR לפתיחת צ׳אט עם צ׳ילר בוואטסאפ" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" shape-rendering="crispEdges"><path fill="#fff" d="M0 0h37v37H0z"/><path stroke="#0B0D10" d="M4 4.5h7m1 0h2m2 0h2m2 0h2m2 0h1m1 0h7M4 5.5h1m5 0h1m4 0h1m1 0h1m1 0h2m1 0h3m1 0h1m5 0h1M4 6.5h1m1 0h3m1 0h1m2 0h5m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M4 7.5h1m1 0h3m1 0h1m1 0h1m1 0h1m5 0h1m1 0h2m2 0h1m1 0h3m1 0h1M4 8.5h1m1 0h3m1 0h1m2 0h1m2 0h2m2 0h5m1 0h1m1 0h3m1 0h1M4 9.5h1m5 0h1m3 0h1m1 0h2m1 0h2m1 0h3m1 0h1m5 0h1M4 10.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M17 11.5h1m5 0h1M6 12.5h1m1 0h3m1 0h1m1 0h4m1 0h2m3 0h2m3 0h1m2 0h1M6 13.5h2m1 0h1m1 0h1m1 0h1m1 0h1m3 0h3m1 0h5m2 0h1m1 0h1M4 14.5h2m1 0h7m2 0h1m2 0h2m1 0h3m4 0h1m1 0h2M5 15.5h5m1 0h2m1 0h2m1 0h2m1 0h1m1 0h1m1 0h6m1 0h1M4 16.5h2m3 0h2m2 0h5m1 0h6m1 0h2m1 0h2M4 17.5h3m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h4m3 0h2M4 18.5h2m3 0h6m1 0h2m1 0h3m3 0h3m2 0h1m1 0h1M5 19.5h1m1 0h2m2 0h2m1 0h1m1 0h1m1 0h2m2 0h1m1 0h2m1 0h1M6 20.5h1m1 0h1m1 0h1m1 0h3m3 0h2m4 0h1m3 0h2m1 0h2M6 21.5h3m2 0h1m2 0h1m2 0h5m1 0h1m1 0h1m1 0h3m1 0h2M4 22.5h1m4 0h3m4 0h1m3 0h1m1 0h1m1 0h2m2 0h1m1 0h3M5 23.5h4m2 0h1m1 0h3m1 0h1m1 0h1m1 0h4m1 0h1m1 0h2m1 0h2M4 24.5h1m1 0h1m3 0h2m2 0h3m1 0h5m1 0h6m1 0h1M12 25.5h1m3 0h1m5 0h1m1 0h1m3 0h1m2 0h2M4 26.5h7m5 0h2m5 0h2m1 0h1m1 0h1m1 0h3M4 27.5h1m5 0h1m1 0h1m1 0h1m4 0h1m1 0h1m2 0h1m3 0h1M4 28.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h2m2 0h6m1 0h1M4 29.5h1m1 0h3m1 0h1m2 0h2m1 0h4m1 0h2m1 0h2m2 0h2m1 0h1M4 30.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m3 0h2m3 0h3m2 0h1M4 31.5h1m5 0h1m3 0h1m1 0h3m3 0h1m1 0h4m2 0h2M4 32.5h7m2 0h1m1 0h3m3 0h2m1 0h3m1 0h1m1 0h3"/></svg>
+<span class="qr-logo"><svg><use href="#bubble"/></svg></span></div>
+        <b>סרקו ופתחו צ׳אט</b>
+        <small dir="ltr">+972 55-258-4589</small>
+      </div>
+      <div class="mobile-cta"><a class="btn-wa" href="https://wa.me/972552584589?text=%D7%94%D7%99%D7%99%20%D7%A6%D7%B3%D7%99%D7%9C%D7%A8" target="_blank" rel="noopener noreferrer"><svg><use href="#wa"/></svg>פתחו בוואטסאפ · לחיצה אחת</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="partners" id="partners">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2>רוצים להזמין בעצמכם?<br>הזמינו ישירות מהחברות המובילות בעולם הטיולים.</h2></div>
+      <p>ההזמנה והתשלום מתבצעים ישירות באתר הספק ולפי התנאים שלו.</p>
+    </div>
+    <div class="pgrid">
+      <div class="pcat">
+        <div class="pcat-head"><span class="pic"><svg><use href="#i-bed"/></svg></span><div><h3>לינה והוסטלים</h3><p>השוואת מחירים, מיטות בדורם וחדרים פרטיים</p></div></div>
+        <div class="plist">
+          <a class="prow" href="https://www.anrdoezrs.net/click-101867183-11891539?url=https%3A%2F%2Fwww.booking.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Booking.com</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://www.agoda.com/?cid=1974284" target="_blank" rel="noopener sponsored"><span class="pname"><b>Agoda</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://expedia.com/affiliate?siteid=1&amp;landingPage=https%3A%2F%2Fwww.expedia.com&amp;camref=1110lMIh2&amp;creativeref=1100l68075" target="_blank" rel="noopener sponsored"><span class="pname"><b>Expedia</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://www.hostelworld.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Hostelworld</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+        </div>
+      </div>
+      <div class="pcat">
+        <div class="pcat-head"><span class="pic"><svg><use href="#i-plane"/></svg></span><div><h3>טיסות</h3><p>השוואת טיסות ומסלולים משתלמים</p></div></div>
+        <div class="plist">
+          <a class="prow" href="https://www.trip.com/?Allianceid=10464826&amp;SID=330520163" target="_blank" rel="noopener sponsored"><span class="pname"><b>Trip.com</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://c111.travelpayouts.com/click?shmarker=750063&amp;promo_id=3791&amp;source_type=customlink&amp;type=click&amp;custom_url=https%3A%2F%2Fwww.kiwi.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Kiwi.com</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://expedia.com/affiliate?siteid=1&amp;landingPage=https%3A%2F%2Fwww.expedia.com&amp;camref=1110lMIh2&amp;creativeref=1100l68075" target="_blank" rel="noopener sponsored"><span class="pname"><b>Expedia</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://www.skyscanner.net" target="_blank" rel="noopener sponsored"><span class="pname"><b>Skyscanner</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+        </div>
+      </div>
+      <div class="pcat">
+        <div class="pcat-head"><span class="pic"><svg><use href="#i-bus"/></svg></span><div><h3>מעברים ואוטובוסים</h3><p>אוטובוסי לילה, רכבות, מעבורות והסעות</p></div></div>
+        <div class="plist">
+          <a class="prow" href="https://www.bookaway.com/?offer_id=34&amp;aff_id=4249" target="_blank" rel="noopener sponsored"><span class="pname"><b>Bookaway</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://12go.asia/?z=16896756" target="_blank" rel="noopener sponsored"><span class="pname"><b>12Go</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://omio.sjv.io/L0yA7O?u=https%3A%2F%2Fwww.omio.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Omio</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://www.busbud.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Busbud</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+        </div>
+      </div>
+      <div class="pcat">
+        <div class="pcat-head"><span class="pic"><svg><use href="#i-ticket"/></svg></span><div><h3>אטרקציות וסיורים</h3><p>טרקים, סיורים מודרכים וכרטיסי כניסה</p></div></div>
+        <div class="plist">
+          <a class="prow" href="https://www.getyourguide.com/?partner_id=VJZAOAS&amp;cmp=Chiller" target="_blank" rel="noopener sponsored"><span class="pname"><b>GetYourGuide</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://www.viator.com/?pid=P00318757&amp;mcid=42383&amp;medium=link" target="_blank" rel="noopener sponsored"><span class="pname"><b>Viator</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://tp.media/r?campaign_id=137&amp;marker=750063&amp;p=4110&amp;trs=550285&amp;u=https%3A%2F%2Fwww.klook.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Klook</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://www.tripadvisor.com/Attractions" target="_blank" rel="noopener sponsored"><span class="pname"><b>Tripadvisor</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+        </div>
+      </div>
+      <div class="pcat">
+        <div class="pcat-head"><span class="pic"><svg><use href="#i-sig"/></svg></span><div><h3>eSIM ותקשורת</h3><p>אינטרנט מהרגע שנוחתים, בלי להחליף סים</p></div></div>
+        <div class="plist">
+          <a class="prow" href="https://tp.media/r?marker=750063&amp;p=8310&amp;campaign_id=541&amp;u=https%3A%2F%2Fwww.airalo.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Airalo</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://tp.media/r?campaign_id=629&amp;marker=750063&amp;p=8979&amp;trs=550285&amp;u=https%3A%2F%2Fsaily.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Saily</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://mobimatter.com/#Chiller" target="_blank" rel="noopener sponsored"><span class="pname"><b>MobiMatter</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+          <a class="prow" href="https://tp.media/r?campaign_id=102&amp;marker=750063&amp;p=2762&amp;trs=550285&amp;u=https%3A%2F%2Fdrimsim.com" target="_blank" rel="noopener sponsored"><span class="pname"><b>Drimsim</b></span><span class="pgo">מעבר לאתר ↗</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust" id="trust">
+  <div class="wrap">
+    <div class="sec-head rv"><div><h2>למה אפשר לסמוך עליו.</h2></div></div>
+    <div class="trust-grid">
+      <div class="t rv"><span class="t-ic" aria-hidden="true"><svg><use href="#i-shield"/></svg></span><h3>מידע אמין, לא ניחושים</h3><p>צ׳ילר שולף מידע עדכני ממקורות מוכרים ואמינים — חברות הנסיעות המובילות, אתרים רשמיים ומנועי חיפוש — ומנוע AI מתקדם הופך אותו לתשובה אחת, ברורה ומדויקת.</p></div>
+      <div class="t rv"><span class="t-ic" aria-hidden="true"><svg><use href="#i-chat"/></svg></span><h3>אומר כשהוא לא יודע</h3><p>אין נתון עדכני? הוא אומר את זה. לא ממציא מקומות ולא מחירים.</p></div>
+      <div class="t rv"><span class="t-ic" aria-hidden="true"><svg><use href="#i-map"/></svg></span><h3>לוקח לעמוד האמיתי</h3><p>מזמינים ישירות מול הספק. צ׳ילר לא נוגע בכרטיס האשראי שלכם.</p></div>
+      <div class="t rv"><span class="t-ic" aria-hidden="true"><svg><use href="#i-coin"/></svg></span><h3>שקוף לגבי כסף</h3><p>על חלק מהלינקים צ׳ילר עשוי לקבל עמלה. המחיר שלכם לא משתנה.</p></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<section class="final">
+  <img class="final-bg" id="fbA" src="/img/uyuni.jpg" alt="" aria-hidden="true"><img class="final-bg off" id="fbB" src="/img/uyuni.jpg" alt="" aria-hidden="true">
+  <div class="glow"></div>
+  <div class="wrap">
+    <h2 class="rv">לאן עכשיו?</h2>
+    <p class="rv">חבר מומחה בכיס לכל הטיול הגדול. תכתבו לצ׳ילר.</p>
+    <a class="btn-wa rv" href="https://wa.me/972552584589?text=%D7%94%D7%99%D7%99%20%D7%A6%D7%B3%D7%99%D7%9C%D7%A8" target="_blank" rel="noopener noreferrer"><svg><use href="#wa"/></svg>פתחו צ׳אט בוואטסאפ</a>
+    <footer>
+      <span class="logo" style="font-size:18px">צ׳ילר</span><span class="sp"></span>
+      <button class="lnk" data-legal="contact">צור קשר</button><button class="lnk" data-legal="privacy">מדיניות פרטיות</button><button class="lnk" data-legal="terms">תנאי שימוש</button><button class="lnk" data-legal="a11y">הצהרת נגישות</button><button class="lnk" data-legal="cookies">הגדרות עוגיות</button>
+    </footer>
+    <p class="foot-note">Chiller Travel משתתפת בתוכניות שותפים. אנו עשויים להרוויח עמלה על הזמנות דרך הקישורים שלנו, ללא עלות נוספת עבורכם, והמלצות ממומנות מסומנות. צ'ילר מבוסס בינה מלאכותית ועלול לטעות; ההזמנה והתשלום נעשים אצל הספק ובאחריותו.</p>
+    <div class="disclaimer">השיחות, המחירים והשעות בדף הם דוגמאות להמחשה.</div>
+    <div class="copyright" id="copy"></div>
+    <div class="credits">צילומים מ-Wikimedia Commons: Diego Delso (CC BY-SA 4.0) · Vyacheslav Argenberg (CC BY 4.0) · Richard Mortel (CC BY 2.0) · Winky from Oxford (CC BY 2.0) · Christopher Crouzet (CC BY-SA 4.0) · Thomas Hirsch (CC BY-SA 3.0) · MareikeHeuer (CC0) · Allard Schmidt (נחלת הכלל) · Mattsjc (CC BY 4.0)</div>
+  </div>
+</section>
+
+<dialog class="modal" id="tryDlg" aria-labelledby="tryTitle">
+  <div class="try-box">
+    <div class="chat-head">
+      <span class="chat-av"><svg><use href="#bubble"/></svg></span>
+      <div><div class="chat-name" id="tryTitle">צ׳ילר</div><div class="chat-status" id="tryStatus">מחובר</div></div>
+      <button class="x-btn" type="button" data-close aria-label="סגירה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="try-body" id="tryBody" aria-live="polite"></div>
+    <div class="try-chips" id="tryChips" aria-label="שאלות מהירות">
+      <button type="button">הוסטל זול בקוסקו</button>
+      <button type="button">איך מגיעים מבנגקוק לצ׳יאנג מאי?</button>
+      <button type="button">eSIM לווייטנאם</button>
+      <button type="button">מה עושים בפאי?</button>
+      <button type="button">טיסה לבנגקוק בנובמבר</button>
+    </div>
+    <div class="try-cta" id="tryCta" hidden><span>רוצים תשובה מלאה וחיה?</span><a href="https://wa.me/972552584589?text=%D7%94%D7%99%D7%99%20%D7%A6%D7%B3%D7%99%D7%9C%D7%A8" target="_blank" rel="noopener noreferrer" id="tryWa"><svg><use href="#wa"/></svg>המשיכו בוואטסאפ · פתח שיחה</a></div>
+    <p class="try-notice" id="tryNotice"></p>
+    <form class="try-form" id="tryForm" autocomplete="off">
+      <label for="tryInput" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">כתבו שאלה לצ׳ילר</label>
+      <input id="tryInput" placeholder="כתבו שאלה, כמו לחבר…" maxlength="200">
+      <button type="submit" id="trySend" aria-label="שליחה"><svg viewBox="0 0 24 24"><path fill="#062A14" d="M21 20L3 12l18-8v6L9 12l12 2z"/></svg></button>
+    </form>
+  </div>
+</dialog>
+
+<dialog class="modal" id="legalDlg" aria-labelledby="legalTitle">
+  <div class="legal-box">
+    <div class="legal-head"><h2 id="legalTitle"></h2><button class="x-btn" type="button" data-close aria-label="סגירה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="legal-body" id="legalBody"></div>
+  </div>
+</dialog>
+
+<div class="cookie" id="cookie" role="dialog" aria-labelledby="cookieTitle" hidden>
+  <b id="cookieTitle">עוגיות וכלי מדידה</b>
+  <p>אנחנו משתמשים בכלי מדידה (Microsoft Clarity) כדי להבין איך משתמשים באתר ולשפר אותו. הכלי נטען רק אם תאשרו. עוגיות הכרחיות להפעלת האתר והצ׳אט פועלות תמיד. <button type="button" class="inl" data-legal="privacy">פרטים במדיניות הפרטיות</button></p>
+  <div class="cookie-btns"><button type="button" class="c-ok" data-consent="accepted">אישור</button><button type="button" class="c-no" data-consent="rejected">דחייה</button></div>
+</div>
+
+<div class="mbar" id="mbar"><a class="btn-wa" href="https://wa.me/972552584589?text=%D7%94%D7%99%D7%99%20%D7%A6%D7%B3%D7%99%D7%9C%D7%A8" target="_blank" rel="noopener noreferrer"><svg><use href="#wa"/></svg>פתחו צ׳אט בוואטסאפ</a></div>
+
+<script type="application/json" id="legalData">__LEGAL_JSON__</script>
+<script type="module">
+import { getConsent, setConsent, loadAnalyticsIfConsented, CONSENT_CHANGE_EVENT } from '/src/consent.js';
+loadAnalyticsIfConsented();
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const fmt = s => esc(s).replace(/\*(.+?)\*/g,'<b>$1</b>');
+  let LANG = (() => { try { return localStorage.getItem('chiller_lang') === 'en' ? 'en' : 'he'; } catch { return 'he'; } })();
+  const T = (he, en) => LANG === 'en' ? en : he;
+
+  const nav = document.getElementById('nav'), mbar = document.getElementById('mbar');
+  const onScroll = () => { nav.classList.toggle('solid', scrollY > 40); mbar.classList.toggle('show', scrollY > 520); };
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), {threshold:.12});
+  const watch = el => io.observe(el);
+  document.querySelectorAll('.rv').forEach(watch);
+
+  /* hero chat */
+  const S_HE = [
+    { img:'cusco', name:'קוסקו, פרו', stamp:'CUSCO · 14:20', t:'14:20',
+      user:'נחתתי בקוסקו. מה עושים היום?',
+      bot:'*ברוך הבא ל-3,400 מטר.* יום ראשון בקלילות:\n- *להתאקלם לאט* — מים, תה קוקה, בלי טרקים\n- *שוק סן פדרו* לארוחה מקומית וזולה\n- *שקיעה מסן בלאס* על גגות העיר',
+      card:{title:'סיור חינמי בעיר · מחר', rows:[['יציאה','10:00'],['משך','~2.5 ש׳']], link:'לפרטים ←'} },
+    { img:'pai', name:'פאי, תאילנד', stamp:'PAI · 11:05', t:'11:05',
+      user:'הוסטל חברתי בפאי, עד 15$ ללילה',
+      bot:'מצאתי 3 שמתאימים. זה שהכי שווה לך — אווירה טובה, 5 דק׳ מרחוב ההליכה:',
+      card:{title:'הוסטל · מרכז פאי', rows:[['לילה','$11'],['זמינות','יש מיטות']], link:'להזמנה ←'} },
+    { img:'halong', name:'הא לונג, וייטנאם', stamp:'HANOI · 19:30', t:'19:30',
+      user:'איך מגיעים מחר מהאנוי להא לונג?',
+      bot:'הכי נוח: שאטל שאוסף מהעיר העתיקה. יש גם אוטובוס ציבורי, זול יותר ואיטי יותר:',
+      card:{title:'HAN → HA LONG · מחר', rows:[['שאטל · 08:00','~2.5 ש׳'],['אוטובוס · 07:30','~3.5 ש׳']], link:'לכל האפשרויות ←'} },
+    { img:'hanoi', name:'האנוי, וייטנאם', stamp:'HANOI · 06:50', t:'06:50',
+      user:'נוחת מחר בהאנוי, צריך eSIM ל-3 שבועות',
+      bot:'קח חבילה של 30 יום עם גלישה בלי הגבלה — מפעילים עוד לפני הטיסה, ונוחתים כבר מחוברים.',
+      card:{title:'eSIM · וייטנאם · 30 יום', rows:[['גלישה','ללא הגבלה'],['הפעלה','מיידית']], link:'לרכישה ←'} }
+  ];
+  const S_EN = [
+    { img:'cusco', name:'Cusco, Peru', stamp:'CUSCO · 14:20', t:'14:20',
+      user:'Just landed in Cusco. What should I do today?',
+      bot:'*Welcome to 3,400 meters.* Take day one easy:\n- *Acclimatize slowly* — water, coca tea, no treks\n- *San Pedro Market* for a cheap local meal\n- *Sunset from San Blas* over the city rooftops',
+      card:{title:'Free walking tour · tomorrow', rows:[['Starts','10:00'],['Duration','~2.5 h']], link:'Details →'} },
+    { img:'pai', name:'Pai, Thailand', stamp:'PAI · 11:05', t:'11:05',
+      user:'Social hostel in Pai, under $15 a night',
+      bot:'Found 3 that fit. The best one for you — great vibe, 5 min from Walking Street:',
+      card:{title:'Hostel · central Pai', rows:[['Per night','$11'],['Availability','Beds free']], link:'Book →'} },
+    { img:'halong', name:'Ha Long, Vietnam', stamp:'HANOI · 19:30', t:'19:30',
+      user:'How do I get from Hanoi to Ha Long tomorrow?',
+      bot:'Easiest: a shuttle with pickup in the Old Quarter. There\'s also a public bus — cheaper and slower:',
+      card:{title:'HAN → HA LONG · tomorrow', rows:[['Shuttle · 08:00','~2.5 h'],['Bus · 07:30','~3.5 h']], link:'All options →'} },
+    { img:'hanoi', name:'Hanoi, Vietnam', stamp:'HANOI · 06:50', t:'06:50',
+      user:'Landing in Hanoi tomorrow, need an eSIM for 3 weeks',
+      bot:'Get a 30-day plan with unlimited data — activate it before your flight and land already connected.',
+      card:{title:'eSIM · Vietnam · 30 days', rows:[['Data','Unlimited'],['Activation','Instant']], link:'Buy →'} }
+  ];
+  const Sx = () => LANG === 'en' ? S_EN : S_HE;
+  const chat = document.getElementById('chat'), status = document.getElementById('status'), stamp = document.getElementById('stamp');
+  const dest = document.getElementById('dest'), destImg = document.getElementById('destImg'), destName = document.getElementById('destName'), amb = document.getElementById('amb');
+  const setDest = s => { destImg.src = '/img/'+s.img+'.jpg'; destName.textContent = s.name; stamp.textContent = s.stamp; };
+  const pills = [...document.querySelectorAll('.pill')];
+  let cur = 0, timers = [], auto = true, heroSeen = true, heroHold = false;
+  function advance(){
+    if (!auto) return;
+    if (heroSeen && !heroHold && !document.hidden) play((cur + 1) % Sx().length);
+    else timers.push(setTimeout(advance, 1500));
+  }
+  (function(){
+    const stage = document.querySelector('.chat-stage');
+    new IntersectionObserver(es => es.forEach(e => { heroSeen = e.isIntersecting; }), { threshold: .25 }).observe(stage);
+    ['mouseenter','focusin'].forEach(ev => stage.addEventListener(ev, () => { heroHold = true; }));
+    ['mouseleave','focusout'].forEach(ev => stage.addEventListener(ev, () => { heroHold = false; }));
+  })();
+  const later = (fn, ms) => timers.push(setTimeout(fn, reduce ? 0 : ms));
+  const clear = () => { timers.forEach(clearTimeout); timers = []; };
+  const add = html => { chat.insertAdjacentHTML('beforeend', html); return chat.lastElementChild; };
+  function renderInstant(i){
+    const s = Sx()[i], st = ' style="animation:none;opacity:1;transform:none"', c = s.card;
+    setDest(s); amb.src = '/img/'+s.img+'.jpg';
+    pills.forEach((p,k) => { p.classList.toggle('active', k===i); p.setAttribute('aria-selected', k===i); });
+    chat.innerHTML = '<div class="chat-tag">' + T('שיחה לדוגמה','Sample chat') + '</div>'
+      + `<div class="msg out"${st}>${fmt(s.user)}<span class="meta">${s.t} <span class="tick">✓✓</span></span></div>`
+      + `<div class="msg in"${st}>${fmt(s.bot)}<span class="meta">${s.t}</span></div>`
+      + `<div class="rcard"${st}><div class="rtop">${esc(c.title)}<span class="live-chip"><i></i>${T('נבדק עכשיו','Checked now')}</span></div>${c.rows.map(r=>`<div class="rrow"><span>${esc(r[0])}</span><span class="mono">${esc(r[1])}</span></div>`).join('')}<a class="rlink" href="https://wa.me/972552584589" target="_blank" rel="noopener noreferrer">${esc(c.link)}</a></div>`;
+  }
+  function play(i){
+    clear(); cur = i;
+    pills.forEach((p,k) => { p.classList.toggle('active', k===i); p.setAttribute('aria-selected', k===i); });
+    const s = Sx()[i];
+    dest.style.opacity = 0; amb.style.opacity = 0; later(() => { setDest(s); amb.src = '/img/'+s.img+'.jpg'; dest.style.opacity = 1; amb.style.opacity = 1; }, 300);
+    chat.innerHTML = '<div class="chat-tag">' + T('שיחה לדוגמה','Sample chat') + '</div>';
+    status.textContent = T('מחובר','Online'); status.classList.remove('typing');
+    later(() => add(`<div class="msg out">${fmt(s.user)}<span class="meta">${s.t} <span class="tick">✓✓</span></span></div>`), 350);
+    later(() => { status.textContent = T('מקליד/ה…','typing…'); status.classList.add('typing'); add('<div class="typing" id="typ"><span></span><span></span><span></span></div>'); }, 1100);
+    later(() => { const t = document.getElementById('typ'); if (t) t.remove(); status.textContent = T('מחובר','Online'); status.classList.remove('typing');
+      add(`<div class="msg in">${fmt(s.bot)}<span class="meta">${s.t}</span></div>`); }, 2500);
+    later(() => { const c = s.card;
+      add(`<div class="rcard"><div class="rtop">${esc(c.title)}<span class="live-chip"><i></i>${T('נבדק עכשיו','Checked now')}</span></div>${c.rows.map(r=>`<div class="rrow"><span>${esc(r[0])}</span><span class="mono">${esc(r[1])}</span></div>`).join('')}<a class="rlink" href="https://wa.me/972552584589" target="_blank" rel="noopener noreferrer">${esc(c.link)}</a></div>`); }, 3300);
+    if (auto && !reduce) later(advance, 8500);
+  }
+  pills.forEach((p,k) => p.addEventListener('click', () => { auto = false; play(k); }));
+  renderInstant(0);
+  if (!reduce) timers.push(setTimeout(advance, 6500));
+
+  /* chaos: looping demo */
+  (function(){
+    const merge = document.getElementById('merge');
+    const frags = [...merge.querySelectorAll('.frag')], ticks = [...merge.querySelectorAll('.tick-row')];
+    const btn = document.getElementById('playpause'), ppIcon = document.getElementById('ppIcon'), ppLabel = document.getElementById('ppLabel');
+    const ICON_PAUSE = '<svg viewBox="0 0 12 12"><rect x="2" y="1.5" width="2.6" height="9" rx="1" fill="currentColor"/><rect x="7.4" y="1.5" width="2.6" height="9" rx="1" fill="currentColor"/></svg>';
+    const ICON_PLAY = '<svg viewBox="0 0 12 12"><path d="M9.5 1.8v8.4L2.6 6z" fill="currentColor"/></svg>';
+    let paused = false, started = false; const anims = new Set();
+    const setBtn = () => { ppIcon.innerHTML = paused ? ICON_PLAY : ICON_PAUSE; ppLabel.textContent = paused ? T('הפעל אנימציה','Play animation') : T('השהה אנימציה','Pause animation'); btn.setAttribute('aria-pressed', paused); };
+    setBtn();
+    document.addEventListener('langchange', setBtn);
+    btn.addEventListener('click', () => { paused = !paused; anims.forEach(a => paused ? a.pause() : a.play()); setBtn(); });
+    const wait = ms => new Promise(res => { let t = 0; const step = () => { if (!paused) t += 50; t >= ms ? res() : setTimeout(step, 50); }; step(); });
+    async function fly(i){
+      const f = frags[i], tk = ticks[i];
+      f.classList.add('active');
+      await wait(420);
+      const mr = merge.getBoundingClientRect(), fr = f.getBoundingClientRect();
+      const el = document.createElement('div'); el.className = 'flyer';
+      el.innerHTML = '<svg><use href="#'+f.dataset.ic+'"/></svg>' + f.querySelector('b').textContent;
+      el.style.right = (mr.right - fr.right + 12) + 'px'; el.style.top = (fr.top - mr.top + fr.height/2 - 18) + 'px';
+      merge.appendChild(el);
+      const er = el.getBoundingClientRect(), tr = tk.getBoundingClientRect();
+      const dx = (tr.right - 10) - er.right, dy = (tr.top + tr.height/2) - (er.top + er.height/2);
+      f.classList.remove('active'); f.classList.add('done');
+      const a = el.animate([
+        { transform:'translate(0,0) scale(1)', opacity:1 },
+        { transform:'translate('+dx*0.55+'px,'+(dy*0.55-26)+'px) scale(1.04)', opacity:1, offset:.55 },
+        { transform:'translate('+dx+'px,'+dy+'px) scale(.8)', opacity:0 }
+      ], { duration:900, easing:'cubic-bezier(.55,0,.25,1)', fill:'forwards' });
+      anims.add(a); if (paused) a.pause();
+      await a.finished; anims.delete(a); el.remove();
+      tk.classList.add('on');
+      await wait(260);
+    }
+    async function loop(){
+      for(;;){
+        for (let i = 0; i < frags.length; i++) await fly(i);
+        await wait(3000);
+        ticks.forEach((t,i) => setTimeout(() => t.classList.remove('on'), i*40));
+        frags.forEach(f => f.classList.remove('done'));
+        await wait(1000);
+      }
+    }
+    if (reduce) { frags.forEach(f => f.classList.add('done')); ticks.forEach(t => t.classList.add('on')); btn.hidden = true; return; }
+    const mio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !started) { started = true; loop(); } }), {threshold:.3});
+    mio.observe(merge);
+  })();
+
+  /* ask grid */
+  const Q_HE = [
+    ['i-bed','לישון','״מצא לי הוסטל חברתי מתחת ל-25$״','בקוסקו? 3 אופציות בסן בלאס, כולן עם בר וסיורים יומיים. המוביל: $14 ללילה, 4 דק׳ מהכיכר.','cusco','קוסקו'],
+    ['i-bus','לזוז','״מה הכי זול להגיע ללה פאס?״','מפונו: אוטובוס תיירים דרך קופקבנה, בערך 8 שעות עם עצירה באגם. זול, ונוף מטורף.','uyuni','בוליביה'],
+    ['i-ticket','לעשות','״3 ימים פה, מה עושים?״','יום 1 להתאקלם ולהסתובב, יום 2 העמק הקדוש, יום 3 הר הקשת — יציאה ב-4:00, תביא שכבות.','rainbow','הר הקשת'],
+    ['i-sig','להתחבר','״נוחת מחר בהאנוי, איזה eSIM?״','חבילת 30 יום עם גלישה חופשית. מפעילים לפני הטיסה ונוחתים מחוברים.','hanoi','האנוי'],
+    ['i-plane','לתכנן','״לאן ממשיכים אחרי קוסקו?״','אם יש לך 10 ימים: אגם טיטיקקה ← לה פאס ← אויוני. מסלול קלאסי, תחבורה פשוטה ביניהם.','machu','פרו'],
+    ['i-buoy','לתקן','״האוטובוס בוטל. מה עכשיו?״','יש חברה אחרת שיוצאת בעוד 45 דק׳ מאותו טרמינל, או הוסטל קרוב + אוטובוס בבוקר. מה מעדיף?','patagonia','פטגוניה']
+  ];
+  const Q_EN = [
+    ['i-bed','Sleep','"Find me a social hostel under $25"','In Cusco? 3 options in San Blas, all with a bar and daily tours. Top pick: $14 a night, 4 min from the plaza.','cusco','Cusco'],
+    ['i-bus','Move','"What\'s the cheapest way to La Paz?"','From Puno: a tourist bus via Copacabana, about 8 hours with a stop at the lake. Cheap, with crazy views.','uyuni','Bolivia'],
+    ['i-ticket','Do','"3 days here — what should I do?"','Day 1 acclimatize and wander, day 2 the Sacred Valley, day 3 Rainbow Mountain — 4:00 start, bring layers.','rainbow','Rainbow Mountain'],
+    ['i-sig','Connect','"Landing in Hanoi tomorrow — which eSIM?"','A 30-day unlimited data plan. Activate before the flight and land connected.','hanoi','Hanoi'],
+    ['i-plane','Plan','"Where next after Cusco?"','If you have 10 days: Lake Titicaca → La Paz → Uyuni. A classic route with easy transport between stops.','machu','Peru'],
+    ['i-buoy','Fix','"My bus got cancelled. Now what?"','Another company leaves in 45 min from the same terminal, or a nearby hostel + a morning bus. What do you prefer?','patagonia','Patagonia']
+  ];
+  const grid = document.getElementById('askgrid');
+  function renderAsk(visible){
+  grid.innerHTML = (LANG === 'en' ? Q_EN : Q_HE).map(([ic,cat,q,a,img,place]) => `
+    <button class="q rv" aria-expanded="false">
+      <span class="q-face"><span class="q-banner"><img src="/img/${img}.jpg" alt=""><span class="q-place2">${place}</span><span class="q-plus" aria-hidden="true">+</span></span>
+      <span class="q-body"><span class="q-cat"><span class="ic"><svg><use href="#${ic}"/></svg></span>${cat}</span><span class="q-text">${esc(q)}</span></span></span>
+      <span class="q-back"><img class="bgimg" src="/img/${img}.jpg" alt=""><span class="who"><i></i>${T('צ׳ילר עונה','Chiller says')}</span><span class="ans">${esc(a)}</span><span class="go">${T('לשאול את זה בוואטסאפ ←','Ask this on WhatsApp →')}</span></span>
+    </button>`).join('');
+  grid.querySelectorAll('.q').forEach(b => { watch(b); b.addEventListener('click', () => {
+    const open = !b.classList.contains('open');
+    grid.querySelectorAll('.q').forEach(x => { x.classList.remove('open'); x.setAttribute('aria-expanded','false'); });
+    if (open) { b.classList.add('open'); b.setAttribute('aria-expanded','true'); }
+  }); if (visible) b.classList.add('on'); });
+  }
+  renderAsk(false);
+
+  /* live terminal */
+  const R = [
+    ['cusco','LIM → CUZ','טיסה',68],
+    ['pai','PAI · 6 מיטות','הוסטל',11],
+    ['halong','HAN → HA LONG','שאטל',14],
+    ['uyuni','UYUNI · 3 ימים','סיור ג׳יפים',160],
+    ['patagonia','PUERTO NATALES','אוטובוס לפארק',22],
+    ['hanoi','VIETNAM 30D','eSIM',19]
+  ];
+  const R_EN = [['LIM → CUZ','Flight'],['PAI · 6 beds','Hostel'],['HAN → HA LONG','Shuttle'],['UYUNI · 3 days','Jeep tour'],['PUERTO NATALES','Bus to the park'],['VIETNAM 30D','eSIM']];
+  const rows = document.getElementById('rows');
+  rows.innerHTML = R.map((r,i) => `<div class="trow" id="r${i}"><img class="ti" src="/img/${r[0]}.jpg" alt=""><span class="route">${r[1]}</span><span class="kind">${r[2]}</span><span class="price"><span class="v">$${r[3]}</span><span class="delta"></span></span><span class="st"><i></i><span class="ago"></span></span></div>`).join('');
+  const ages = R.map(() => Math.floor(Math.random()*40)+3);
+  const agoEls = R.map((_,i) => rows.querySelector('#r'+i+' .ago'));
+  const drawAges = () => ages.forEach((a,i) => agoEls[i].textContent = a < 5 ? T('עכשיו','now') : T(`לפני ${a}ש׳`, `${a}s ago`));
+  drawAges();
+  function ping(){
+    const i = Math.floor(Math.random()*R.length), r = R[i];
+    const ch = Math.max(1, Math.round(r[3]*(Math.random()*.04)));
+    const up = Math.random() < .45; r[3] = Math.max(3, r[3] + (up ? ch : -ch));
+    const row = rows.querySelector('#r'+i);
+    row.querySelector('.v').textContent = '$'+r[3];
+    const d = row.querySelector('.delta'); d.className = 'delta '+(up?'up':'down'); d.textContent = (up?'▲ ':'▼ ')+'$'+ch;
+    ages[i] = 0; drawAges(); row.classList.add('flash'); setTimeout(() => row.classList.remove('flash'), 900);
+  }
+  const clock = document.getElementById('clock');
+  const tick = () => { clock.textContent = new Date().toLocaleTimeString('he-IL',{hour12:false}); ages.forEach((_,i)=>ages[i]++); drawAges(); };
+  tick(); setInterval(tick, 1000);
+  if (!reduce) setInterval(ping, 2200);
+
+  /* modals: shared open/close */
+  function openDlg(d){ if (!d.open) { d.showModal(); document.documentElement.classList.add('modal-open'); } }
+  document.querySelectorAll('dialog.modal').forEach(d => {
+    d.addEventListener('click', e => { if (e.target === d || e.target.closest('[data-close]')) d.close(); });
+    d.addEventListener('close', () => { if (!document.querySelector('dialog[open]')) document.documentElement.classList.remove('modal-open'); });
+  });
+
+  /* try-it chat: talks to the real Chiller backend, same flow as the live site's ChatWidget */
+  const tryDlg = document.getElementById('tryDlg'), tryBody = document.getElementById('tryBody'), tryForm = document.getElementById('tryForm'),
+        tryInput = document.getElementById('tryInput'), trySend = document.getElementById('trySend'), tryCta = document.getElementById('tryCta'),
+        tryStatus = document.getElementById('tryStatus'), tryWa = document.getElementById('tryWa');
+  const WA_NUM = '972552584589', SITE = 'https://chiller-travel.com';
+  const API = (import.meta.env && import.meta.env.VITE_API_URL) || 'https://chiller-bot-server.onrender.com';
+  const escA = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtT = t => escA(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*(.+?)\*/g,'<b>$1</b>');
+  const PNAMES = { booking:'Booking.com', agoda:'Agoda', hostelworld:'Hostelworld', expedia:'Expedia', hotels:'Hotels.com', trip:'Trip.com', skyscanner:'Skyscanner', kiwi:'Kiwi.com', aviasales:'Aviasales', busbud:'Busbud', bookaway:'Bookaway', '12go':'12Go', omio:'Omio', klook:'Klook', viator:'Viator', getyourguide:'GetYourGuide', tripadvisor:'Tripadvisor', airalo:'Airalo', saily:'Saily', yesim:'Yesim', drimsim:'Drimsim', discovercars:'DiscoverCars', localrent:'Localrent' };
+  const AFF = {"airalo":{"c":"https://www.airalo.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?marker=750063&p=8310&campaign_id=541&u={{dest}}"},"saily":{"c":"https://saily.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=629&marker=750063&p=8979&trs=550285&u={{dest}}"},"yesim":{"c":"https://yesim.app","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=224&marker=750063&p=5998&trs=550285&u={{dest}}"},"drimsim":{"c":"https://drimsim.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=102&marker=750063&p=2762&trs=550285&u={{dest}}"},"mobimatter":{"c":"https://mobimatter.com","a":1,"t":"append","p":"","h":"Chiller","u":""},"klook":{"c":"https://www.klook.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=137&marker=750063&p=4110&trs=550285&u={{dest}}"},"tiqets":{"c":"https://www.tiqets.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=89&marker=750063&p=2074&trs=550285&u={{dest}}"},"kkday":{"c":"https://www.kkday.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=633&marker=750063&p=9074&trs=550285&u={{dest}}"},"gocity":{"c":"https://gocity.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=62&marker=750063&p=1942&trs=550285&u={{dest}}"},"wegotrip":{"c":"https://wegotrip.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=150&marker=750063&p=4487&trs=550285&u={{dest}}"},"getyourguide":{"c":"https://www.getyourguide.com","a":1,"t":"append","p":"partner_id=VJZAOAS&cmp=Chiller","h":"","u":""},"viator":{"c":"https://www.viator.com","a":1,"t":"append","p":"pid=P00318757&mcid=42383&medium=link","h":"","u":""},"viator_api":{"c":"https://www.viator.com","a":1,"t":"append","p":"pid=P00318757&mcid=42383&medium=api","h":"","u":""},"tripadvisor":{"c":"https://www.tripadvisor.com/Attractions","a":0,"t":"none","p":"","h":"","u":""},"trip":{"c":"https://www.trip.com","a":1,"t":"append","p":"Allianceid=10464826&SID=330520163","h":"","u":""},"aviasales":{"c":"https://www.aviasales.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=100&marker=750063&p=4114&trs=550285&u={{dest}}"},"kiwi":{"c":"https://www.kiwi.com","a":1,"t":"tpl","p":"","h":"","u":"https://c111.travelpayouts.com/click?shmarker=750063&promo_id=3791&source_type=customlink&type=click&custom_url={{dest}}"},"gettransfer":{"c":"https://gettransfer.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=147&marker=750063&p=4439&trs=550285&u={{dest}}"},"welcomepickups":{"c":"https://www.welcomepickups.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=627&marker=750063&p=8919&trs=550285&u={{dest}}"},"kiwitaxi":{"c":"https://kiwitaxi.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=1&marker=750063&p=647&trs=550285&u={{dest}}"},"busbud":{"c":"https://www.busbud.com","a":0,"t":"none","p":"","h":"","u":""},"omio":{"c":"https://www.omio.com","a":1,"t":"tpl","p":"","h":"","u":"https://omio.sjv.io/L0yA7O?u={{dest}}"},"wayaway":{"c":"https://www.wayaway.io","a":0,"t":"none","p":"","h":"","u":""},"12go":{"c":"https://12go.asia","a":1,"t":"append","p":"z=16896756","h":"","u":""},"skyscanner":{"c":"https://www.skyscanner.net","a":0,"t":"none","p":"","h":"","u":""},"google_flights":{"c":"https://www.google.com/travel/flights","a":0,"t":"none","p":"","h":"","u":""},"bookaway":{"c":"https://www.bookaway.com","a":1,"t":"append","p":"offer_id=34&aff_id=4249","h":"","u":""},"hostelworld":{"c":"https://www.hostelworld.com","a":0,"t":"none","p":"","h":"","u":""},"booking":{"c":"https://www.booking.com","a":1,"t":"tpl","p":"","h":"","u":"https://www.anrdoezrs.net/click-101867183-11891539?url={{dest}}"},"agoda":{"c":"https://www.agoda.com","a":1,"t":"append","p":"cid=1974284","h":"","u":""},"hotels":{"c":"https://www.hotels.com","a":0,"t":"none","p":"","h":"","u":""},"expedia":{"c":"https://www.expedia.com","a":1,"t":"tpl","p":"","h":"","u":"https://expedia.com/affiliate?siteid=1&landingPage={{dest}}&camref=1110lMIh2&creativeref=1100l68075"},"vrbo":{"c":"https://www.vrbo.com","a":0,"t":"none","p":"","h":"","u":""},"localrent":{"c":"https://localrent.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=87&marker=750063&p=2043&trs=550285&u={{dest}}"},"economybookings":{"c":"https://www.economybookings.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=10&marker=750063&p=2018&trs=550285&u={{dest}}"},"qeeq":{"c":"https://www.qeeq.com","a":1,"t":"tpl","p":"","h":"","u":"https://tp.media/r?campaign_id=172&marker=750063&p=4845&trs=550285&u={{dest}}"},"ekta":{"c":"https://ektatraveling.com","a":0,"t":"none","p":"","h":"","u":""},"discovercars":{"c":"https://www.discovercars.com","a":0,"t":"none","p":"","h":"","u":""},"insubuy":{"c":"https://www.insubuy.com","a":0,"t":"none","p":"","h":"","u":""},"visitorscoverage":{"c":"https://www.visitorscoverage.com","a":0,"t":"none","p":"","h":"","u":""}};
+  function toDirect(href){
+    try {
+      const u = new URL(href);
+      if (!/(^|\.)chiller-travel\.com$/i.test(u.hostname)) return href;
+      const g = u.pathname.match(/^\/go\/([a-z0-9_]+)/i); if (!g || !AFF[g[1]]) return href;
+      const p = AFF[g[1]]; let target = p.c;
+      const d = u.searchParams.get('dest');
+      if (d && /^https?:\/\//i.test(d)) {
+        const host = x => new URL(x).hostname.toLowerCase().replace(/^www\./, '');
+        const ph = host(p.c), dh = host(d);
+        if (dh !== ph && !dh.endsWith('.' + ph)) return d;
+        target = d;
+      }
+      if (!p.a) return target;
+      if (p.t === 'append') { const t = new URL(target); for (const [k, v] of new URLSearchParams(p.p)) t.searchParams.set(k, v); if (p.h) t.hash = p.h; return t.toString(); }
+      if (p.t === 'tpl') return p.u.replace('{{dest}}', encodeURIComponent(target));
+      return target;
+    } catch { return href; }
+  }
+  function linkLabel(href){
+    try {
+      const u = new URL(href), g = u.pathname.match(/^\/go\/([a-z0-9_]+)/i);
+      return T('פתיחה ב-','Open ') + (g ? (PNAMES[g[1]] || g[1]) : u.hostname.replace(/^www\./, ''));
+    } catch { return T('לינק','Link'); }
+  }
+  function formatBot(text){
+    const re = /\[([^\]]+)\]\(([^)\s]+)\)|((?:https?:\/\/|www\.)[^\s<]+[^\s<.,;:!?)\]'"»”])/g;
+    let out = '', last = 0;
+    for (const m of text.matchAll(re)) {
+      out += fmtT(text.slice(last, m.index));
+      let href = m[2] || m[3]; const label = m[1] || m[3];
+      if (href.startsWith('/')) href = SITE + href; else if (!/^https?:\/\//i.test(href)) href = 'https://' + href;
+      const orig = href; if (/^https?:\/\//i.test(href)) href = toDirect(href);
+      if (!/^https?:\/\//i.test(href)) out += escA(m[0]);
+      else if (m[1]) out += `<a href="${escA(href)}" target="_blank" rel="noopener noreferrer">${fmtT(label)}</a>`;
+      else out += `<a class="blink" href="${escA(href)}" target="_blank" rel="noopener noreferrer">${escA(linkLabel(orig))} ↗</a>`;
+      last = m.index + m[0].length;
+    }
+    return out + fmtT(text.slice(last));
+  }
+  const sessionId = (() => { try { let id = sessionStorage.getItem('chiller_session_id'); if (!id) { id = 'web-' + Math.random().toString(36).substring(2, 15); sessionStorage.setItem('chiller_session_id', id); } return id; } catch { return 'web-' + Math.random().toString(36).substring(2, 15); } })();
+  let tokenP = null;
+  function getToken(fresh){
+    if (fresh || !tokenP) { tokenP = fetch(API + '/simulate/token').then(r => { if (!r.ok) throw new Error('token ' + r.status); return r.json(); }).then(d => d.token); tokenP.catch(() => { tokenP = null; }); }
+    return tokenP;
+  }
+  async function callSim(body, signal){
+    const go = t => fetch(API + '/simulate', { method:'POST', headers:{ 'Content-Type':'application/json', 'x-simulate-token':t }, body:JSON.stringify(body), signal });
+    let r = await go(await getToken(false));
+    if (r.status === 403) r = await go(await getToken(true));
+    return r;
+  }
+  const now = () => new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',hour12:false});
+  const tadd = html => { tryBody.insertAdjacentHTML('beforeend', html); tryBody.scrollTop = tryBody.scrollHeight; return tryBody.lastElementChild; };
+  const setWa = q => { tryWa.href = 'https://wa.me/' + WA_NUM + '?text=' + encodeURIComponent(q || T('היי צ׳ילר','Hi Chiller')); tryWa.target = '_blank'; tryWa.rel = 'noopener noreferrer'; };
+  let busy = false;
+  async function ask(q){
+    q = q.trim(); if (!q || busy) return;
+    busy = true; trySend.disabled = true; tryInput.value = '';
+    tadd(`<div class="msg out">${escA(q)}<span class="meta">${now()} <span class="tick">✓✓</span></span></div>`);
+    tryStatus.textContent = T('מקליד/ה…','typing…'); tryStatus.classList.add('typing');
+    const typ = tadd('<div class="typing"><span></span><span></span><span></span></div>');
+    const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 45000);
+    let html, err = false;
+    try {
+      const r = await callSim({ userId: sessionId, message: q }, ctrl.signal);
+      if (!r.ok) throw new Error('status ' + r.status);
+      const data = await r.json();
+      html = formatBot(data.reply || T('מצטער, לא הצלחתי לעבד את זה — נסה שוב בבקשה.','Sorry, I couldn\'t process that — please try again.'));
+    } catch (e) {
+      err = true;
+      html = e.name === 'AbortError'
+        ? T('לוקח לי יותר זמן מהרגיל לענות. נסו שוב עוד רגע — או המשיכו איתי ישר בוואטסאפ.','This is taking longer than usual. Try again in a moment — or continue with me on WhatsApp.')
+        : T('לא הצלחתי להתחבר כרגע. אפשר להמשיך איתי ישר בוואטסאפ 👇','I couldn\'t connect right now. You can continue with me on WhatsApp 👇');
+    } finally { clearTimeout(timer); }
+    typ.remove(); tryStatus.textContent = T('מחובר','Online'); tryStatus.classList.remove('typing');
+    tadd(`<div class="msg in${err ? ' err' : ''}">${html}<span class="meta">${now()}</span></div>`);
+    tryCta.hidden = false; setWa(q);
+    busy = false; trySend.disabled = false; tryInput.focus(); tryBody.scrollTop = tryBody.scrollHeight;
+  }
+  setWa('');
+  document.getElementById('openTry').addEventListener('click', () => {
+    openDlg(tryDlg);
+    if (!tryBody.children.length) {
+      tadd(`<div class="msg in">${T('היי! 🎒 אני צ׳ילר, הסוכן החכם שלך לטיולים. איך אפשר לעזור לך לתכנן את ההרפתקה הבאה?','Hi! 🎒 I\'m Chiller, your smart travel sidekick. How can I help you plan your next adventure?')}<span class="meta">${now()}</span></div>`);
+      getToken(false).catch(() => {});
+    }
+    setTimeout(() => tryInput.focus(), 50);
+  });
+  tryForm.addEventListener('submit', e => { e.preventDefault(); ask(tryInput.value); });
+  document.getElementById('tryChips').addEventListener('click', e => { const b = e.target.closest('button'); if (b) ask(b.textContent); });
+
+  /* legal, contact & cookie modals — texts are the live site's current pages */
+  const LEGAL_DATA = JSON.parse(document.getElementById('legalData').textContent);
+  const TITLES_HE = { privacy:'מדיניות פרטיות', terms:'תנאי שימוש', a11y:'הצהרת נגישות', contact:'צור קשר', cookies:'הגדרות עוגיות' };
+  const TITLES_EN = { privacy:'Privacy Policy', terms:'Terms of Use', a11y:'Accessibility Statement', contact:'Contact us', cookies:'Cookie settings' };
+  const A11Y_EN = `<div dir="ltr" lang="en"><header class="legal-header"><div class="legal-meta">Last updated: September 24, 2026</div></header>
+    <section class="legal-section"><p>At Chiller Travel we want every traveler to be able to use the site and chat comfortably, including people with disabilities. We are working to adapt the site to the WCAG 2.0 AA guidelines and the Israeli standard IS 5568, and aim to meet them.</p></section>
+    <section class="legal-section"><h2>What we've done on the site</h2><ul><li>Full keyboard navigation, with a clear focus outline on the active element.</li><li>Page language and writing direction are set (Hebrew right-to-left, English left-to-right) so screen readers read correctly.</li><li>Text labels for buttons and input fields, including the chat input.</li><li>Sufficient color contrast between text and background.</li><li>Layouts adapted for phones and computers.</li><li>The site doesn't use images that carry information, so there's no visual content that requires alt text.</li></ul></section>
+    <section class="legal-section"><h2>Scope and testing</h2><p>This statement applies to chiller-travel.com and its chat. Chiller has no physical office or public service point.</p><p>The WhatsApp service runs inside the WhatsApp app, whose accessibility (such as screen-reader support and voice messages) is Meta's responsibility. You can also send Chiller voice messages.</p><p>The site was tested in Chrome on desktop and in phone view, including keyboard navigation. A full accessibility audit by a certified accessibility professional has not yet been carried out.</p><p>The homepage includes animated sample conversations. They are illustrative only, and the information in them is not needed to use the service.</p></section>
+    <section class="legal-section"><h2>Known limitations</h2><p>Chat answers are generated automatically by AI and sometimes include links to external providers' sites (for example, accommodation or flight booking sites). The accessibility of those sites is the providers' responsibility and outside our control.</p></section>
+    <section class="legal-section"><h2>Ran into a problem?</h2><p>If something on the site isn't accessible to you, we'd like to hear about it and fix it. Write to us at chillerbot1405@gmail.com and describe the problem and the page where you found it. We'll try to get back to you within 7 business days. If the site is hard for you to use, you can get the same information and help by email.</p></section></div>`;
+  const WA_ICON = '<svg><use href="#wa"/></svg>';
+  const CONTACT_HTML_HE = `<p>יש שאלה, הצעה או משהו שלא עבד? נשמח לשמוע. הכי מהיר — בוואטסאפ. אפשר גם להשאיר הודעה כאן והיא תישלח אלינו במייל.</p>
+    <div class="crow"><a class="cbtn wa" href="https://wa.me/${WA_NUM}" target="_blank" rel="noopener noreferrer">${WA_ICON}צ׳אט בוואטסאפ</a><a class="cbtn ghost" href="mailto:chillerbot1405@gmail.com" dir="ltr">chillerbot1405@gmail.com</a></div>
+    <hr>
+    <form class="cform" id="cform"><label>שם מלא *<input name="n" required autocomplete="name"></label><label>הודעה *<textarea name="m" required></textarea></label><div><button class="cbtn dark" type="submit">שליחת הודעה</button></div></form>`;
+  const CONTACT_HTML_EN = `<p>Got a question, an idea, or something that didn't work? We'd love to hear from you. WhatsApp is fastest — or leave a message here and it'll reach us by email.</p>
+    <div class="crow"><a class="cbtn wa" href="https://wa.me/${WA_NUM}" target="_blank" rel="noopener noreferrer">${WA_ICON}Chat on WhatsApp</a><a class="cbtn ghost" href="mailto:chillerbot1405@gmail.com">chillerbot1405@gmail.com</a></div>
+    <hr>
+    <form class="cform" id="cform"><label>Full name *<input name="n" required autocomplete="name"></label><label>Message *<textarea name="m" required></textarea></label><div><button class="cbtn dark" type="submit">Send message</button></div></form>`;
+  const cookiesHtml = () => {
+    if (LANG === 'en') {
+      const c = getConsent(), st = c === 'accepted' ? 'You accepted analytics.' : c === 'rejected' ? 'You declined analytics.' : 'You haven\'t chosen yet.';
+      return `<p>We use an analytics tool (Microsoft Clarity) to understand how the site is used and improve it. It only loads if you accept. Cookies that are essential for the site and chat always run.</p>
+        <div class="cstate">Current setting: <b>${st}</b></div>
+        <div class="crow"><button class="cbtn dark" data-consent="accepted">Accept analytics</button><button class="cbtn ghost" data-consent="rejected">Decline</button></div>
+        <p style="margin-top:16px">More details in the <a href="#privacy">Privacy Policy</a>.</p>`;
+    }
+    const c = getConsent(), st = c === 'accepted' ? 'אישרתם כלי מדידה.' : c === 'rejected' ? 'דחיתם כלי מדידה.' : 'עוד לא בחרתם.';
+    return `<p>אנחנו משתמשים בכלי מדידה (Microsoft Clarity) כדי להבין איך משתמשים באתר ולשפר אותו. הכלי נטען רק אם תאשרו. עוגיות הכרחיות להפעלת האתר והצ׳אט פועלות תמיד.</p>
+      <div class="cstate">המצב הנוכחי: <b>${st}</b></div>
+      <div class="crow"><button class="cbtn dark" data-consent="accepted">אישור כלי מדידה</button><button class="cbtn ghost" data-consent="rejected">דחייה</button></div>
+      <p style="margin-top:16px">פרטים נוספים ב<a href="#privacy">מדיניות הפרטיות</a>.</p>`;
+  };
+  const legalDlg = document.getElementById('legalDlg'), legalTitle = document.getElementById('legalTitle'), legalBody = document.getElementById('legalBody');
+  function legalPart(html){
+    const tmp = document.createElement('div'); tmp.innerHTML = html;
+    const part = tmp.querySelector('[lang="' + LANG + '"]');
+    return part ? part.outerHTML : html;
+  }
+  function openLegal(key){
+    legalTitle.textContent = (LANG === 'en' ? TITLES_EN : TITLES_HE)[key];
+    legalBody.dataset.key = key;
+    legalBody.innerHTML = key === 'contact' ? (LANG === 'en' ? CONTACT_HTML_EN : CONTACT_HTML_HE)
+      : key === 'cookies' ? cookiesHtml()
+      : (key === 'a11y' && LANG === 'en') ? A11Y_EN
+      : legalPart(LEGAL_DATA[key]);
+    legalBody.scrollTop = 0; openDlg(legalDlg);
+  }
+  const HASH_MAP = { privacy:'privacy', terms:'terms', accessibility:'a11y', a11y:'a11y', contact:'contact', cookies:'cookies' };
+  legalBody.addEventListener('click', e => {
+    const a = e.target.closest('a[href]'); const c = e.target.closest('[data-consent]');
+    if (c) { setConsent(c.dataset.consent); legalBody.innerHTML = cookiesHtml(); return; }
+    if (!a) return;
+    const m = a.getAttribute('href').match(/#([a-z0-9]+)$/i);
+    if (m && HASH_MAP[m[1]] && !/^(https?:|mailto:)/.test(a.getAttribute('href').replace(/^https?:\/\/(www\.)?chiller-travel\.com\/?/, ''))) { e.preventDefault(); openLegal(HASH_MAP[m[1]]); }
+  });
+  legalBody.addEventListener('submit', e => {
+    if (e.target.id !== 'cform') return; e.preventDefault();
+    const n = e.target.n.value.trim(), msg = e.target.m.value.trim(); if (!n || !msg) return;
+    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=chillerbot1405@gmail.com&su=' + encodeURIComponent('Contact from ' + n) + '&body=' + encodeURIComponent(msg), '_blank');
+  });
+  document.querySelectorAll('[data-legal]').forEach(b => b.addEventListener('click', () => openLegal(b.dataset.legal)));
+  /* deep links used by Meta / the old site: /#privacy, /#terms, /#accessibility, /#contact, /#booking */
+  const ROUTES = { privacy:'privacy', terms:'terms', accessibility:'a11y', contact:'contact', cookies:'cookies' };
+  const routeNow = () => {
+    const h = location.hash.replace('#', '');
+    if (ROUTES[h]) openLegal(ROUTES[h]);
+    else if (h === 'booking') { const el = document.getElementById('partners'); if (el) el.scrollIntoView(); }
+  };
+  window.addEventListener('hashchange', routeNow);
+  legalDlg.addEventListener('close', () => { if (ROUTES[location.hash.replace('#', '')]) history.replaceState(null, '', location.pathname + location.search); });
+  routeNow();
+  const cookie = document.getElementById('cookie');
+  if (!getConsent()) setTimeout(() => { if (!getConsent()) cookie.hidden = false; }, 1200);
+  cookie.addEventListener('click', e => { const c = e.target.closest('[data-consent]'); if (c) setConsent(c.dataset.consent); });
+  window.addEventListener(CONSENT_CHANGE_EVENT, e => { cookie.hidden = !(e.detail && e.detail.reopen); });
+
+  /* footer photo: different destination every visit, slow crossfade */
+  (function(){
+    const PICS = ['uyuni','patagonia','machu','halong','rainbow','pai','cusco','hanoi'];
+    const a = document.getElementById('fbA'), b = document.getElementById('fbB');
+    let i = Math.floor(Math.random() * PICS.length), front = a, back = b;
+    a.src = '/img/' + PICS[i] + '.jpg';
+    if (reduce) return;
+    setInterval(() => {
+      i = (i + 1) % PICS.length;
+      back.onload = () => { back.classList.remove('off'); front.classList.add('off'); [front, back] = [back, front]; };
+      back.src = '/img/' + PICS[i] + '.jpg';
+    }, 7000);
+  })();
+
+  /* language switch (Hebrew / English) */
+  const EN = {"צ׳ילר":"Chiller","מה אפשר לשאול":"What to ask","מידע חי":"Live data","איך זה עובד":"How it works","הזמנה ישירה":"Book direct","אמון":"Trust","פתחו בוואטסאפ":"Open WhatsApp","עוזר טיולים חכם · בוואטסאפ · 24/7":"Smart travel assistant · on WhatsApp · 24/7","החבר שכבר":"The friend who's","היה":"already been","שם.":"there.","שואלים את צ׳ילר בוואטסאפ איפה לישון, איך להגיע ומה עושים הערב — ומקבלים תשובה של חבר מנוסה, עם מחירים עדכניים ולינק ישר למקום.":"Ask Chiller on WhatsApp where to sleep, how to get there and what to do tonight — and get the answer of an experienced friend, with up-to-date prices and a link straight to the place.","פתחו צ׳אט בוואטסאפ":"Chat on WhatsApp","או נסו כאן באתר":"Or try it here","נסו לשאול:":"Try asking:","מה עושים הערב?":"What should I do today?","איפה לישון?":"Where should I sleep?","יש אוטובוס הלילה?":"How do I get there?","צריך eSIM":"Need an eSIM","מחובר":"Online","הודעה":"Message","קוסקו, פרו":"Cusco, Peru","קוסקו":"Cusco","פאי":"Pai","האנוי":"Hanoi","טורס דל פיינה":"Torres del Paine","סלאר דה אויוני":"Salar de Uyuni","הא לונג":"Ha Long","הר הקשת":"Rainbow Mountain","מאצ׳ו פיצ׳ו":"Machu Picchu","הבעיה":"The problem","7 אפליקציות.":"7 apps.","שיחה אחת.":"One chat.","טאבים, קבוצות, PDF של לוח זמנים ובלוג מלפני כמה שנים — ועדיין אין איפה לישון הלילה. צ׳ילר מכווץ את כל זה להודעה אחת.":"Tabs, group chats, a timetable PDF and a blog post from a few years ago — and still nowhere to sleep tonight. Chiller squeezes all of it into one message.","בלי צ׳ילר":"Without Chiller","7 אפליקציות":"7 apps","השוואת טיסות":"Flight comparison","14 טאבים פתוחים":"14 open tabs","מתיש":"Exhausting","אתר הוסטלים":"Hostel site","הסינון מתאפס שוב":"Filters reset again","מבלבל":"Confusing","לוח זמנים לאוטובוס":"Bus timetable","PDF מלפני שנתיים":"A 2-year-old PDF","לא מעודכן":"Outdated","קבוצת מטיילים":"Travelers' group","3 תשובות סותרות":"3 conflicting answers","איטי":"Slow","מפות":"Maps","כמה זמן זה באמת?":"How long is it really?","חלקי":"Partial","המרת מטבע":"Currency converter","עוד אפליקציה":"Yet another app","עוד טאב":"Another tab","אתר eSIM":"eSIM site","איזה מהם?":"Which one?","ניחוש":"A guess","מתכנס":"merging","עם צ׳ילר":"With Chiller","שיחה אחת":"One chat","מחר עובר מבנגקוק לצ׳יאנג מאי. תסדר לי הכל?":"Moving from Bangkok to Chiang Mai tomorrow. Can you sort it all?","סגור. הנה הכל במקום אחד:":"Done. Here's everything in one place:","טיסה נמצאה · 3 אופציות הושוו":"Flight found · 3 options compared","הוסטל בעיר העתיקה · נבדק זמין":"Old City hostel · availability checked","רכבת לילה · יציאה 20:00":"Night train · departs 20:00","תשובה אחת ברורה":"One clear answer","12 דק׳ הליכה מהתחנה":"12 min walk from the station","המחירים כבר בדולרים":"Prices already in dollars","eSIM לתאילנד · 15 יום":"Thailand eSIM · 15 days","השהה אנימציה":"Pause animation","שואלים כמו":"Ask like you'd","ששואלים חבר.":"ask a friend.","בלי פילטרים ובלי טפסים. כותבים מה שצריך — וצ׳ילר מחזיר תשובה קצרה, חכמה ולינק.":"No filters, no forms. Write what you need — Chiller comes back with a short, smart answer and a link.","עוברים עם העכבר או לוחצים על שאלה כדי לראות את התשובה":"Hover or tap a question to see the answer","CUSCO · 23:10 · גשם":"CUSCO · 23:10 · RAIN","האוטובוס בוטל.":"Bus cancelled.","יש תוכנית ב׳.":"There's a plan B.","צ׳ילר לא רק לתכנון. הוא שם בדיוק כשמשהו נשבר — באמצע הלילה, בטרמינל, עם 4% סוללה.":"Chiller isn't just for planning. It's there exactly when something breaks — in the middle of the night, at the terminal, on 4% battery.","האוטובוס לפונו בוטל 😩 מה עושים?":"My bus to Puno got cancelled 😩 what now?","נשימה. יש 2 אופציות הלילה:\n-":"Breathe. Two options tonight:\n-","חברה אחרת יוצאת ב-23:55":"Another company leaves at 23:55","מאותו טרמינל\n-":"from the same terminal\n-","הוסטל 6 דק׳ הליכה":"A hostel 6 min away","+ אוטובוס בוקר ב-7:30\n\nלשלוח לינק לאחת מהן?":"+ a morning bus at 7:30\n\nWant a link for one of them?","תביא את של 23:55":"Send me the 23:55 one","קוסקו ← פונו · 23:55":"Cusco → Puno · 23:55","מקומות פנויים":"Seats left","יש":"Yes","להזמנה ←":"Book →","נבדק עכשיו.":"Checked now.","לא ב-2019.":"Not in 2019.","צ׳ילר בודק מחירים, זמינות ולוחות זמנים בזמן אמת — איפה שיש מידע כזה. וכשאין לו נתון עדכני, הוא אומר את זה. לא ממציא.":"Chiller checks prices, availability and timetables in real time — wherever that data exists. And when it has no current data, it says so. It doesn't make things up.","בדיקות חיות":"Live checks","מסלול":"Route","סוג":"Type","מחיר":"Price","סטטוס":"Status","* נתוני המחשה בלבד":"* Illustrative data only","מתעדכן אוטומטית":"Updates automatically","בלי אפליקציה חדשה.":"No new app.","זה וואטסאפ.":"It's WhatsApp.","פותחים צ׳אט":"Open a chat","לחיצה אחת, וצ׳ילר אצלכם בוואטסאפ.":"One tap and Chiller is in your WhatsApp.","שואלים כמו חבר":"Ask like a friend","בעברית או באנגלית, בטקסט, בהודעה קולית או בתמונה.":"In English or Hebrew — by text, voice note or photo.","יוצאים לדרך":"Hit the road","תשובה ברורה ולינק ישר למקום הנכון.":"A clear answer and a link straight to the right place.","גולשים מהמחשב?":"On a computer?","סרקו ופתחו צ׳אט":"Scan to start a chat","פתחו בוואטסאפ · לחיצה אחת":"Open WhatsApp · one tap","רוצים להזמין בעצמכם?":"Prefer to book yourself?","הספקים שאנחנו סומכים עליהם.":"Providers we trust.","ההזמנה והתשלום מתבצעים ישירות באתר הספק ולפי התנאים שלו. חלק מהקישורים הם קישורי שותפים, ואנחנו עשויים לקבל עמלה — בלי תוספת למחיר שלכם.":"Booking and payment happen directly on the provider's site, under its terms. Some links are affiliate links, and we may earn a commission — at no extra cost to you.","לינה והוסטלים":"Hostels & stays","השוואת מחירים, מיטות בדורם וחדרים פרטיים":"Compare prices, dorm beds and private rooms","מבחר ענק וביטול גמיש":"Huge choice & flexible cancellation","מעבר לאתר ↗":"Visit site ↗","דילים חזקים במיוחד באסיה":"Especially strong deals in Asia","ההוסטלים הכי חברתיים":"The most social hostels","מלונות, דילים וחבילות":"Hotels, deals and bundles","טיסות":"Flights","השוואת טיסות ומסלולים משתלמים":"Compare flights and smart routes","טיסות ורכבות, חזק באסיה":"Flights & trains, strong in Asia","השוואה בין כל חברות התעופה":"Compare every airline","שילובי טיסות זולים ויצירתיים":"Cheap, creative flight combos","מעברים ואוטובוסים":"Buses & transfers","אוטובוסי לילה, רכבות, מעבורות והסעות":"Night buses, trains, ferries and shuttles","אוטובוסים בין-עירוניים בעולם":"Intercity buses worldwide","מעברים, מעבורות והסעות":"Transfers, ferries and shuttles","אוטובוסים ורכבות באסיה":"Buses and trains in Asia","רכבות ואוטובוסים באירופה":"Trains and buses in Europe","אטרקציות וסיורים":"Tours & activities","טרקים, סיורים מודרכים וכרטיסי כניסה":"Treks, guided tours and tickets","טרקים, שייט וחוויות":"Treks, cruises and experiences","סיורים מודרכים בכל העולם":"Guided tours worldwide","אטרקציות וכרטיסים באסיה":"Attractions and tickets in Asia","ביקורות ואטרקציות":"Reviews and attractions","eSIM ותקשורת":"eSIM & connectivity","אינטרנט מהרגע שנוחתים, בלי להחליף סים":"Online the moment you land, no SIM swap","חבילות ביותר מ-200 מדינות":"Plans in 200+ countries","eSIM פשוט ומהיר":"Simple, fast eSIM","חבילות גלישה ללא הגבלה":"Unlimited data plans","כרטיס אחד לכל העולם":"One SIM for the whole world","למה אפשר לסמוך עליו.":"Why you can trust it.","אומר כשהוא לא יודע":"Says when it doesn't know","אין נתון עדכני? הוא אומר את זה. לא ממציא מקומות ולא מחירים.":"No current data? It tells you. It never invents places or prices.","לוקח לעמוד האמיתי":"Takes you to the real page","מזמינים ישירות מול הספק. צ׳ילר לא נוגע בכרטיס האשראי שלכם.":"You book directly with the provider. Chiller never touches your card.","שקוף לגבי כסף":"Transparent about money","על חלק מהלינקים צ׳ילר עשוי לקבל עמלה. המחיר שלכם לא משתנה.":"Chiller may earn a commission on some links. Your price stays the same.","נבנה ע״י מטיילים":"Built by travelers","[מקום לסיפור המייסד — אם תרצה]":"[Space for the founder's story — if you want one]","לאן עכשיו?":"Where to next?","תכתבו לצ׳ילר. הוא כבר היה שם.":"Message Chiller. It's already been there.","צור קשר":"Contact","מדיניות פרטיות":"Privacy Policy","תנאי שימוש":"Terms of Use","הצהרת נגישות":"Accessibility","הגדרות עוגיות":"Cookie settings","הדמייה · שיחות, מחירים ושעות בדף הן דוגמאות להמחשה.":"Mockup · conversations, prices and times on this page are illustrative examples.","צילומים מ-Wikimedia Commons: Diego Delso (CC BY-SA 4.0) · Vyacheslav Argenberg (CC BY 4.0) · Richard Mortel (CC BY 2.0) · Winky from Oxford (CC BY 2.0) · Christopher Crouzet (CC BY-SA 4.0) · Thomas Hirsch (CC BY-SA 3.0) · MareikeHeuer (CC0) · Allard Schmidt (נחלת הכלל) · Mattsjc (CC BY 4.0)":"Photos from Wikimedia Commons: Diego Delso (CC BY-SA 4.0) · Vyacheslav Argenberg (CC BY 4.0) · Richard Mortel (CC BY 2.0) · Winky from Oxford (CC BY 2.0) · Christopher Crouzet (CC BY-SA 4.0) · Thomas Hirsch (CC BY-SA 3.0) · MareikeHeuer (CC0) · Allard Schmidt (public domain) · Mattsjc (CC BY 4.0)","הוסטל זול בקוסקו":"Cheap hostel in Cusco","איך מגיעים מבנגקוק לצ׳יאנג מאי?":"Bangkok to Chiang Mai — how?","eSIM לווייטנאם":"eSIM for Vietnam","מה עושים בפאי?":"What to do in Pai?","טיסה לבנגקוק בנובמבר":"Flight to Bangkok in November","רוצים תשובה מלאה וחיה?":"Want to keep going?","המשיכו בוואטסאפ · פתח שיחה":"Continue on WhatsApp · open chat","כתבו שאלה לצ׳ילר":"Write a question to Chiller","עוגיות וכלי מדידה":"Cookies & analytics","אנחנו משתמשים בכלי מדידה (Microsoft Clarity) כדי להבין איך משתמשים באתר ולשפר אותו. הכלי נטען רק אם תאשרו. עוגיות הכרחיות להפעלת האתר והצ׳אט פועלות תמיד.":"We use an analytics tool (Microsoft Clarity) to understand how the site is used and improve it. It only loads if you accept. Cookies that are essential for the site and chat always run.","פרטים במדיניות הפרטיות":"Details in the Privacy Policy","אישור":"Accept","דחייה":"Decline","ראשי":"Main","דוגמאות שאלות":"Example questions","יעדים":"Destinations","קוד QR לפתיחת צ׳אט עם צ׳ילר בוואטסאפ":"QR code to open a WhatsApp chat with Chiller","סגירה":"Close","שאלות מהירות":"Quick questions","כתבו שאלה, כמו לחבר…":"Ask anything, like you'd ask a friend…","שליחה":"Send","צ׳ילר — החבר שכבר היה שם":"Chiller — the friend who's already been there","היה שם.":"already been there.","חבר מומחה בכיס, בוואטסאפ 24/7":"Your expert friend in your pocket, on WhatsApp 24/7","מה זה צ׳ילר":"About Chiller","מה זה צ׳ילר?":"What is Chiller?","צ׳ילר הוא עוזר נסיעות חכם מבוסס AI שפותח במיוחד כדי לסייע לתרמילאים ומטיילים עצמאיים לתכנן את הרפתקת חייהם בטיול הגדול. צ׳ילר מתמחה במתן מענה לוגיסטי, מציאת מקומות לינה מתאימים, המלצה על אטרקציות, ותכנון מעברים ותחבורה (אוטובוסים, שאטלים, מעבורות וטיסות). צ׳ילר מיועד לתפקד כ״חבר מומחה בכיס״ עבור התרמילאי הישראלי ולעזור לו לבנות את חוויית הטיול המושלמת בשבילו.":"Chiller is a smart, AI-powered travel assistant built specifically to help backpackers and independent travelers plan the adventure of a lifetime on their big trip. Chiller specializes in logistics: finding the right places to stay, recommending attractions, and planning transfers and transport (buses, shuttles, ferries and flights). Chiller is designed to be an “expert friend in your pocket” for Israeli backpackers, helping each of them build the trip that’s perfect for them.","למי השירות מיועד":"Who it’s for","למוצ׳ילרים ותרמילאים ישראלים המחפשים לחקור את העולם בצורה מתוחכמת, מותאמת אישית וחסכונית.":"Israeli backpackers and travelers who want to explore the world in a smarter, more personal and budget-friendly way.","החזון שלנו":"Our vision","להנגיש את כלי התכנון והמענה הלוגיסטי המובילים ביותר לכל תרמילאי, ולאפשר לכם לצאת לדרך בראש שקט תוך חיבור לספקי שירות מוכרים בעולם הנסיעות והטיולים.":"To give every backpacker access to the best planning tools and logistics help, so you can hit the road with peace of mind, connected to well-known providers in the travel world.","תרמילאי חוצה נחל בדרך בין הרים":"A backpacker crossing a stream on a mountain trail","מי זה צ׳ילר?":"Who is Chiller?","מי זה צ׳ילר":"Meet Chiller","בזמן אמת.":"In real time.","הזמינו ישירות מהחברות המובילות בעולם הטיולים.":"Book direct with the world’s leading travel companies.","ההזמנה והתשלום מתבצעים ישירות באתר הספק ולפי התנאים שלו.":"Booking and payment happen directly on the provider’s site, under its terms.","מידע אמין, לא ניחושים":"Reliable info, not guesses","צ׳ילר שולף מידע עדכני ממקורות מוכרים ואמינים — חברות הנסיעות המובילות, אתרים רשמיים ומנועי חיפוש — ומנוע AI מתקדם הופך אותו לתשובה אחת, ברורה ומדויקת.":"Chiller pulls current information from well-known, trusted sources — leading travel companies, official sites and search engines — and an advanced AI engine turns it into one clear, accurate answer.","לאן שלא תגיע,":"Wherever you go,","צ׳ילר כבר יודע.":"Chiller already knows.","צ׳ילר — לאן שלא תגיע, צ׳ילר כבר יודע":"Chiller — wherever you go, Chiller already knows","חבר מומחה בכיס לכל הטיול הגדול. תכתבו לצ׳ילר.":"An expert friend in your pocket for the whole big trip. Message Chiller.","מה צ׳ילר יודע לעשות":"What Chiller can do","מציאת דרכי הגעה: אוטובוסים, טיסות ומעברי גבול יבשתיים וימיים, עם קישור להזמנה אצל הספק.":"Finding ways to get there: buses, flights and land and sea border crossings, with a booking link at the provider.","השוואה וחיפוש של הוסטלים ומקומות לינה, עם קישור ישיר להזמנה.":"Comparing and searching hostels and places to stay, with a direct booking link.","המלצות על אטרקציות, סיורים וחוויות אקסטרים, עם קישור להזמנה.":"Recommendations for attractions, tours and extreme experiences, with a booking link.","התאמה של חבילות תקשורת ו-eSIM לכל מדינה.":"Matching data plans and eSIMs for every country.","Chiller Travel משתתפת בתוכניות שותפים. אנו עשויים להרוויח עמלה על הזמנות דרך הקישורים שלנו, ללא עלות נוספת עבורכם, והמלצות ממומנות מסומנות. צ'ילר מבוסס בינה מלאכותית ועלול לטעות; ההזמנה והתשלום נעשים אצל הספק ובאחריותו.":"Chiller Travel participates in affiliate programs. We may earn a commission on bookings made through our links at no extra cost to you, and sponsored recommendations are labeled. Chiller is AI-based and can make mistakes; bookings and payments happen with, and are the responsibility of, the provider.","השיחות, המחירים והשעות בדף הם דוגמאות להמחשה.":"Conversations, prices and times on this page are illustrative examples."};
+  const SKIP = new Set(['chat','askgrid','rows','tryBody','legalBody','legalTitle','legalData','destName','stamp','status','tryStatus','ppLabel','clock']);
+  const texts = [], attrs = [];
+  (function collect(){
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) {
+      const t = n.nodeValue.trim(); if (!t || !EN[t]) continue;
+      let p = n.parentElement, bad = false;
+      while (p) { if (SKIP.has(p.id) || p.tagName === 'SCRIPT') { bad = true; break; } p = p.parentElement; }
+      if (!bad) texts.push({ n, he: n.nodeValue, k: t });
+    }
+    document.querySelectorAll('[aria-label],[placeholder],[alt]').forEach(el => ['aria-label','placeholder','alt'].forEach(a => {
+      const v = el.getAttribute(a); if (v && EN[v]) attrs.push({ el, a, he: v });
+    }));
+  })();
+  const TITLE_HE = document.title;
+  const langBtn = document.getElementById('langBtn');
+  function applyLang(l, first){
+    LANG = l;
+    try { localStorage.setItem('chiller_lang', l); } catch {}
+    const html = document.documentElement; html.lang = l; html.dir = l === 'en' ? 'ltr' : 'rtl';
+    texts.forEach(x => { x.n.nodeValue = l === 'en' ? x.he.replace(x.k, EN[x.k]) : x.he; });
+    attrs.forEach(x => x.el.setAttribute(x.a, l === 'en' ? EN[x.he] : x.he));
+    document.title = l === 'en' ? EN[TITLE_HE] : TITLE_HE;
+    document.getElementById('copy').textContent = '© ' + new Date().getFullYear() + ' Chiller Travel. ' + T('כל הזכויות שמורות ל-Chiller Travel.', 'All rights reserved. Chiller Travel.');
+    document.getElementById('tryNotice').innerHTML = l === 'en' ? "Chiller is AI and can make mistakes, and is not a party to bookings with providers. Some links are affiliate links. By sending a message you confirm you are 18 or older and agree to the <a href=\"#terms\">Terms of Use</a> and <a href=\"#privacy\">Privacy Policy</a>. Don't share sensitive information such as passport or card details." : "צ׳ילר הוא בינה מלאכותית ועלול לטעות, ואינו צד להזמנות אצל הספקים. חלק מהקישורים הם קישורי שותפים. בשליחת הודעה אתם מאשרים שאתם בני 18 ומעלה ומסכימים ל<a href=\"#terms\">תנאי השימוש</a> ול<a href=\"#privacy\">מדיניות הפרטיות</a>. אל תשתפו מידע רגיש כמו מספר דרכון או פרטי אשראי.";
+    langBtn.textContent = l === 'en' ? 'עב' : 'EN';
+    langBtn.lang = l === 'en' ? 'he' : 'en';
+    langBtn.setAttribute('aria-label', l === 'en' ? 'מעבר לעברית' : 'Switch to English');
+    const waText = encodeURIComponent(T('היי צ׳ילר','Hi Chiller'));
+    document.querySelectorAll('a[href^="https://wa.me/"]').forEach(a => { if (a.id !== 'tryWa') a.href = a.href.split('?')[0] + '?text=' + waText; });
+    if (first) return;
+    clear(); renderInstant(cur);
+    renderAsk(true);
+    rows.querySelectorAll('.trow').forEach((row, i) => { row.querySelector('.route').textContent = l === 'en' ? R_EN[i][0] : R[i][1]; row.querySelector('.kind').textContent = l === 'en' ? R_EN[i][1] : R[i][2]; });
+    drawAges();
+    status.textContent = T('מחובר','Online'); tryStatus.textContent = T('מחובר','Online');
+    if (legalDlg.open && legalBody.dataset.key) openLegal(legalBody.dataset.key);
+    document.dispatchEvent(new Event('langchange'));
+  }
+  langBtn.addEventListener('click', () => applyLang(LANG === 'en' ? 'he' : 'en'));
+  if (LANG === 'en') { LANG = 'he'; applyLang('en'); } else applyLang('he', true);
+})();
+</script>
+</body>
 </html>
