@@ -2,7 +2,7 @@
 // (`const AFF = {...}`) so its chat links can skip the /go hop. This check fails the build if that
 // copy drifts from src/config/affiliateProviders.js (the source of truth used by /go).
 // Compact format: c=cleanUrl, a=isActive?1:0, t='append'|'tpl'|'none', p=affiliateParams,
-// h=affiliateHash, u=affiliateUrl (template, only for t='tpl').
+// h=affiliateHash, u=affiliateUrl (template, only for t='tpl'), x=extraDomains (exact extra hosts, optional).
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { affiliateProviders } from '../src/config/affiliateProviders.js';
@@ -19,6 +19,7 @@ function compact(p) {
     p: t === 'append' ? (p.affiliateParams || '') : '',
     h: t === 'append' ? (p.affiliateHash || '') : '',
     u: t === 'tpl' ? p.affiliateUrl : '',
+    ...(p.extraDomains?.length ? { x: p.extraDomains } : {}),
   };
 }
 
@@ -46,7 +47,10 @@ for (const id of new Set([...Object.keys(expected), ...Object.keys(actual)])) {
       diffs.push(`- ${id}.${k}: index.html=${JSON.stringify(actual[id][k])} expected=${JSON.stringify(expected[id][k])}`);
     }
   }
-  for (const k of Object.keys(actual[id])) if (!['c', 'a', 't', 'p', 'h', 'u'].includes(k)) diffs.push(`- ${id}: unexpected field "${k}" in index.html AFF`);
+  if (JSON.stringify(actual[id].x || null) !== JSON.stringify(expected[id].x || null)) {
+    diffs.push(`- ${id}.x: index.html=${JSON.stringify(actual[id].x)} expected=${JSON.stringify(expected[id].x)}`);
+  }
+  for (const k of Object.keys(actual[id])) if (!['c', 'a', 't', 'p', 'h', 'u', 'x'].includes(k)) diffs.push(`- ${id}: unexpected field "${k}" in index.html AFF`);
 }
 
 if (diffs.length) {

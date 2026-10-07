@@ -71,7 +71,8 @@ function resolveProviderAndDest() {
       matchedProvider = affiliateProviders.find(provider => {
         const cleanUrlObj = new URL(provider.cleanUrl);
         const providerHost = cleanUrlObj.hostname.replace(/^www\./, '').toLowerCase();
-        return hostname === providerHost || hostname.endsWith(`.${providerHost}`);
+        return hostname === providerHost || hostname.endsWith(`.${providerHost}`) ||
+          (provider.extraDomains || []).some(extra => hostname === extra.toLowerCase());
       });
 
       if (matchedProvider) {
@@ -112,7 +113,8 @@ function hostMatchesProvider(destUrl, provider) {
   try {
     const host = new URL(destUrl).hostname.toLowerCase().replace(/^www\./, '');
     const providerHost = new URL(provider.cleanUrl).hostname.toLowerCase().replace(/^www\./, '');
-    return host === providerHost || host.endsWith(`.${providerHost}`);
+    return host === providerHost || host.endsWith(`.${providerHost}`) ||
+      (provider.extraDomains || []).some(extra => host === extra.toLowerCase());
   } catch {
     return false;
   }
