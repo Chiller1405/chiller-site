@@ -343,6 +343,9 @@ export const affiliateProviders = [
     name: 'Booking.com',
     category: 'accommodation',
     cleanUrl: 'https://www.booking.com',
+    // Booking's Kayak-powered flights page (works from Israel; flights.booking.com does not). It is
+    // NOT a booking.com subdomain, so it is listed as an exact extra host (never all of kayak.com).
+    extraDomains: ['booking.kayak.com'],
     // Approved 2026-09-25 via CJ ("Booking.com MEA", advertiser 4347392). CJ deep link:
     // click-<PID 101867183 = "Chiller Travel" property>-<AID 11891539 = Booking text link>?url=<dest>.
     // Verified 2026-09-27: lands on the exact searchresults page with aid=818288 and
